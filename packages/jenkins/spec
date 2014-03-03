@@ -1,0 +1,6 @@
+---
+name: jenkins
+dependencies: {}
+files:
+  - jenkins/jenkins-1.532.2.war
+  - jenkins/mesos-0.17.0.hpi

@@ -1,0 +1,86 @@
+---
+cassandra/cassandra-mesos-2.0.5-1.tgz:
+  object_id: 2671be01-13d2-4603-bc69-dc5ac7fead10
+  sha: !binary |-
+    ZmNlNjU5YmVjMDAwOTFkMGJiODlkMTA5OTY2ZTU0YjIxMTYxZTE2OA==
+  size: 28034771
+chronos/chronos-2.1.0_mesos-0.14.0-rc4.jar:
+  object_id: 2e28a1d4-32fc-4c7e-b5ed-b8235c899421
+  sha: !binary |-
+    OGJjZTZmMzBmM2NiNTkxZTE1M2U2ZDNhNGNkZjNkNTI2MWM5YThlYg==
+  size: 30499060
+git/git-1.9.0.tar.gz:
+  object_id: e7c90a61-2c42-4aec-bcfe-c1b363dcfe6a
+  sha: !binary |-
+    OGMwNjVlOTE2NzZjODFjNzExZTMxZTQyMzIyYjc4MGI1ODc0MjFkZg==
+  size: 4839710
+java/jdk-1.7.0_51.tar.gz:
+  object_id: 4de0384e-57e2-454a-a143-22a9a303a5e7
+  sha: !binary |-
+    YmVlM2IwODVhOTA0MzljODMzY2UxOGUxMzhjOWYxYTYxNTE1Mjg5MQ==
+  size: 138199690
+jenkins/mesos-0.17.0.hpi:
+  object_id: 05342b43-18df-4ddb-84b0-09a5d96174f6
+  sha: !binary |-
+    NzNkYjBmYzI4NDY3YzM3MDUxODY2OTExYmIzOGU1MTQwOWMxYjRjZA==
+  size: 878821
+marathon/marathon-0.4.1-SNAPSHOT-jar-with-dependencies.jar:
+  object_id: a359745b-07fd-4eab-a9e7-0e2c77aae7ec
+  sha: !binary |-
+    YjlkNDA3ZTUyOTQxZDhlYzM1MzYzMDY5MzdjY2Q1NGRiNzIyZjQyNA==
+  size: 48995378
+mesos/mesos-0.17.0.tar.gz:
+  object_id: d3a77999-274e-4d20-b277-30955522c227
+  sha: !binary |-
+    YzViYjY1ZTNiNmY4NTRmODNjZGIwMTk3ZDk5ZGUxOTU2M2ZiMzM1ZA==
+  size: 27485653
+nginx/nginx-1.4.5.tar.gz:
+  object_id: b9c19042-65ba-4cb8-82ae-6675b26171f3
+  sha: !binary |-
+    OTZjMWFlY2QzMTRmNzNhM2MzMGEwZGI4YzM5YWQxNWRkYWNiMDc0ZQ==
+  size: 768728
+nginx/pcre-8.34.tar.gz:
+  object_id: 84641be9-6be7-4da1-9206-7b850a4eac6e
+  sha: !binary |-
+    ZDQ2ZTUzNzMzN2VlNzBkZjE5MDg0MDAxYTRiNjgxNWIzZDY5ZmU2Yw==
+  size: 1933734
+node/node-v0.10.26-linux-x64.tar.gz:
+  object_id: 93d621f0-7dca-451b-9593-524e9a59ed65
+  sha: !binary |-
+    ZDE1ZDM5ZTExOWJkY2Y3NWM2ZmMyMjJmNTFmZjA2MzBiMjYxMTE2MA==
+  size: 5314716
+ruby/bundler-1.5.3.gem:
+  object_id: 89c24d4d-2ba7-42d8-a8a1-adb2600500e3
+  sha: !binary |-
+    ZDIzNjUwYWViMzY2ZWZkODVkOWM1MWEzNmIzZGRlNDc3YTg2ODkxOQ==
+  size: 284672
+ruby/ruby-2.1.1.tar.gz:
+  object_id: fb5a7a95-745f-4e8e-959b-7bd2beafa223
+  sha: !binary |-
+    MjdjYmM4YWU5ODg2M2I0NjA3ZWRlODA4NWJlY2EyYTIwZjRjMDNmZA==
+  size: 15092388
+ruby/rubygems-2.2.2.tgz:
+  object_id: a6d5f6c7-ef05-4fa2-8f27-95445c2698eb
+  sha: !binary |-
+    M2ZhZDFmNjQxNWJhOTI1OTRmZTRiNDI5MDNmM2EyOTM4Y2VmYmFkZg==
+  size: 414111
+sasl/cyrus-sasl-2.1.26.tar.gz:
+  object_id: 703c5060-94ae-4aa1-a6c4-7261e1e5ff5e
+  sha: !binary |-
+    ZDY2NjlmYjkxNDM0MTkyNTI5YmQxM2VlOTU3MzdhOGE1MDQwMjQxYw==
+  size: 5220231
+scala/scala-2.10.3.tgz:
+  object_id: c8d72dc8-0faf-48b3-89c7-6e12a1de660f
+  sha: !binary |-
+    MDRjZDYyMzdmMTY0OTQwZTFlOTkzYTEyN2U3Y2IyMTI5N2YzYjdhZQ==
+  size: 30531249
+zookeeper/zookeeper-3.4.5.tar.gz:
+  object_id: 6cfe3bf6-fc65-422e-b9ac-8913ca413235
+  sha: !binary |-
+    ZmQ5MjE1NzVlMDI0Nzg5MDk1NTcwMzRlYTkyMmRlODcxOTI2ZWZjNw==
+  size: 16402010
+jenkins/jenkins-1.532.2.war:
+  object_id: 8c217c24-aaf4-4fea-bf5c-22f49250bce3
+  sha: !binary |-
+    MzhhNzc1NmM5NmEyMDRmNzU3NDdkOGM0YjlkYTUxMGZkODg0ZWUzNg==
+  size: 63525132

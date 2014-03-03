@@ -1,0 +1,173 @@
+<% num_zookeepers = 3 %>
+<% num_masters = 2 %>
+<% num_marathons = 2 %>
+<% num_chronos = 2 %>
+<% num_jenkins = 1 %>
+<% num_cassandras = 1 %>
+<% num_slaves = 3 %>
+<% deployment_name = "mesos-aws" %>
+<% os = "ubuntu" %>
+<% tld = "microbosh" %>
+<% director_uuid = "8d304045-17d5-49a4-a24f-41b4c4f46835" %>
+---
+name: <%= deployment_name %>
+director_uuid: <%= director_uuid %>
+
+releases:
+ - name: mesos
+   version: latest
+
+compilation:
+  workers: 10
+  network: default
+  reuse_compilation_vms: true
+  cloud_properties:
+    instance_type: m1.xlarge
+
+update:
+  canaries: 0
+  canary_watch_time: 30000-60000
+  update_watch_time: 30000-60000
+  max_in_flight: 32
+  serial: false
+
+networks:
+  - name: default
+    type: dynamic
+    cloud_properties:
+      security_groups: ['default']
+
+resource_pools:
+  - name: zookeeper
+    network: default
+    size: <%= num_zookeepers %>
+    stemcell:
+      name: bosh-aws-xen-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: m1.medium
+
+  - name: master
+    network: default
+    size: <%= num_masters %>
+    stemcell:
+      name: bosh-aws-xen-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: m1.medium
+
+  - name: marathon
+    network: default
+    size: <%= num_marathons %>
+    stemcell:
+      name: bosh-aws-xen-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: m1.medium
+
+  - name: chronos
+    network: default
+    size: <%= num_chronos %>
+    stemcell:
+      name: bosh-aws-xen-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: m1.medium
+
+  - name: jenkins
+    network: default
+    size: <%= num_jenkins %>
+    stemcell:
+      name: bosh-aws-xen-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: m1.medium
+
+  - name: cassandra
+    network: default
+    size: <%= num_cassandras %>
+    stemcell:
+      name: bosh-aws-xen-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: m1.medium
+
+  - name: slave
+    network: default
+    size: <%= num_slaves %>
+    stemcell:
+      name: bosh-aws-xen-<%= os %>
+      version: latest
+    cloud_properties:
+      instance_type: m1.xlarge
+
+jobs:
+  - name: zookeeper
+    templates:
+      - name: zookeeper
+    instances: <%= num_zookeepers %>
+    resource_pool: zookeeper
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: mesos-master
+    templates:
+      - name: mesos-master
+    instances: <%= num_masters %>
+    resource_pool: master
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: marathon
+    templates:
+      - name: marathon
+    instances: <%= num_marathons %>
+    resource_pool: marathon
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: chronos
+    templates:
+      - name: chronos
+    instances: <%= num_chronos %>
+    resource_pool: chronos
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: jenkins
+    templates:
+      - name: jenkins
+    instances: <%= num_jenkins %>
+    resource_pool: jenkins
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: cassandra
+    templates:
+      - name: cassandra
+    instances: <%= num_cassandras %>
+    resource_pool: cassandra
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: mesos-slave
+    templates:
+      - name: mesos-slave
+    instances: <%= num_slaves %>
+    resource_pool: slave
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+properties:
+  zookeeper:
+    servers:
+      <% num_zookeepers.times do |i| %>
+      <%= "- #{i}.zookeeper.default.#{deployment_name}.#{tld}\n" %>
+      <% end %>
