@@ -24,7 +24,7 @@ cd mesos-boshrelease
 bosh upload release releases/mesos-1.yml
 ```
 
-Now create a deployment file (using the files at the [examples](https://github.com/cloudfoundry-community/mesos-boshrelease/tree/master/examples) directory as a starting point) and deploy:
+Now create a deployment file (using the files at the [examples](examples) directory as a starting point) and deploy:
 
 ```
 bosh deployment path/to/deployment.yml
