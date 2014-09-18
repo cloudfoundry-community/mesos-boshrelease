@@ -19,5 +19,5 @@ fi
 echo "Building SASL ${SASL_VERSION}..."
 cd ${BOSH_COMPILE_TARGET}/cyrus-sasl-${SASL_VERSION}
 ./configure --prefix=${BOSH_INSTALL_TARGET}
-make -j${CPUS}
+make
 make install
