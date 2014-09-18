@@ -5,3 +5,4 @@ dependencies:
   - sasl
 files:
   - mesos/mesos-0.20.0.tar.gz
+  - maven/apache-maven-3.2.3-bin.tar.gz

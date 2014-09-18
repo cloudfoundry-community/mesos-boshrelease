@@ -6,6 +6,7 @@ CPUS=`grep -c ^processor /proc/cpuinfo`
 
 # We grab the latest versions that are in the directory
 MESOS_VERSION=`ls -r mesos/mesos-*.tar.gz | sed 's/mesos\/mesos-\(.*\)\.tar\.gz/\1/' | head -1`
+MAVEN_VERSION=`ls -r maven/apache-maven-*-bin.tar.gz | sed 's/maven\/apache-maven-\(.*\)-bin\.tar\.gz/\1/' | head -1`
 
 # Extract Apache Mesos package
 echo "Extracting Apache Mesos ${MESOS_VERSION}..."
@@ -22,9 +23,19 @@ export JAVA_HOME=/var/vcap/packages/java/jdk
 export LDFLAGS="-L/var/vcap/packages/sasl/lib"
 export CPPFLAGS="-I/var/vcap/packages/sasl/include"
 
+# Extract Apache Maven package
+echo "Extracting Apache Maven ${MAVEN_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/maven/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting Apache Maven ${MAVEN_VERSION}"
+  exit 1
+fi
+export MAVEN_HOME=${BOSH_COMPILE_TARGET}/apache-maven-${MAVEN_VERSION}
+
 # Build Apache Mesos package
 echo "Building Apache Mesos ${MESOS_VERSION}..."
 cd ${BOSH_COMPILE_TARGET}/mesos-${MESOS_VERSION}
 ./configure --prefix=${BOSH_INSTALL_TARGET} --with-webui --disable-python
 make -j${CPUS}
 make install
+

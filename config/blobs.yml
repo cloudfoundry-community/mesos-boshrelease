@@ -84,3 +84,8 @@ mesos/mesos-0.20.0.tar.gz:
   sha: !binary |-
     MWUwYzIyOTlhZDk4NDZmMTA5ZGU0YmZjNDdhZTliYmIxMzZlNmZmYw==
   size: 27537727
+maven/apache-maven-3.2.3-bin.tar.gz:
+  object_id: 85dfe356-eb82-493b-a648-e3320fbb7c80
+  sha: !binary |-
+    MWNlNjY0MWY3ZGNiNGZkNTc4NWJlZGNkY2EyOTc5ZGE4M2Y2ZDIzZg==
+  size: 6956162
