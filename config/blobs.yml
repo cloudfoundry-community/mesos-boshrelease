@@ -29,11 +29,6 @@ marathon/marathon-0.4.1-SNAPSHOT-jar-with-dependencies.jar:
   sha: !binary |-
     YjlkNDA3ZTUyOTQxZDhlYzM1MzYzMDY5MzdjY2Q1NGRiNzIyZjQyNA==
   size: 48995378
-mesos/mesos-0.17.0.tar.gz:
-  object_id: d3a77999-274e-4d20-b277-30955522c227
-  sha: !binary |-
-    YzViYjY1ZTNiNmY4NTRmODNjZGIwMTk3ZDk5ZGUxOTU2M2ZiMzM1ZA==
-  size: 27485653
 nginx/nginx-1.4.5.tar.gz:
   object_id: b9c19042-65ba-4cb8-82ae-6675b26171f3
   sha: !binary |-
@@ -84,3 +79,8 @@ jenkins/jenkins-1.532.2.war:
   sha: !binary |-
     MzhhNzc1NmM5NmEyMDRmNzU3NDdkOGM0YjlkYTUxMGZkODg0ZWUzNg==
   size: 63525132
+mesos/mesos-0.20.0.tar.gz:
+  object_id: 63da6664-899e-4fa4-bc5d-0c15152e6a91
+  sha: !binary |-
+    MWUwYzIyOTlhZDk4NDZmMTA5ZGU0YmZjNDdhZTliYmIxMzZlNmZmYw==
+  size: 27537727
