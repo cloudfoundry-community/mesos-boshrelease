@@ -39,11 +39,6 @@ nginx/pcre-8.34.tar.gz:
   sha: !binary |-
     ZDQ2ZTUzNzMzN2VlNzBkZjE5MDg0MDAxYTRiNjgxNWIzZDY5ZmU2Yw==
   size: 1933734
-node/node-v0.10.26-linux-x64.tar.gz:
-  object_id: 93d621f0-7dca-451b-9593-524e9a59ed65
-  sha: !binary |-
-    ZDE1ZDM5ZTExOWJkY2Y3NWM2ZmMyMjJmNTFmZjA2MzBiMjYxMTE2MA==
-  size: 5314716
 ruby/bundler-1.5.3.gem:
   object_id: 89c24d4d-2ba7-42d8-a8a1-adb2600500e3
   sha: !binary |-
@@ -89,3 +84,8 @@ zookeeper/zookeeper-3.4.6.tar.gz:
   sha: !binary |-
     MmE5ZTUzZjU5OTBkZmUwOTY1ODM0YTUyNWZiY2FkMjI2YmY5MzQ3NA==
   size: 17699306
+node/node-v0.10.32-linux-x64.tar.gz:
+  object_id: a50316cd-b91e-4b1b-811b-00cca8e8af4e
+  sha: !binary |-
+    ZmFkZWZjMTVhOTkyZDIxYmQxOWQwZDNlYzE3NDM5MGQxZTdmY2I3Mg==
+  size: 5643126
