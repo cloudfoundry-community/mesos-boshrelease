@@ -14,6 +14,7 @@ packages:
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/slave_ctl.erb: bin/slave_ctl
+  config/framework_credentials.cfg.erb: config/framework_credentials.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
 properties:
@@ -23,6 +24,10 @@ properties:
   mesos.slave.group:
     description: "Group which will own the Apache Mesos Slave services"
     default: "vcap"
+  mesos.framework_credentials.principal:
+    description: "'principal' framework credentials"
+  mesos.framework_credentials.secret:
+    description: "'secret' framework credentials"
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"
@@ -34,13 +39,13 @@ properties:
     default: false
   mesos.slave.cgroups_hierarchy:
     description: "The path to the cgroups hierarchy root"
-    default: "/cgroup"
+    default: "/sys/fs/cgroup"
+  mesos.slave.cgroups_limit_swap:
+    description: "Cgroups feature flag to enable memory limits on both memory and swap instead of just memory"
+    default: false
   mesos.slave.cgroups_root:
     description: "Name of the root cgroup"
     default: "mesos"
-  mesos.slave.cgroups_subsystems:
-    description: "List of subsystems to enable (e.g., 'cpu,freezer')"
-    default: "cpu,memory,freezer"
   mesos.slave.checkpoint:
     description: "Whether to checkpoint Apache Mesos Slaves and Frameworks information to disk"
     default: true
@@ -59,15 +64,30 @@ properties:
   mesos.slave.gc_delay:
     description: "Maximum amount of time to wait before cleaning up executor directories"
     default: "1weeks"
+  mesos.slave.initialize_driver_logging:
+    description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
+    default: true
   mesos.slave.listen_address:
     description: "IP address where Apache Mesos Slave will listen on"
     default: 0.0.0.0
   mesos.slave.isolation:
     description: "Apache Mesos Slave isolation mechanism (process, cgroups)"
-    default: "process"
+    default: "posix/cpu,posix/mem"
   mesos.slave.logbufsecs:
     description: "How many seconds to buffer log messages for"
     default: 0
+  mesos.slave.loglevel:
+    description: "Log message at or above this level; possible values: 'INFO', 'WARNING', 'ERROR';"
+    default: "INFO"
+  mesos.slave.perf_duration:
+    description: "Duration of a perf stat sample"
+    default: "10secs"
+  mesos.slave.perf_events:
+    description: "List of command-separated perf events to sample for each container when using the perf_event isolator"
+    default: ""
+  mesos.slave.perf_interval:
+    description: "Interval between the start of perf stat samples"
+    default: "1mins"
   mesos.slave.port:
     description: "Port where Apache Mesos Slave will listen on"
     default: 5051
@@ -77,11 +97,17 @@ properties:
   mesos.slave.recovery_timeout:
     description: "Amount of time alloted for the Apache Mesos Slaves to recover"
     default: "15mins"
+  mesos.slave.registration_backoff_factor:
+    description: "Registration backoff factor"
+    default: "1secs"
   mesos.slave.resource_monitoring_interval:
     description: "Periodic time interval for monitoring executor resource usage"
     default: "1secs"
   mesos.slave.resources:
     description: "Total consumable resources per slave, in the form 'name(role):value;name(role):value...'"
+    default: ""
+  mesos.slave.subsystems:
+    description: "List of comma-separated cgroup subsystems to run the slave binary"
     default: ""
   mesos.slave.strict:
     description: "Whether to do Apache Mesos Slaves recovery in strict mode"

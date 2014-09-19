@@ -27,10 +27,10 @@ case $1 in
 
     # Calculate consumable resources if not set by user
     if [[ -z $MESOS_SLAVE_RESOURCES ]]; then
-      CPUS=`grep processor /proc/cpuinfo | wc -l`
-      MEM_KB=`cat /proc/meminfo | grep MemTotal | awk '{print $2}'`
-      MEM=$[(MEM_KB - 1024 * 1024) / 1024]
-      RESOURCES="--resources=cpus:$CPUS;mem:$MEM"
+        CPUS=`grep processor /proc/cpuinfo | wc -l`
+        MEM_KB=`cat /proc/meminfo | grep MemTotal | awk '{print $2}'`
+        MEM=$[(MEM_KB - 1024 * 1024) / 1024]
+        RESOURCES="--resources=cpus:$CPUS;mem:$MEM"
     fi
 
     # Set public Mesos hostname
@@ -43,30 +43,37 @@ case $1 in
     # Start Apache Mesos Slave service
     exec chpst -u $MESOS_SLAVE_USER:$MESOS_SLAVE_GROUP mesos-slave \
            --attributes="$MESOS_SLAVE_ATTRIBUTES" \
-           --cgroups_enable_cfs=$MESOS_SLAVE_CGROUPS_ENABLE_CFS \
+           --cgroups_enable_cfs="$MESOS_SLAVE_CGROUPS_ENABLE_CFS" \
            --cgroups_hierarchy="$MESOS_SLAVE_CGROUPS_HIERARCHY" \
+           --cgroups_limit_swap="$MESOS_SLAVE_CGROUPS_LIMIT_SWAP" \
            --cgroups_root="$MESOS_SLAVE_CGROUPS_ROOT" \
-           --cgroups_subsystems="$MESOS_SLAVE_CGROUPS_SUBSYSTEMS" \
-           --checkpoint=$MESOS_SLAVE_CHECKPOINT \
+           --checkpoint="$MESOS_SLAVE_CHECKPOINT" \
+           $MESOS_SLAVE_CREDENTIAL \
            --default_role="$MESOS_SLAVE_DEFAULT_ROLE" \
            --disk_watch_interval="$MESOS_SLAVE_DISK_WATCH_INTERVAL" \
            --executor_registration_timeout="$MESOS_SLAVE_EXECUTOR_REGISTRATION_TIMEOUT" \
            --executor_shutdown_grace_period="$MESOS_SLAVE_EXECUTOR_SHUTDOWN_GRACE_PERIOD" \
-           --frameworks_home=$MESOS_SLAVE_STORE_DIR \
+           --frameworks_home="$MESOS_SLAVE_STORE_DIR" \
            --gc_delay="$MESOS_SLAVE_GC_DELAY" \
            --hostname="$MESOS_SLAVE_HOSTNAME" \
+           --initialize_driver_logging="$MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING" \
            --ip="$MESOS_SLAVE_IP_ADDRESS" \
            --isolation="$MESOS_SLAVE_ISOLATION" \
-           --log_dir=$MESOS_SLAVE_LOG_DIR \
+           --log_dir="$MESOS_SLAVE_LOG_DIR" \
            --logbufsecs="$MESOS_SLAVE_LOGBUFSECS" \
+           --logging_level="$MESOS_SLAVE_LOGLEVEL" \
            --master=file://$MESOS_SLAVE_CONF_DIR/zoo_mesos.cfg \
+           --perf_duration="$MESOS_SLAVE_PERF_DURATION" \
+           --perf_events="$MESOS_SLAVE_PERF_EVENTS" \
+           --perf_interval="$MESOS_SLAVE_PERF_INTERVAL" \
            --port="$MESOS_SLAVE_PORT" \
            --recover="$MESOS_SLAVE_RECOVER" \
            --recovery_timeout="$MESOS_SLAVE_RECOVERY_TIMEOUT" \
+           --registration_backoff_factor="$MESOS_SLAVE_REGISTRATION_BACKOFF_FACTOR" \
            --resource_monitoring_interval="$MESOS_SLAVE_RESOURCE_MONITORING_INTERVAL" \
            $RESOURCES \
-           --strict=$MESOS_SLAVE_STRICT \
-           --work_dir=$MESOS_SLAVE_TMP_DIR \
+           --strict="$MESOS_SLAVE_STRICT" \
+           --work_dir="$MESOS_SLAVE_TMP_DIR" \
            >>$MESOS_SLAVE_LOG_DIR/$OUTPUT_LABEL.stdout.log \
            2>>$MESOS_SLAVE_LOG_DIR/$OUTPUT_LABEL.stderr.log
     ;;

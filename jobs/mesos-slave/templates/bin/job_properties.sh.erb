@@ -37,14 +37,20 @@ export MESOS_SLAVE_CGROUPS_ENABLE_CFS="<%= p('mesos.slave.cgroups_enable_cfs') %
 # The path to the cgroups hierarchy root
 export MESOS_SLAVE_CGROUPS_HIERARCHY="<%= p('mesos.slave.cgroups_hierarchy') %>"
 
+# Cgroups feature flag to enable memory limits on both memory and swap instead of just memory
+export MESOS_SLAVE_CGROUPS_LIMIT_SWAP="<%= p('mesos.slave.cgroups_limit_swap') %>"
+
 # Name of the root cgroup
 export MESOS_SLAVE_CGROUPS_ROOT="<%= p('mesos.slave.cgroups_root') %>"
 
-# List of subsystems to enable (e.g., 'cpu,freezer')
-export MESOS_SLAVE_CGROUPS_SUBSYSTEMS="<%= p('mesos.slave.cgroups_subsystems') %>"
-
 # Whether to checkpoint Apache Mesos Slaves and Frameworks information to disk
 export MESOS_SLAVE_CHECKPOINT="<%= p('mesos.slave.checkpoint') %>"
+
+# Framework credential file
+export MESOS_SLAVE_CREDENTIAL=""
+<% if_p('mesos.framework_credentials.principal', 'mesos.framework_credentials.secret') do %>
+export MESOS_SLAVE_CREDENTIAL="--credential=file://$MESOS_SLAVE_CONF_DIR/framework_credentials.cfg"
+<% end %>
 
 # Default role
 export MESOS_SLAVE_DEFAULT_ROLE="<%= p('mesos.slave.default_role') %>"
@@ -61,6 +67,9 @@ export MESOS_SLAVE_EXECUTOR_SHUTDOWN_GRACE_PERIOD="<%= p('mesos.slave.executor_s
 # Maximum amount of time to wait before cleaning up executor directories
 export MESOS_SLAVE_GC_DELAY="<%= p('mesos.slave.gc_delay') %>"
 
+# Whether to automatically initialize google logging of scheduler and/or executor drivers
+export MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.slave.initialize_driver_logging') %>"
+
 # IP address where Apache Mesos Slave will listen on
 export MESOS_SLAVE_IP_ADDRESS="<%= p('mesos.slave.listen_address') %>"
 
@@ -69,6 +78,18 @@ export MESOS_SLAVE_ISOLATION="<%= p('mesos.slave.isolation') %>"
 
 # How many seconds to buffer log messages for
 export MESOS_SLAVE_LOGBUFSECS="<%= p('mesos.slave.logbufsecs') %>"
+
+# Log message at or above this level
+export MESOS_SLAVE_LOGLEVEL="<%= p('mesos.slave.loglevel') %>"
+
+# Duration of a perf stat sample
+export MESOS_SLAVE_PERF_DURATION="<%= p('mesos.slave.perf_duration') %>"
+
+# List of command-separated perf events to sample for each container when using the perf_event isolator
+export MESOS_SLAVE_PERF_EVENTS="<%= p('mesos.slave.perf_events') %>"
+
+# Interval between the start of perf stat samples
+export MESOS_SLAVE_PERF_INTERVAL="<%= p('mesos.slave.perf_interval') %>"
 
 # Port where Apache Mesos Slave will listen on
 export MESOS_SLAVE_PORT="<%= p('mesos.slave.port') %>"
@@ -79,11 +100,17 @@ export MESOS_SLAVE_RECOVER="<%= p('mesos.slave.recover') %>"
 # Amount of time alloted for the Apache Mesos Slaves to recover
 export MESOS_SLAVE_RECOVERY_TIMEOUT="<%= p('mesos.slave.recovery_timeout') %>"
 
+# Registration backoff factor
+export MESOS_SLAVE_REGISTRATION_BACKOFF_FACTOR="<%= p('mesos.slave.registration_backoff_factor') %>"
+
 # Periodic time interval for monitoring executor resource usage
 export MESOS_SLAVE_RESOURCE_MONITORING_INTERVAL="<%= p('mesos.slave.resource_monitoring_interval') %>"
 
 # Total consumable resources per slave, in the form 'name(role):value;name(role):value...'
 export MESOS_SLAVE_RESOURCES="<%= p('mesos.slave.resources') %>"
+
+# List of comma-separated cgroup subsystems to run the slave binary
+export MESOS_SLAVE_SUBSYSTEMS="<%= p('mesos.slave.subsystems') %>"
 
 # Whether to do Apache Mesos Slaves recovery in strict mode
 export MESOS_SLAVE_STRICT="<%= p('mesos.slave.strict') %>"
