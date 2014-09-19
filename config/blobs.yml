@@ -59,11 +59,6 @@ sasl/cyrus-sasl-2.1.26.tar.gz:
   sha: !binary |-
     ZDY2NjlmYjkxNDM0MTkyNTI5YmQxM2VlOTU3MzdhOGE1MDQwMjQxYw==
   size: 5220231
-scala/scala-2.10.3.tgz:
-  object_id: c8d72dc8-0faf-48b3-89c7-6e12a1de660f
-  sha: !binary |-
-    MDRjZDYyMzdmMTY0OTQwZTFlOTkzYTEyN2U3Y2IyMTI5N2YzYjdhZQ==
-  size: 30531249
 jenkins/jenkins-1.532.2.war:
   object_id: 8c217c24-aaf4-4fea-bf5c-22f49250bce3
   sha: !binary |-
@@ -89,3 +84,8 @@ node/node-v0.10.32-linux-x64.tar.gz:
   sha: !binary |-
     ZmFkZWZjMTVhOTkyZDIxYmQxOWQwZDNlYzE3NDM5MGQxZTdmY2I3Mg==
   size: 5643126
+scala/scala-2.11.2.tgz:
+  object_id: 909350c4-42a1-4b13-9488-3f52ba0040db
+  sha: !binary |-
+    OTA0ZTllZTNiYjk2ZTgzNTBiMWUwZjI1MDJhNzA0ZjgzNmMwY2RmMQ==
+  size: 26488789
