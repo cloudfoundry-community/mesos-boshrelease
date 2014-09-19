@@ -9,11 +9,6 @@ chronos/chronos-2.1.0_mesos-0.14.0-rc4.jar:
   sha: !binary |-
     OGJjZTZmMzBmM2NiNTkxZTE1M2U2ZDNhNGNkZjNkNTI2MWM5YThlYg==
   size: 30499060
-git/git-1.9.0.tar.gz:
-  object_id: e7c90a61-2c42-4aec-bcfe-c1b363dcfe6a
-  sha: !binary |-
-    OGMwNjVlOTE2NzZjODFjNzExZTMxZTQyMzIyYjc4MGI1ODc0MjFkZg==
-  size: 4839710
 java/jdk-1.7.0_51.tar.gz:
   object_id: 4de0384e-57e2-454a-a143-22a9a303a5e7
   sha: !binary |-
@@ -89,3 +84,8 @@ scala/scala-2.11.2.tgz:
   sha: !binary |-
     OTA0ZTllZTNiYjk2ZTgzNTBiMWUwZjI1MDJhNzA0ZjgzNmMwY2RmMQ==
   size: 26488789
+git/git-2.1.0.tar.gz:
+  object_id: 4986fc48-80ce-4251-ae05-9aa2311ccd19
+  sha: !binary |-
+    ZTIyNTY0ZTE1MmUzMjQyYmM0ZmNmY2M3ZWIwNWZkZTdhNGM4M2UwNA==
+  size: 4975916
