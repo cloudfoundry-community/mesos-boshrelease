@@ -69,11 +69,6 @@ scala/scala-2.10.3.tgz:
   sha: !binary |-
     MDRjZDYyMzdmMTY0OTQwZTFlOTkzYTEyN2U3Y2IyMTI5N2YzYjdhZQ==
   size: 30531249
-zookeeper/zookeeper-3.4.5.tar.gz:
-  object_id: 6cfe3bf6-fc65-422e-b9ac-8913ca413235
-  sha: !binary |-
-    ZmQ5MjE1NzVlMDI0Nzg5MDk1NTcwMzRlYTkyMmRlODcxOTI2ZWZjNw==
-  size: 16402010
 jenkins/jenkins-1.532.2.war:
   object_id: 8c217c24-aaf4-4fea-bf5c-22f49250bce3
   sha: !binary |-
@@ -89,3 +84,8 @@ maven/apache-maven-3.2.3-bin.tar.gz:
   sha: !binary |-
     MWNlNjY0MWY3ZGNiNGZkNTc4NWJlZGNkY2EyOTc5ZGE4M2Y2ZDIzZg==
   size: 6956162
+zookeeper/zookeeper-3.4.6.tar.gz:
+  object_id: 1a0f69b8-62b8-41bb-b157-cd68632f162f
+  sha: !binary |-
+    MmE5ZTUzZjU5OTBkZmUwOTY1ODM0YTUyNWZiY2FkMjI2YmY5MzQ3NA==
+  size: 17699306
