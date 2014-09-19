@@ -166,6 +166,9 @@ jobs:
         default: [dns, gateway]
 
 properties:
+  mesos:
+    master:
+      quorum: <%= (num_masters/2) + 1 %>
   zookeeper:
     servers:
       <% num_zookeepers.times do |i| %>

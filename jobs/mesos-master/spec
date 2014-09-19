@@ -11,6 +11,7 @@ templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/master_ctl.erb: bin/master_ctl
   config/framework_credentials.cfg.erb: config/framework_credentials.cfg
+  config/slaves_whitelist.cfg.erb: config/slaves_whitelist.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
 properties:
@@ -29,30 +30,65 @@ properties:
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"
+  mesos.zk_session_timeout:
+    description: "ZooKeeper session timeout"
+    default: "10secs"
+  mesos.slaves:
+    description: "List of slaves to advertise offers for"
+    default: ["*"]
   mesos.master.allocation_interval:
     description: "Amount of time to wait between performing (batch) allocations"
     default: "1secs"
-  mesos.master.authenticate:
+  mesos.master.authenticate_frameworks:
     description: "Only authenticated frameworks are allowed to register?"
+    default: false
+  mesos.master.authenticate_slaves:
+    description: "Only authenticated slaves are allowed to register?"
     default: false
   mesos.master.framework_sorter:
     description: "Policy to use for allocating resources between a given user's frameworks"
     default: "drf"
+  mesos.master.initialize_driver_logging:
+    description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
+    default: true
   mesos.master.listen_address:
     description: "IP address where Apache Mesos Master will listen on"
     default: 0.0.0.0
+  mesos.master.log_auto_initialize:
+    description: "Whether to automatically initialize the replicated log used for the registry"
+    default: true
   mesos.master.logbufsecs:
     description: "How many seconds to buffer log messages for"
     default: 0
+  mesos.master.loglevel:
+    description: "Log message at or above this level; possible values: 'INFO', 'WARNING', 'ERROR';"
+    default: "INFO"
   mesos.master.port:
     description: "Port where Apache Mesos Master will listen on"
     default: 80
+  mesos.master.quorum:
+    description: "The size of the quorum of replicas when using 'replicated_log' based registry"
+  mesos.master.recovery_slave_removal_limit:
+    description: "For failovers, limit on the percentage of slaves that can be removed from the registry *and* shutdown after the re-registration timeout elapses"
+    default: "100%"
+  mesos.master.registry:
+    description: "Persistence strategy for the registry"
+    default: "replicated_log"
+  mesos.master.registry_fetch_timeout:
+    description: "Duration of time to wait in order to fetch data from the registry"
+    default: "1mins"
+  mesos.master.registry_store_timeout:
+    description: "Duration of time to wait in order to store data in the registry"
+    default: "5secs"
   mesos.master.roles:
     description: "A comma seperated list of the allocation roles that frameworks in this cluster may belong to"
     default: ""
   mesos.master.root_submissions:
     description: "Can root submit frameworks?"
     default: true
+  mesos.master.slave_reregister_timeout:
+    description: "The timeout within which all slaves are expected to re-register when a new master is elected as the leader"
+    default: "10mins"
   mesos.master.user_sorter:
     description: "Policy to use for allocating resources between users"
     default: "drf"

@@ -30,18 +30,29 @@ case $1 in
     exec chpst -u $MESOS_MASTER_USER:$MESOS_MASTER_GROUP mesos-master \
            --cluster="$MESOS_CLUSTER_NAME" \
            --allocation_interval="$MESOS_MASTER_ALLOCATION_INTERVAL" \
-           --authenticate=$MESOS_MASTER_AUTHENTICATE \
+           --authenticate="$MESOS_MASTER_AUTHENTICATE_FRAMEWORKS" \
+           --authenticate_slaves="$MESOS_MASTER_AUTHENTICATE_SLAVES" \
            --credentials=file://$MESOS_MASTER_CONF_DIR/framework_credentials.cfg \
            --framework_sorter="$MESOS_MASTER_FRAMEWORK_SORTER" \
+           --initialize_driver_logging="$MESOS_MASTER_INITIALIZE_DRIVER_LOGGING" \
            --ip="$MESOS_MASTER_IP_ADDRESS" \
-           --log_dir=$MESOS_MASTER_LOG_DIR \
+           --log_auto_initialize="$MESOS_MASTER_LOG_AUTO_INITIALIZE" \
+           --log_dir="$MESOS_MASTER_LOG_DIR" \
            --logbufsecs="$MESOS_MASTER_LOGBUFSECS" \
+           --logging_level="$MESOS_MASTER_LOGLEVEL" \
            --port="$MESOS_MASTER_PORT" \
+           --quorum="$MESOS_MASTER_QUORUM" \
+           --recovery_slave_removal_limit="$MESOS_MASTER_RECOVERY_SLAVE_REMOVAL_LIMIT" \
+           --registry="$MESOS_MASTER_REGISTRY" \
+           --registry_fetch_timeout="$MESOS_MASTER_REGISTRY_FETCH_TIMEOUT" \
+           --registry_store_timeout="$MESOS_MASTER_REGISTRY_STORE_TIMEOUT" \
            --roles="$MESOS_MASTER_ROLES" \
-           --root_submissions=$MESOS_MASTER_ROOT_SUBMISSIONS \
+           --root_submissions="$MESOS_MASTER_ROOT_SUBMISSIONS" \
+           --slave_reregister_timeout="$MESOS_MASTER_SLAVE_REREGISTER_TIMEOUT" \
            --user_sorter="$MESOS_MASTER_USER_SORTER" \
            --weights="$MESOS_MASTER_WEIGHTS" \
-           --work_dir=$MESOS_MASTER_TMP_DIR \
+           --whitelist=file://$MESOS_MASTER_CONF_DIR/slaves_whitelist.cfg \
+           --work_dir="$MESOS_MASTER_TMP_DIR" \
            --zk=file://$MESOS_MASTER_CONF_DIR/zoo_mesos.cfg \
            >>$MESOS_MASTER_LOG_DIR/$OUTPUT_LABEL.stdout.log \
            2>>$MESOS_MASTER_LOG_DIR/$OUTPUT_LABEL.stderr.log

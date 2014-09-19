@@ -35,19 +35,46 @@ export MESOS_CLUSTER_NAME="<%= p('mesos.cluster_name') %>"
 export MESOS_MASTER_ALLOCATION_INTERVAL="<%= p('mesos.master.allocation_interval') %>"
 
 # Only authenticated frameworks are allowed to register?
-export MESOS_MASTER_AUTHENTICATE="<%= p('mesos.master.authenticate') %>"
+export MESOS_MASTER_AUTHENTICATE_FRAMEWORKS="<%= p('mesos.master.authenticate_frameworks') %>"
+
+# Only authenticated slaves are allowed to register?
+export MESOS_MASTER_AUTHENTICATE_SLAVES="<%= p('mesos.master.authenticate_slaves') %>"
 
 # Policy to use for allocating resources between a given user's frameworks
 export MESOS_MASTER_FRAMEWORK_SORTER="<%= p('mesos.master.framework_sorter') %>"
 
+# Whether to automatically initialize google logging of scheduler and/or executor drivers
+export MESOS_MASTER_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.master.initialize_driver_logging') %>"
+
 # IP address where Apache Mesos Master will listen on
 export MESOS_MASTER_IP_ADDRESS="<%= p('mesos.master.listen_address') %>"
+
+# Whether to automatically initialize the replicated log used for the registry
+export MESOS_MASTER_LOG_AUTO_INITIALIZE="<%= p('mesos.master.log_auto_initialize') %>"
 
 # How many seconds to buffer log messages for
 export MESOS_MASTER_LOGBUFSECS="<%= p('mesos.master.logbufsecs') %>"
 
+# Log message at or above this level
+export MESOS_MASTER_LOGLEVEL="<%= p('mesos.master.loglevel') %>"
+
 # Port where Apache Mesos Master will listen on
 export MESOS_MASTER_PORT="<%= p('mesos.master.port') %>"
+
+# The size of the quorum of replicas when using 'replicated_log' based registry
+export MESOS_MASTER_QUORUM="<%= p('mesos.master.quorum') %>"
+
+# For failovers, limit on the percentage of slaves that can be removed from the registry *and* shutdown after the re-registration timeout elapses
+export MESOS_MASTER_RECOVERY_SLAVE_REMOVAL_LIMIT="<%= p('mesos.master.recovery_slave_removal_limit') %>"
+
+# Persistence strategy for the registry
+export MESOS_MASTER_REGISTRY="<%= p('mesos.master.registry') %>"
+
+# Duration of time to wait in order to fetch data from the registry
+export MESOS_MASTER_REGISTRY_FETCH_TIMEOUT="<%= p('mesos.master.registry_fetch_timeout') %>"
+
+# Duration of time to wait in order to store data in the registry
+export MESOS_MASTER_REGISTRY_STORE_TIMEOUT="<%= p('mesos.master.registry_store_timeout') %>"
 
 # A comma seperated list of the allocation roles that frameworks in this cluster may belong to
 export MESOS_MASTER_ROLES="<%= p('mesos.master.roles') %>"
@@ -55,8 +82,14 @@ export MESOS_MASTER_ROLES="<%= p('mesos.master.roles') %>"
 # Can root submit frameworks?
 export MESOS_MASTER_ROOT_SUBMISSIONS="<%= p('mesos.master.root_submissions') %>"
 
+# The timeout within which all slaves are expected to re-register when a new master is elected as the leader
+export MESOS_MASTER_SLAVE_REREGISTER_TIMEOUT="<%= p('mesos.master.slave_reregister_timeout') %>"
+
 # Policy to use for allocating resources between users
 export MESOS_MASTER_USER_SORTER="<%= p('mesos.master.user_sorter') %>"
 
 # A comma seperated list of role/weight pairs of the form 'role=weight,role=weight'
 export MESOS_MASTER_WEIGHTS="<%= p('mesos.master.weights') %>"
+
+# ZooKeeper session timeout
+export MESOS_ZK_SESSION_TIMEOUT="<%= p('mesos.zk_session_timeout') %>"
