@@ -34,21 +34,6 @@ nginx/pcre-8.34.tar.gz:
   sha: !binary |-
     ZDQ2ZTUzNzMzN2VlNzBkZjE5MDg0MDAxYTRiNjgxNWIzZDY5ZmU2Yw==
   size: 1933734
-ruby/bundler-1.5.3.gem:
-  object_id: 89c24d4d-2ba7-42d8-a8a1-adb2600500e3
-  sha: !binary |-
-    ZDIzNjUwYWViMzY2ZWZkODVkOWM1MWEzNmIzZGRlNDc3YTg2ODkxOQ==
-  size: 284672
-ruby/ruby-2.1.1.tar.gz:
-  object_id: fb5a7a95-745f-4e8e-959b-7bd2beafa223
-  sha: !binary |-
-    MjdjYmM4YWU5ODg2M2I0NjA3ZWRlODA4NWJlY2EyYTIwZjRjMDNmZA==
-  size: 15092388
-ruby/rubygems-2.2.2.tgz:
-  object_id: a6d5f6c7-ef05-4fa2-8f27-95445c2698eb
-  sha: !binary |-
-    M2ZhZDFmNjQxNWJhOTI1OTRmZTRiNDI5MDNmM2EyOTM4Y2VmYmFkZg==
-  size: 414111
 sasl/cyrus-sasl-2.1.26.tar.gz:
   object_id: 703c5060-94ae-4aa1-a6c4-7261e1e5ff5e
   sha: !binary |-
@@ -89,3 +74,23 @@ git/git-2.1.0.tar.gz:
   sha: !binary |-
     ZTIyNTY0ZTE1MmUzMjQyYmM0ZmNmY2M3ZWIwNWZkZTdhNGM4M2UwNA==
   size: 4975916
+ruby/ruby-2.1.2.tar.gz:
+  object_id: 14bb5056-36bb-491f-8785-0e51cd04aee2
+  sha: !binary |-
+    YjgxOGQ1NmI0NjM4ZjE5NDkyMzkwMzg2MjNiNzYxNTE3ZDRhNTY4Ng==
+  size: 15096114
+ruby/rubygems-2.4.1.tgz:
+  object_id: aaf919dd-5f7a-4c87-8660-890f53d8f4c7
+  sha: !binary |-
+    MDE2Yjk4ZDhmZmNhM2IxYWY0Yzc5Nzc4OGQ3NWMxYTY3ZjM4ZDQxZA==
+  size: 437226
+ruby/bundler-1.7.3.gem:
+  object_id: 51f3077b-7811-41c3-885f-9aa4b6a38f6e
+  sha: !binary |-
+    NjE4ZmRmNzZmMzVlODczZTQ5MGUxNWNkYWM4N2JlN2Y3MjQ3ZjgxYg==
+  size: 299520
+ruby/yaml-0.1.6.tar.gz:
+  object_id: c8e48f85-d597-4993-bf99-d903dd8d80a9
+  sha: !binary |-
+    ZjNkNDA0ZTExYmVjM2M0ZWZjZGRmZDE0YzQyZDQ2ZjFhYWJlMGI1ZA==
+  size: 503012
