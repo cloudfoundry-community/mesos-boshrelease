@@ -1,7 +1,1 @@
-<%
-  servers = []
-  p('zookeeper.servers').each do |server|
-    servers << "#{server}:#{p('zookeeper.client_port')}/#{p('mesos.zk_state')}"
-  end
-%>
-zk://<%= servers.join(',') %>
+zk://<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>/<%= p('mesos.zk_state') %>
