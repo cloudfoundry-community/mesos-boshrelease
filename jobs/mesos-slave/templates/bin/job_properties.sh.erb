@@ -70,9 +70,6 @@ export MESOS_SLAVE_GC_DELAY="<%= p('mesos.slave.gc_delay') %>"
 # Whether to automatically initialize google logging of scheduler and/or executor drivers
 export MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.slave.initialize_driver_logging') %>"
 
-# IP address where Apache Mesos Slave will listen on
-export MESOS_SLAVE_IP_ADDRESS="<%= p('mesos.slave.listen_address') %>"
-
 # Apache Mesos Slave isolation mechanism (process, cgroups)
 export MESOS_SLAVE_ISOLATION="<%= p('mesos.slave.isolation') %>"
 

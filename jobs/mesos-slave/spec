@@ -67,9 +67,6 @@ properties:
   mesos.slave.initialize_driver_logging:
     description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
     default: true
-  mesos.slave.listen_address:
-    description: "IP address where Apache Mesos Slave will listen on"
-    default: 0.0.0.0
   mesos.slave.isolation:
     description: "Apache Mesos Slave isolation mechanism (process, cgroups)"
     default: "posix/cpu,posix/mem"

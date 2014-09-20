@@ -9,6 +9,17 @@ export MESOS_SLAVE_PID_FILE=$MESOS_SLAVE_PID_DIR/mesos-slave.pid
 # Set the hostname
 hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
 
+<%
+   def openstruct_to_hash(os)
+     os.marshal_dump.map do |key, element|
+       element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+     end.reduce(&:merge)
+   end
+
+   networks = openstruct_to_hash(spec.networks)
+   listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+%>
+
 case $1 in
 
   start)
@@ -57,7 +68,7 @@ case $1 in
            --gc_delay="$MESOS_SLAVE_GC_DELAY" \
            --hostname="$MESOS_SLAVE_HOSTNAME" \
            --initialize_driver_logging="$MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING" \
-           --ip="$MESOS_SLAVE_IP_ADDRESS" \
+           --ip=<%= listen_ip %> \
            --isolation="$MESOS_SLAVE_ISOLATION" \
            --log_dir="$MESOS_SLAVE_LOG_DIR" \
            --logbufsecs="$MESOS_SLAVE_LOGBUFSECS" \
