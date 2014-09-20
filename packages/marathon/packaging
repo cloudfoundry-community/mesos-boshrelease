@@ -5,8 +5,17 @@ set -u # report the usage of uninitialized variables
 CPUS=`grep -c ^processor /proc/cpuinfo`
 
 # We grab the latest versions that are in the directory
-MARATHON_VERSION=`ls -r marathon/marathon-*-SNAPSHOT-jar-with-dependencies.jar | sed 's/marathon\/marathon-\(.*\)-SNAPSHOT-jar-with-dependencies\.jar/\1/' | head -1`
+MARATHON_VERSION=`ls -r marathon/marathon-*.tgz | sed 's/marathon\/marathon-\(.*\)\.tgz/\1/' | head -1`
+
+# Extract Marathon package
+echo "Extracting Marathon ${MARATHON_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/marathon/marathon-${MARATHON_VERSION}.tgz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting Marathon ${MARATHON_VERSION}"
+  exit 1
+fi
 
 # Copy Marathon package
 echo "Copying Marathon ${MARATHON_VERSION}..."
-cp -a ${BOSH_COMPILE_TARGET}/marathon/marathon-${MARATHON_VERSION}-SNAPSHOT-jar-with-dependencies.jar ${BOSH_INSTALL_TARGET}/marathon.jar
+cp -a ${BOSH_COMPILE_TARGET}/marathon-${MARATHON_VERSION}/marathon-${MARATHON_VERSION}.jar ${BOSH_INSTALL_TARGET}/marathon.jar
+

@@ -39,6 +39,7 @@ case $1 in
            -Dfile.encoding=UTF-8 \
            -Djava.io.tmpdir=$MARATHON_TMP_DIR \
            -cp /var/vcap/packages/marathon/marathon.jar mesosphere.marathon.Main \
+           --artifact_store "file://$MARATHON_STORE_DIR" \
            ${MARATHON_CHECKPOINT:-} \
            --failover_timeout "$MARATHON_FAILOVER_TIMEOUT" \
            ${MARATHON_HA:-} \
@@ -50,12 +51,11 @@ case $1 in
            --local_port_max "$MARATHON_LOCAL_PORT_MAX" \
            --master file://$MARATHON_CONF_DIR/zoo_mesos.cfg \
            --mesos_role "$MARATHON_MESOS_ROLE" \
-           --reconciliation_frequency "$MARATHON_RECONCILIATION_FREQUENCY" \
+           --mesos_user "$MARATHON_MESOS_USER" \
            --reconciliation_initial_delay "$MARATHON_RECONCILIATION_INITIAL_DELAY" \
+           --reconciliation_interval "$MARATHON_RECONCILIATION_INTERVAL" \
            --task_launch_timeout "$MARATHON_TASK_LAUNCH_TIMEOUT" \
-           --task_rate_limit "$MARATHON_TASK_RATE_LIMIT" \
-           --zk_hosts $ZK_HOSTS \
-           --zk_state "$MARATHON_ZK_STATE" \
+           --zk $ZK_HOSTS \
            --zk_timeout "$MARATHON_ZK_TIMEOUT" \
            >>$MARATHON_LOG_DIR/$OUTPUT_LABEL.stdout.log \
            2>>$MARATHON_LOG_DIR/$OUTPUT_LABEL.stderr.log
@@ -73,3 +73,4 @@ case $1 in
 
 esac
 exit 0
+

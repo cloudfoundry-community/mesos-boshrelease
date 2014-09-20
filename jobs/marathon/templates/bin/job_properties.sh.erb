@@ -59,23 +59,21 @@ export MARATHON_LOCAL_PORT_MAX="<%= p('marathon.local_port_max') %>"
 # Mesos role for this framework
 export MARATHON_MESOS_ROLE="<%= p('marathon.mesos_role') %>"
 
-# This is the length of time, in milliseconds, between task reconciliation operations
-export MARATHON_RECONCILIATION_FREQUENCY="<%= p('marathon.reconciliation_frequency') %>"
+# Mesos user for this framework
+export MARATHON_MESOS_USER="<%= p('marathon.mesos_user') %>"
 
 # This is the length of time, in milliseconds, before Marathon begins to periodically perform task reconciliation operations
 export MARATHON_RECONCILIATION_INITIAL_DELAY="<%= p('marathon.reconciliation_initial_delay') %>"
 
+# This is the length of time, in milliseconds, between task reconciliation operations
+export MARATHON_RECONCILIATION_INTERVAL="<%= p('marathon.reconciliation_interval') %>"
+
 # Time, in milliseconds, to wait for a task to enter the TASK_RUNNING state before killing it
 export MARATHON_TASK_LAUNCH_TIMEOUT="<%= p('marathon.task_launch_timeout') %>"
-
-# This is the time window within which instances may be launched for a given app
-export MARATHON_TASK_RATE_LIMIT="<%= p('marathon.task_rate_limit') %>"
-
-# Path in ZooKeeper for storing Marathon state
-export MARATHON_ZK_STATE="/<%= p('marathon.zk_state') %>"
 
 # The timeout for ZooKeeper in milliseconds
 export MARATHON_ZK_TIMEOUT="<%= p('marathon.zk_timeout') %>"
 
 # Apache Mesos Native Library
 export MESOS_NATIVE_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so
+

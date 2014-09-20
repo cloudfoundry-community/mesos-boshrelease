@@ -51,17 +51,17 @@ properties:
   marathon.mesos_role:
     description: "Mesos role for this framework"
     default: "*"
-  marathon.reconciliation_frequency:
-    description: "This is the length of time, in milliseconds, between task reconciliation operations"
-    default: 30000
+  marathon.mesos_user:
+    description: "Mesos user for this framework"
+    default: "role"
   marathon.reconciliation_initial_delay:
     description: "This is the length of time, in milliseconds, before Marathon begins to periodically perform task reconciliation operations"
     default: 30000
+  marathon.reconciliation_interval:
+    description: "This is the length of time, in milliseconds, between task reconciliation operations"
+    default: 30000
   marathon.task_launch_timeout:
     description: "Time, in milliseconds, to wait for a task to enter the TASK_RUNNING state before killing it"
-    default: 60000
-  marathon.task_rate_limit:
-    description: "This is the time window within which instances may be launched for a given app"
     default: 60000
   marathon.zk_state:
     description: "Path in ZooKeeper for storing Marathon state"
@@ -77,3 +77,4 @@ properties:
   zookeeper.client_port:
     description: "Port at which the clients will connect to Apache Zookeeper"
     default: 2181
+
