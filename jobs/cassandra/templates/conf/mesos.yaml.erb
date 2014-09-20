@@ -2,22 +2,10 @@
 mesos.executor.uri: '<%= p('cassandra.mesos.executor_uri') %>'
 
 # Where the Mesos master is located
-<%
-  mesos_servers = []
-  p('zookeeper.servers').each do |server|
-    mesos_servers << "#{server}:#{p('zookeeper.client_port')}/#{p('mesos.zk_state')}"
-  end
-%>
-mesos.master.url: 'zk://<%= mesos_servers.join(',') %>'
+mesos.master.url: 'zk://<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>/<%= p('mesos.zk_state') %>'
 
 # Which Zookeeper to use to store our state e.g. 'zkHost:port,zkHost:port'
-<%
-  zoo_servers = []
-  p('zookeeper.servers').each do |server|
-    zoo_servers << "#{server}:#{p('zookeeper.client_port')}"
-  end
-%>
-state.zk: '<%= zoo_servers.join(',') %>'
+state.zk: '<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>'
 
 # Where we can find the Mesos library
 java.library.path: '/var/vcap/packages/mesos/lib/libmesos.so'
