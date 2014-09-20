@@ -51,9 +51,6 @@ properties:
   mesos.master.initialize_driver_logging:
     description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
     default: true
-  mesos.master.listen_address:
-    description: "IP address where Apache Mesos Master will listen on"
-    default: 0.0.0.0
   mesos.master.log_auto_initialize:
     description: "Whether to automatically initialize the replicated log used for the registry"
     default: true

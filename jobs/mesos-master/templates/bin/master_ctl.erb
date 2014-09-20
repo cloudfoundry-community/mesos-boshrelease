@@ -13,6 +13,17 @@ else
   hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
 fi
 
+<%
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
+
+networks = openstruct_to_hash(spec.networks)
+listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+%>
+
 case $1 in
 
   start)
@@ -35,7 +46,7 @@ case $1 in
            --credentials=file://$MESOS_MASTER_CONF_DIR/framework_credentials.cfg \
            --framework_sorter="$MESOS_MASTER_FRAMEWORK_SORTER" \
            --initialize_driver_logging="$MESOS_MASTER_INITIALIZE_DRIVER_LOGGING" \
-           --ip="$MESOS_MASTER_IP_ADDRESS" \
+           --ip=<%= listen_ip %> \
            --log_auto_initialize="$MESOS_MASTER_LOG_AUTO_INITIALIZE" \
            --log_dir="$MESOS_MASTER_LOG_DIR" \
            --logbufsecs="$MESOS_MASTER_LOGBUFSECS" \
