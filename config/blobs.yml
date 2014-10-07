@@ -39,11 +39,6 @@ jenkins/jenkins-1.532.2.war:
   sha: !binary |-
     MzhhNzc1NmM5NmEyMDRmNzU3NDdkOGM0YjlkYTUxMGZkODg0ZWUzNg==
   size: 63525132
-mesos/mesos-0.20.0.tar.gz:
-  object_id: 63da6664-899e-4fa4-bc5d-0c15152e6a91
-  sha: !binary |-
-    MWUwYzIyOTlhZDk4NDZmMTA5ZGU0YmZjNDdhZTliYmIxMzZlNmZmYw==
-  size: 27537727
 maven/apache-maven-3.2.3-bin.tar.gz:
   object_id: 85dfe356-eb82-493b-a648-e3320fbb7c80
   sha: !binary |-
@@ -114,3 +109,8 @@ docker/docker-1.2.0:
   sha: !binary |-
     NTQwNDU5YmM1ZDlmMWNhYzE3ZmU4NjU0ODkxODE0MzE0ZGIxNWU3Nw==
   size: 13398472
+mesos/mesos-0.20.1.tar.gz:
+  object_id: 74b07ed1-bf1f-4feb-9a8b-eba87191929c
+  sha: !binary |-
+    ODAyODM2NmEyNTM4NTUxZGFhZjI5MGY3YzYyYzRjOGJmYjQxNWY2MQ==
+  size: 27070583
