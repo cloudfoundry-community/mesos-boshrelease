@@ -1,4 +1,4 @@
-autopurge.purgeInterval=<%= p('zookeeper.purge_interval') %>
+autopurge.purgeInterval=<%= p('zookeeper.autopurge_purge_interval') %>
 autopurge.snapRetainCount=<%= p('zookeeper.autopurge_snap_retain_count') %>
 clientPort=<%= p('zookeeper.client_port') %>
 clientPortAddress=<%= p('zookeeper.listen_address') %>
@@ -15,6 +15,7 @@ maxSessionTimeout=<%= p('zookeeper.max_session_timeout') %>
 minSessionTimeout=<%= p('zookeeper.min_session_timeout') %>
 preAllocSize=<%= p('zookeeper.pre_allocation_size') %>
 snapCount=<%= p('zookeeper.snap_count') %>
+syncEnabled=<%= p('zookeeper.sync_enabled') %>
 syncLimit=<%= p('zookeeper.sync_limit') %>
 tickTime=<%= p('zookeeper.tick_time') %>
 
