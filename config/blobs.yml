@@ -99,3 +99,11 @@ apr/apr-util-1.5.4.tar.gz:
   object_id: 4da12d84-1014-4b5e-b571-4097fdab27bf
   sha: 72cc3ac693b52fb831063d5c0de18723bc8e0095
   size: 874044
+sqlite/sqlite-amalgamation-3080703.zip:
+  object_id: d087e00a-e7c6-4b54-a604-5093a56476b0
+  sha: eccc4873e4af3f1ef117ff5b89362eb85c1eb594
+  size: 1547471
+subversion/subversion-1.8.10.tar.gz:
+  object_id: 2024e091-7afe-42c8-bf8b-f7b5ec6c6191
+  sha: 8e1e1e5fd97c3f575a81d66232c62dc902257a17
+  size: 9331079

@@ -1,0 +1,7 @@
+---
+name: subversion
+dependencies:
+  - apr
+files:
+  - subversion/subversion-1.8.10.tar.gz
+  - sqlite/sqlite-amalgamation-3080703.zip

@@ -1,0 +1,39 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=`grep -c ^processor /proc/cpuinfo`
+
+# We grab the latest versions that are in the directory
+SUBVERSION_VERSION=`ls -r subversion/subversion-*.tar.gz | sed 's/subversion\/subversion-\(.*\)\.tar\.gz/\1/' | head -1`
+SQLITE_VERSION=`ls -r sqlite/sqlite-*.zip | sed 's/sqlite\/sqlite-\(.*\)\.zip/\1/' | head -1`
+
+# Extract Subversion package
+echo "Extracting Subversion ${SUBVERSION_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/subversion/subversion-${SUBVERSION_VERSION}.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting Subversion ${SUBVERSION_VERSION}"
+  exit 1
+fi
+
+# Extract SQLite package
+echo "Extracting SQLite ${SQLITE_VERSION}..."
+unzip ${BOSH_COMPILE_TARGET}/sqlite/sqlite-${SQLITE_VERSION}.zip
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting SQLite ${SQLITE_VERSION}"
+  exit 1
+fi
+
+# Move SQLite package to Subversion package
+mv ${BOSH_COMPILE_TARGET}/sqlite-${SQLITE_VERSION} \
+   ${BOSH_COMPILE_TARGET}/subversion-${SUBVERSION_VERSION}/sqlite-amalgamation/
+
+# Build Subversion package
+echo "Building Subversion ${SUBVERSION_VERSION}..."
+cd ${BOSH_COMPILE_TARGET}/subversion-${SUBVERSION_VERSION}
+./configure \
+    --prefix=${BOSH_INSTALL_TARGET} \
+    --with-apr=/var/vcap/packages/apr/ \
+    --with-apr-util=/var/vcap/packages/apr/
+make -j${CPUS}
+make install
