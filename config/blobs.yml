@@ -1,116 +1,93 @@
 ---
 cassandra/cassandra-mesos-2.0.5-1.tgz:
   object_id: 2671be01-13d2-4603-bc69-dc5ac7fead10
-  sha: !binary |-
-    ZmNlNjU5YmVjMDAwOTFkMGJiODlkMTA5OTY2ZTU0YjIxMTYxZTE2OA==
+  sha: fce659bec00091d0bb89d109966e54b21161e168
   size: 28034771
 chronos/chronos-2.1.0_mesos-0.14.0-rc4.jar:
   object_id: 2e28a1d4-32fc-4c7e-b5ed-b8235c899421
-  sha: !binary |-
-    OGJjZTZmMzBmM2NiNTkxZTE1M2U2ZDNhNGNkZjNkNTI2MWM5YThlYg==
+  sha: 8bce6f30f3cb591e153e6d3a4cdf3d5261c9a8eb
   size: 30499060
 java/jdk-1.7.0_51.tar.gz:
   object_id: 4de0384e-57e2-454a-a143-22a9a303a5e7
-  sha: !binary |-
-    YmVlM2IwODVhOTA0MzljODMzY2UxOGUxMzhjOWYxYTYxNTE1Mjg5MQ==
+  sha: bee3b085a90439c833ce18e138c9f1a615152891
   size: 138199690
 jenkins/mesos-0.17.0.hpi:
   object_id: 05342b43-18df-4ddb-84b0-09a5d96174f6
-  sha: !binary |-
-    NzNkYjBmYzI4NDY3YzM3MDUxODY2OTExYmIzOGU1MTQwOWMxYjRjZA==
+  sha: 73db0fc28467c37051866911bb38e51409c1b4cd
   size: 878821
 nginx/nginx-1.4.5.tar.gz:
   object_id: b9c19042-65ba-4cb8-82ae-6675b26171f3
-  sha: !binary |-
-    OTZjMWFlY2QzMTRmNzNhM2MzMGEwZGI4YzM5YWQxNWRkYWNiMDc0ZQ==
+  sha: 96c1aecd314f73a3c30a0db8c39ad15ddacb074e
   size: 768728
 nginx/pcre-8.34.tar.gz:
   object_id: 84641be9-6be7-4da1-9206-7b850a4eac6e
-  sha: !binary |-
-    ZDQ2ZTUzNzMzN2VlNzBkZjE5MDg0MDAxYTRiNjgxNWIzZDY5ZmU2Yw==
+  sha: d46e537337ee70df19084001a4b6815b3d69fe6c
   size: 1933734
 sasl/cyrus-sasl-2.1.26.tar.gz:
   object_id: 703c5060-94ae-4aa1-a6c4-7261e1e5ff5e
-  sha: !binary |-
-    ZDY2NjlmYjkxNDM0MTkyNTI5YmQxM2VlOTU3MzdhOGE1MDQwMjQxYw==
+  sha: d6669fb91434192529bd13ee95737a8a5040241c
   size: 5220231
 jenkins/jenkins-1.532.2.war:
   object_id: 8c217c24-aaf4-4fea-bf5c-22f49250bce3
-  sha: !binary |-
-    MzhhNzc1NmM5NmEyMDRmNzU3NDdkOGM0YjlkYTUxMGZkODg0ZWUzNg==
+  sha: 38a7756c96a204f75747d8c4b9da510fd884ee36
   size: 63525132
 maven/apache-maven-3.2.3-bin.tar.gz:
   object_id: 85dfe356-eb82-493b-a648-e3320fbb7c80
-  sha: !binary |-
-    MWNlNjY0MWY3ZGNiNGZkNTc4NWJlZGNkY2EyOTc5ZGE4M2Y2ZDIzZg==
+  sha: 1ce6641f7dcb4fd5785bedcdca2979da83f6d23f
   size: 6956162
 zookeeper/zookeeper-3.4.6.tar.gz:
   object_id: 1a0f69b8-62b8-41bb-b157-cd68632f162f
-  sha: !binary |-
-    MmE5ZTUzZjU5OTBkZmUwOTY1ODM0YTUyNWZiY2FkMjI2YmY5MzQ3NA==
+  sha: 2a9e53f5990dfe0965834a525fbcad226bf93474
   size: 17699306
 node/node-v0.10.32-linux-x64.tar.gz:
   object_id: a50316cd-b91e-4b1b-811b-00cca8e8af4e
-  sha: !binary |-
-    ZmFkZWZjMTVhOTkyZDIxYmQxOWQwZDNlYzE3NDM5MGQxZTdmY2I3Mg==
+  sha: fadefc15a992d21bd19d0d3ec174390d1e7fcb72
   size: 5643126
 scala/scala-2.11.2.tgz:
   object_id: 909350c4-42a1-4b13-9488-3f52ba0040db
-  sha: !binary |-
-    OTA0ZTllZTNiYjk2ZTgzNTBiMWUwZjI1MDJhNzA0ZjgzNmMwY2RmMQ==
+  sha: 904e9ee3bb96e8350b1e0f2502a704f836c0cdf1
   size: 26488789
 git/git-2.1.0.tar.gz:
   object_id: 4986fc48-80ce-4251-ae05-9aa2311ccd19
-  sha: !binary |-
-    ZTIyNTY0ZTE1MmUzMjQyYmM0ZmNmY2M3ZWIwNWZkZTdhNGM4M2UwNA==
+  sha: e22564e152e3242bc4fcfcc7eb05fde7a4c83e04
   size: 4975916
 ruby/ruby-2.1.2.tar.gz:
   object_id: 14bb5056-36bb-491f-8785-0e51cd04aee2
-  sha: !binary |-
-    YjgxOGQ1NmI0NjM4ZjE5NDkyMzkwMzg2MjNiNzYxNTE3ZDRhNTY4Ng==
+  sha: b818d56b4638f1949239038623b761517d4a5686
   size: 15096114
 ruby/rubygems-2.4.1.tgz:
   object_id: aaf919dd-5f7a-4c87-8660-890f53d8f4c7
-  sha: !binary |-
-    MDE2Yjk4ZDhmZmNhM2IxYWY0Yzc5Nzc4OGQ3NWMxYTY3ZjM4ZDQxZA==
+  sha: 016b98d8ffca3b1af4c797788d75c1a67f38d41d
   size: 437226
 ruby/bundler-1.7.3.gem:
   object_id: 51f3077b-7811-41c3-885f-9aa4b6a38f6e
-  sha: !binary |-
-    NjE4ZmRmNzZmMzVlODczZTQ5MGUxNWNkYWM4N2JlN2Y3MjQ3ZjgxYg==
+  sha: 618fdf76f35e873e490e15cdac87be7f7247f81b
   size: 299520
 ruby/yaml-0.1.6.tar.gz:
   object_id: c8e48f85-d597-4993-bf99-d903dd8d80a9
-  sha: !binary |-
-    ZjNkNDA0ZTExYmVjM2M0ZWZjZGRmZDE0YzQyZDQ2ZjFhYWJlMGI1ZA==
+  sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
   size: 503012
 marathon/marathon-0.7.0-RC4.tgz:
   object_id: f675f871-c7f6-433d-a5c4-ab04fcf7060c
-  sha: !binary |-
-    MThjZDI5YjRhNGEyNDdkYjlmOTJmZDQ3MmU4MWIxMTM2ZWIwNDk0Ng==
+  sha: 18cd29b4a4a247db9f92fd472e81b1136eb04946
   size: 63361758
 docker/bridge-utils-1.5.tar.gz:
   object_id: f220c677-8e73-4e6c-b5e7-adbff9320683
-  sha: !binary |-
-    MWY3MWI2ZjIyZjVkMmI2ZDIxZTE0NmY0YWMyMDgyMGFkNDJlNThlZQ==
+  sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
   size: 33472
 docker/autoconf-2.69.tar.gz:
   object_id: 0927a3d0-b43c-4aba-915a-d46959ae7a1b
-  sha: !binary |-
-    NTYyNDcxY2JjYjBkZDBmYTQyYTc2NjY1YWNmMGRiYjY4NDc5Yjc4YQ==
+  sha: 562471cbcb0dd0fa42a76665acf0dbb68479b78a
   size: 1927468
 docker/aufs-tools_20120411-3_amd64.deb:
   object_id: 2f3cad6d-0ca6-4cf4-b75b-d48f92b87f53
-  sha: !binary |-
-    MmRmYzFmZTM4NmNkM2YwNWFjN2UwYjRlYmNmM2ViYzhhN2YzYjA0ZA==
+  sha: 2dfc1fe386cd3f05ac7e0b4ebcf3ebc8a7f3b04d
   size: 91762
 docker/docker-1.2.0:
   object_id: b044edeb-ac27-4f24-88c7-b13f259672d5
-  sha: !binary |-
-    NTQwNDU5YmM1ZDlmMWNhYzE3ZmU4NjU0ODkxODE0MzE0ZGIxNWU3Nw==
+  sha: 540459bc5d9f1cac17fe8654891814314db15e77
   size: 13398472
-mesos/mesos-0.20.1.tar.gz:
-  object_id: 74b07ed1-bf1f-4feb-9a8b-eba87191929c
-  sha: !binary |-
-    ODAyODM2NmEyNTM4NTUxZGFhZjI5MGY3YzYyYzRjOGJmYjQxNWY2MQ==
-  size: 27070583
+mesos/mesos-0.21.0.tar.gz:
+  object_id: 3ee3c0ec-f33f-4cb8-b0e5-9b268f5bb0eb
+  sha: 52cc62bd83903f42c289ecb647368881f918fa02
+  size: 28140492
