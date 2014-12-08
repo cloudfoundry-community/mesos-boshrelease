@@ -1,8 +1,10 @@
 ---
 name: mesos
 dependencies:
+  - apr
   - java
+  - maven
   - sasl
+  - subversion
 files:
   - mesos/mesos-0.21.0.tar.gz
-  - maven/apache-maven-3.2.3-bin.tar.gz
