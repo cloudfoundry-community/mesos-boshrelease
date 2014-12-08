@@ -2,10 +2,12 @@
 name: mesos-master
 
 packages:
+  - apr
   - bosh-helpers
   - java
-  - sasl
   - mesos
+  - sasl
+  - subversion
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
@@ -21,21 +23,6 @@ properties:
   mesos.master.group:
     description: "Group which will own the Apache Mesos Master services"
     default: "vcap"
-  mesos.cluster_name:
-    description: "Human readable name for the Apache Mesos cluster"
-    default: "Mesos Cluster"
-  mesos.framework_credentials:
-    description: "Array of credentials. Each item contains a 'principal' and 'secret' separated by whitespace"
-    default: []
-  mesos.zk_state:
-    description: "Path in ZooKeeper for storing Apache Mesos state"
-    default: "mesos"
-  mesos.zk_session_timeout:
-    description: "ZooKeeper session timeout"
-    default: "10secs"
-  mesos.slaves:
-    description: "List of slaves to advertise offers for"
-    default: ["*"]
   mesos.master.allocation_interval:
     description: "Amount of time to wait between performing (batch) allocations"
     default: "1secs"
@@ -45,6 +32,12 @@ properties:
   mesos.master.authenticate_slaves:
     description: "Only authenticated slaves are allowed to register?"
     default: false
+  mesos.cluster_name:
+    description: "Human readable name for the Apache Mesos cluster"
+    default: "Mesos Cluster"
+  mesos.framework_credentials:
+    description: "Array of credentials. Each item contains a 'principal' and 'secret' separated by whitespace"
+    default: []
   mesos.master.framework_sorter:
     description: "Policy to use for allocating resources between a given user's frameworks"
     default: "drf"
@@ -60,6 +53,9 @@ properties:
   mesos.master.loglevel:
     description: "Log message at or above this level; possible values: 'INFO', 'WARNING', 'ERROR';"
     default: "INFO"
+  mesos.master.offer_timeout:
+    description: "Duration of time before an offer is rescinded from a framework"
+    default: "5mins"
   mesos.master.port:
     description: "Port where Apache Mesos Master will listen on"
     default: 80
@@ -92,6 +88,12 @@ properties:
   mesos.master.weights:
     description: "A comma seperated list of role/weight pairs of the form 'role=weight,role=weight'"
     default: ""
+  mesos.master.slaves_whitelist:
+    description: "List of slaves to advertise offers for"
+    default: ["*"]
+  mesos.zk_state:
+    description: "Path in ZooKeeper for storing Apache Mesos state"
+    default: "mesos"
   zookeeper.servers:
     description: "List of all Apache Zookeeper server host IP/hostnames"
   zookeeper.client_port:

@@ -5,19 +5,19 @@
 #
 
 # Directory to store the Apache Mesos Master configuration files
-export MESOS_MASTER_CONF_DIR=$JOB_DIR/config
+export MESOS_MASTER_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Apache Mesos Master log files
-export MESOS_MASTER_LOG_DIR=$LOG_DIR
+export MESOS_MASTER_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Apache Mesos Master process IDs
-export MESOS_MASTER_PID_DIR=$RUN_DIR
+export MESOS_MASTER_PID_DIR=${RUN_DIR}
 
 # Directory to store the Apache Mesos Master data files
-export MESOS_MASTER_STORE_DIR=$STORE_DIR
+export MESOS_MASTER_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Apache Mesos Master temp files
-export MESOS_MASTER_TMP_DIR=$TMP_DIR
+export MESOS_MASTER_TMP_DIR=${TMP_DIR}
 
 # User which will own the Apache Mesos Master services
 export MESOS_MASTER_USER="<%= p('mesos.master.user') %>"
@@ -28,9 +28,6 @@ export MESOS_MASTER_GROUP="<%= p('mesos.master.group') %>"
 # Apache Mesos Home directory
 export MESOS_HOME=/var/vcap/packages/mesos
 
-# Human readable name for the Apache Mesos cluster
-export MESOS_CLUSTER_NAME="<%= p('mesos.cluster_name') %>"
-
 # Amount of time to wait between performing (batch) allocations
 export MESOS_MASTER_ALLOCATION_INTERVAL="<%= p('mesos.master.allocation_interval') %>"
 
@@ -39,6 +36,9 @@ export MESOS_MASTER_AUTHENTICATE_FRAMEWORKS="<%= p('mesos.master.authenticate_fr
 
 # Only authenticated slaves are allowed to register?
 export MESOS_MASTER_AUTHENTICATE_SLAVES="<%= p('mesos.master.authenticate_slaves') %>"
+
+# Human readable name for the Apache Mesos cluster
+export MESOS_CLUSTER_NAME="<%= p('mesos.cluster_name') %>"
 
 # Policy to use for allocating resources between a given user's frameworks
 export MESOS_MASTER_FRAMEWORK_SORTER="<%= p('mesos.master.framework_sorter') %>"
@@ -54,6 +54,9 @@ export MESOS_MASTER_LOGBUFSECS="<%= p('mesos.master.logbufsecs') %>"
 
 # Log message at or above this level
 export MESOS_MASTER_LOGLEVEL="<%= p('mesos.master.loglevel') %>"
+
+# Duration of time before an offer is rescinded from a framework
+export MESOS_MASTER_OFFER_TIMEOUT="<%= p('mesos.master.offer_timeout') %>"
 
 # Port where Apache Mesos Master will listen on
 export MESOS_MASTER_PORT="<%= p('mesos.master.port') %>"
@@ -87,6 +90,3 @@ export MESOS_MASTER_USER_SORTER="<%= p('mesos.master.user_sorter') %>"
 
 # A comma seperated list of role/weight pairs of the form 'role=weight,role=weight'
 export MESOS_MASTER_WEIGHTS="<%= p('mesos.master.weights') %>"
-
-# ZooKeeper session timeout
-export MESOS_ZK_SESSION_TIMEOUT="<%= p('mesos.zk_session_timeout') %>"

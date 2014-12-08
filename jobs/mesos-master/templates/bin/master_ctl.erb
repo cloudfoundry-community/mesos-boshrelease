@@ -4,13 +4,13 @@ set -e # exit immediately if a simple command exits with a non-zero status
 
 # Setup common env vars and folders
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'mesos-master'
-export MESOS_MASTER_PID_FILE=$MESOS_MASTER_PID_DIR/mesos-master.pid
+export MESOS_MASTER_PID_FILE=${MESOS_MASTER_PID_DIR}/mesos-master.pid
 
 # Set the hostname
 if hostname=$(public_hostname); then
-  hostname $hostname
+    hostname $hostname
 else
-  hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
+    hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
 fi
 
 <%
@@ -27,51 +27,52 @@ listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
 case $1 in
 
   start)
-    pid_guard $MESOS_MASTER_PID_FILE $JOB_NAME
-    echo $$ > $MESOS_MASTER_PID_FILE
+    pid_guard ${MESOS_MASTER_PID_FILE} ${JOB_NAME}
+    echo $$ > ${MESOS_MASTER_PID_FILE}
 
     # Increase the default number of open file descriptors
     ulimit -n 8192
 
     # Create Apache Mesos Master user & group
-    create_group $MESOS_MASTER_GROUP
-    create_user $MESOS_MASTER_USER $MESOS_MASTER_GROUP
+    create_group ${MESOS_MASTER_GROUP}
+    create_user ${MESOS_MASTER_USER} ${MESOS_MASTER_GROUP}
 
     # Start Apache Mesos Master service
-    exec chpst -u $MESOS_MASTER_USER:$MESOS_MASTER_GROUP mesos-master \
-           --cluster="$MESOS_CLUSTER_NAME" \
-           --allocation_interval="$MESOS_MASTER_ALLOCATION_INTERVAL" \
-           --authenticate="$MESOS_MASTER_AUTHENTICATE_FRAMEWORKS" \
-           --authenticate_slaves="$MESOS_MASTER_AUTHENTICATE_SLAVES" \
-           --credentials=file://$MESOS_MASTER_CONF_DIR/framework_credentials.cfg \
-           --framework_sorter="$MESOS_MASTER_FRAMEWORK_SORTER" \
-           --initialize_driver_logging="$MESOS_MASTER_INITIALIZE_DRIVER_LOGGING" \
+    exec chpst -u ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} mesos-master \
+           --allocation_interval="${MESOS_MASTER_ALLOCATION_INTERVAL}" \
+           --authenticate="${MESOS_MASTER_AUTHENTICATE_FRAMEWORKS}" \
+           --authenticate_slaves="${MESOS_MASTER_AUTHENTICATE_SLAVES}" \
+           --cluster="${MESOS_CLUSTER_NAME}" \
+           --credentials=file://${MESOS_MASTER_CONF_DIR}/framework_credentials.cfg \
+           --framework_sorter="${MESOS_MASTER_FRAMEWORK_SORTER}" \
+           --initialize_driver_logging="${MESOS_MASTER_INITIALIZE_DRIVER_LOGGING}" \
            --ip=<%= listen_ip %> \
-           --log_auto_initialize="$MESOS_MASTER_LOG_AUTO_INITIALIZE" \
-           --log_dir="$MESOS_MASTER_LOG_DIR" \
-           --logbufsecs="$MESOS_MASTER_LOGBUFSECS" \
-           --logging_level="$MESOS_MASTER_LOGLEVEL" \
-           --port="$MESOS_MASTER_PORT" \
-           --quorum="$MESOS_MASTER_QUORUM" \
-           --recovery_slave_removal_limit="$MESOS_MASTER_RECOVERY_SLAVE_REMOVAL_LIMIT" \
-           --registry="$MESOS_MASTER_REGISTRY" \
-           --registry_fetch_timeout="$MESOS_MASTER_REGISTRY_FETCH_TIMEOUT" \
-           --registry_store_timeout="$MESOS_MASTER_REGISTRY_STORE_TIMEOUT" \
-           --roles="$MESOS_MASTER_ROLES" \
-           --root_submissions="$MESOS_MASTER_ROOT_SUBMISSIONS" \
-           --slave_reregister_timeout="$MESOS_MASTER_SLAVE_REREGISTER_TIMEOUT" \
-           --user_sorter="$MESOS_MASTER_USER_SORTER" \
-           --weights="$MESOS_MASTER_WEIGHTS" \
-           --whitelist=file://$MESOS_MASTER_CONF_DIR/slaves_whitelist.cfg \
-           --work_dir="$MESOS_MASTER_TMP_DIR" \
-           --zk=file://$MESOS_MASTER_CONF_DIR/zoo_mesos.cfg \
-           >>$MESOS_MASTER_LOG_DIR/$OUTPUT_LABEL.stdout.log \
-           2>>$MESOS_MASTER_LOG_DIR/$OUTPUT_LABEL.stderr.log
+           --log_auto_initialize="${MESOS_MASTER_LOG_AUTO_INITIALIZE}" \
+           --log_dir="${MESOS_MASTER_LOG_DIR}" \
+           --logbufsecs="${MESOS_MASTER_LOGBUFSECS}" \
+           --logging_level="${MESOS_MASTER_LOGLEVEL}" \
+           --offer_timeout="${MESOS_MASTER_OFFER_TIMEOUT}" \
+           --port="${MESOS_MASTER_PORT}" \
+           --quorum="${MESOS_MASTER_QUORUM}" \
+           --recovery_slave_removal_limit="${MESOS_MASTER_RECOVERY_SLAVE_REMOVAL_LIMIT}" \
+           --registry="${MESOS_MASTER_REGISTRY}" \
+           --registry_fetch_timeout="${MESOS_MASTER_REGISTRY_FETCH_TIMEOUT}" \
+           --registry_store_timeout="${MESOS_MASTER_REGISTRY_STORE_TIMEOUT}" \
+           --roles="${MESOS_MASTER_ROLES}" \
+           --root_submissions="${MESOS_MASTER_ROOT_SUBMISSIONS}" \
+           --slave_reregister_timeout="${MESOS_MASTER_SLAVE_REREGISTER_TIMEOUT}" \
+           --user_sorter="${MESOS_MASTER_USER_SORTER}" \
+           --weights="${MESOS_MASTER_WEIGHTS}" \
+           --whitelist=file://${MESOS_MASTER_CONF_DIR}/slaves_whitelist.cfg \
+           --work_dir="${MESOS_MASTER_TMP_DIR}" \
+           --zk=file://${MESOS_MASTER_CONF_DIR}/zoo_mesos.cfg \
+           >>${MESOS_MASTER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
+           2>>${MESOS_MASTER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
 
   stop)
     # Stop Apache Mesos Master service
-    kill_and_wait $MESOS_MASTER_PID_FILE
+    kill_and_wait ${MESOS_MASTER_PID_FILE}
     ;;
 
   *)
