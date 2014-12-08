@@ -2,14 +2,12 @@
 name: mesos-slave
 
 packages:
+  - apr
   - bosh-helpers
   - java
-  - node
-  - ruby
-  - scala
-  - git
-  - sasl
   - mesos
+  - sasl
+  - subversion
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
@@ -24,13 +22,6 @@ properties:
   mesos.slave.group:
     description: "Group which will own the Apache Mesos Slave services"
     default: "vcap"
-  mesos.framework_credentials.principal:
-    description: "'principal' framework credentials"
-  mesos.framework_credentials.secret:
-    description: "'secret' framework credentials"
-  mesos.zk_state:
-    description: "Path in ZooKeeper for storing Apache Mesos state"
-    default: "mesos"
   mesos.slave.attributes:
     description: "Attributes of machine"
     default: ""
@@ -46,9 +37,10 @@ properties:
   mesos.slave.cgroups_root:
     description: "Name of the root cgroup"
     default: "mesos"
-  mesos.slave.checkpoint:
-    description: "Whether to checkpoint Apache Mesos Slaves and Frameworks information to disk"
-    default: true
+  mesos.framework_credentials.principal:
+    description: "'principal' framework credentials"
+  mesos.framework_credentials.secret:
+    description: "'secret' framework credentials"
   mesos.slave.default_role:
     description: "Default role"
     default: "*"
@@ -112,6 +104,9 @@ properties:
   mesos.slave.switch_user:
     description: "Whether to run tasks as the user who submitted them rather than the user running the slave"
     default: false
+  mesos.zk_state:
+    description: "Path in ZooKeeper for storing Apache Mesos state"
+    default: "mesos"
   zookeeper.servers:
     description: "List of all Apache Zookeeper server host IP/hostnames"
   zookeeper.client_port:

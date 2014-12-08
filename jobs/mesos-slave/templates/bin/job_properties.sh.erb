@@ -5,19 +5,19 @@
 #
 
 # Directory to store the Apache Mesos Slave configuration files
-export MESOS_SLAVE_CONF_DIR=$JOB_DIR/config
+export MESOS_SLAVE_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Apache Mesos Slave log files
-export MESOS_SLAVE_LOG_DIR=$LOG_DIR
+export MESOS_SLAVE_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Apache Mesos Slave process IDs
-export MESOS_SLAVE_PID_DIR=$RUN_DIR
+export MESOS_SLAVE_PID_DIR=${RUN_DIR}
 
 # Directory to store the Apache Mesos Slave data files
-export MESOS_SLAVE_STORE_DIR=$STORE_DIR
+export MESOS_SLAVE_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Apache Mesos Slave temp files
-export MESOS_SLAVE_TMP_DIR=$TMP_DIR
+export MESOS_SLAVE_TMP_DIR=${TMP_DIR}
 
 # User which will own the Apache Mesos Slave services
 export MESOS_SLAVE_USER="<%= p('mesos.slave.user') %>"
@@ -43,13 +43,10 @@ export MESOS_SLAVE_CGROUPS_LIMIT_SWAP="<%= p('mesos.slave.cgroups_limit_swap') %
 # Name of the root cgroup
 export MESOS_SLAVE_CGROUPS_ROOT="<%= p('mesos.slave.cgroups_root') %>"
 
-# Whether to checkpoint Apache Mesos Slaves and Frameworks information to disk
-export MESOS_SLAVE_CHECKPOINT="<%= p('mesos.slave.checkpoint') %>"
-
 # Framework credential file
 export MESOS_SLAVE_CREDENTIAL=""
 <% if_p('mesos.framework_credentials.principal', 'mesos.framework_credentials.secret') do %>
-export MESOS_SLAVE_CREDENTIAL="--credential=file://$MESOS_SLAVE_CONF_DIR/framework_credentials.cfg"
+export MESOS_SLAVE_CREDENTIAL="--credential=file://${MESOS_SLAVE_CONF_DIR}/framework_credentials.cfg"
 <% end %>
 
 # Default role
