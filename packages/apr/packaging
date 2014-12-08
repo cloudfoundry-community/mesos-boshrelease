@@ -1,0 +1,42 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=`grep -c ^processor /proc/cpuinfo`
+
+# We grab the latest versions that are in the directory
+APR_VERSION=`ls apr/apr-*.tar.gz | sed 's/apr\/apr-\(.*\)\.tar\.gz/\1/' | head -1`
+APR_UTIL_VERSION=`ls -r apr/apr-util-*.tar.gz | sed 's/apr\/apr-util-\(.*\)\.tar\.gz/\1/' | head -1`
+
+# Extract Apache Portable Runtime package
+echo "Extracting Apache Portable Runtime ${APR_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/apr/apr-${APR_VERSION}.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting Apache Portable Runtime ${APR_VERSION}"
+  exit 1
+fi
+
+# Extract Apache Portable Runtime Util package
+echo "Extracting Apache Portable Runtime Util ${APR_UTIL_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/apr/apr-util-${APR_UTIL_VERSION}.tar.gz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting Apache Portable Runtime Util ${APR_UTIL_VERSION}"
+  exit 1
+fi
+
+# Build Apache Portable Runtime package
+echo "Building Apache Portable Runtime ${APR_VERSION}..."
+cd ${BOSH_COMPILE_TARGET}/apr-${APR_VERSION}
+./configure \
+  --prefix=${BOSH_INSTALL_TARGET}
+make -j${CPUS}
+make install
+
+# Build Apache Portable Runtime Util package
+echo "Building Apache Portable Runtime Util ${APR_UTIL_VERSION}..."
+cd ${BOSH_COMPILE_TARGET}/apr-util-${APR_UTIL_VERSION}
+./configure \
+  --prefix=${BOSH_INSTALL_TARGET} \
+  --with-apr=${BOSH_INSTALL_TARGET}
+make -j${CPUS}
+make install

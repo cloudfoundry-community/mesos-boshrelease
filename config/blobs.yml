@@ -91,3 +91,11 @@ mesos/mesos-0.21.0.tar.gz:
   object_id: 3ee3c0ec-f33f-4cb8-b0e5-9b268f5bb0eb
   sha: 52cc62bd83903f42c289ecb647368881f918fa02
   size: 28140492
+apr/apr-1.5.1.tar.gz:
+  object_id: 363acf5a-ae19-4b10-9975-04776f2e7620
+  sha: 9caa83e3f50f3abc9fab7c4a3f2739a12b14c3a3
+  size: 1020833
+apr/apr-util-1.5.4.tar.gz:
+  object_id: 4da12d84-1014-4b5e-b571-4097fdab27bf
+  sha: 72cc3ac693b52fb831063d5c0de18723bc8e0095
+  size: 874044
