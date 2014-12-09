@@ -83,10 +83,6 @@ docker/aufs-tools_20120411-3_amd64.deb:
   object_id: 2f3cad6d-0ca6-4cf4-b75b-d48f92b87f53
   sha: 2dfc1fe386cd3f05ac7e0b4ebcf3ebc8a7f3b04d
   size: 91762
-docker/docker-1.2.0:
-  object_id: b044edeb-ac27-4f24-88c7-b13f259672d5
-  sha: 540459bc5d9f1cac17fe8654891814314db15e77
-  size: 13398472
 mesos/mesos-0.21.0.tar.gz:
   object_id: 3ee3c0ec-f33f-4cb8-b0e5-9b268f5bb0eb
   sha: 52cc62bd83903f42c289ecb647368881f918fa02
@@ -107,3 +103,7 @@ subversion/subversion-1.8.10.tar.gz:
   object_id: 2024e091-7afe-42c8-bf8b-f7b5ec6c6191
   sha: 8e1e1e5fd97c3f575a81d66232c62dc902257a17
   size: 9331079
+docker/docker-1.3.2:
+  object_id: 640cb6ea-d172-42b7-b40d-867cac47bf1b
+  sha: d22fa70f621654fc69c37fb41168034d5f9d1f90
+  size: 14173183
