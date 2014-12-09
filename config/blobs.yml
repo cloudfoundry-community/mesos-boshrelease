@@ -3,10 +3,6 @@ cassandra/cassandra-mesos-2.0.5-1.tgz:
   object_id: 2671be01-13d2-4603-bc69-dc5ac7fead10
   sha: fce659bec00091d0bb89d109966e54b21161e168
   size: 28034771
-chronos/chronos-2.1.0_mesos-0.14.0-rc4.jar:
-  object_id: 2e28a1d4-32fc-4c7e-b5ed-b8235c899421
-  sha: 8bce6f30f3cb591e153e6d3a4cdf3d5261c9a8eb
-  size: 30499060
 java/jdk-1.7.0_51.tar.gz:
   object_id: 4de0384e-57e2-454a-a143-22a9a303a5e7
   sha: bee3b085a90439c833ce18e138c9f1a615152891
@@ -107,3 +103,7 @@ docker/docker-1.3.2:
   object_id: 640cb6ea-d172-42b7-b40d-867cac47bf1b
   sha: d22fa70f621654fc69c37fb41168034d5f9d1f90
   size: 14173183
+chronos/chronos-2.3.0_mesos-0.21.0-SNAPSHOT.jar:
+  object_id: 6aba68b3-578d-4f1f-857b-e7a32ccbd2c0
+  sha: 3dc301bfe372ceea5556b36878cc1fb46c383b40
+  size: 36073539
