@@ -5,19 +5,19 @@
 #
 
 # Directory to store the Chronos configuration files
-export CHRONOS_CONF_DIR=$JOB_DIR/config
+export CHRONOS_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Chronos log files
-export CHRONOS_LOG_DIR=$LOG_DIR
+export CHRONOS_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Chronos process IDs
-export CHRONOS_PID_DIR=$RUN_DIR
+export CHRONOS_PID_DIR=${RUN_DIR}
 
 # Directory to store the Chronos data files
-export CHRONOS_STORE_DIR=$STORE_DIR
+export CHRONOS_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Chronos temp files
-export CHRONOS_TMP_DIR=$TMP_DIR
+export CHRONOS_TMP_DIR=${TMP_DIR}
 
 # User which will own the Chronos services
 export CHRONOS_USER="<%= p('chronos.user') %>"
@@ -28,8 +28,22 @@ export CHRONOS_GROUP="<%= p('chronos.group') %>"
 # Java Heap Size for Chronos
 export CHRONOS_JAVA_HEAP_SIZE="<%= p('chronos.java_heap_size') %>"
 
-# Job Owner
-export CHRONOS_DEFAULT_JOB_OWNER="<%= p('chronos.default_job_owner') %>"
+<% if_p('chronos.cassandra.consistency', 'chronos.cassandra.contact_points', 'chronos.cassandra.keyspace',
+        'chronos.cassandra.port', 'chronos.cassandra.table', 'chronos.cassandra.ttl') do
+        |cassandra_consistency, cassandra_contact_points, cassandra_keyspace,
+        cassandra_port, cassandra_table, cassandra_ttl| %>
+# Cassandra options
+export CHRONOS_CASSANDRA_OPTIONS=""
+export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_consistency "<%= cassandra_consistency %>""
+export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_contact_points "<%= cassandra_contact_points %>""
+export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_keyspace "<%= cassandra_keyspace %>""
+export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_port "<%= cassandra_port %>""
+export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_table "<%= cassandra_table %>""
+export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_ttl "<%= cassandra_ttl %>""
+<% end %>
+
+# The name of the cluster where Chronos is run
+export CHRONOS_CLUSTER_NAME="<%= p('chronos.cluster_name') %>"
 
 # Disables a job after this many failures have occurred
 export CHRONOS_DISABLE_AFTER_FAILURES="<%= p('chronos.disable_after_failures') %>"
@@ -40,9 +54,9 @@ export CHRONOS_FAILOVER_TIMEOUT="<%= p('chronos.failover_timeout') %>"
 # Number of ms between retries
 export CHRONOS_FAILURE_RETRY="<%= p('chronos.failure_retry') %>"
 
-<% if_p('chronos.ganglia_group_prefix', 'ganglia_host_port', 'ganglia_reporting_interval') do |ganglia_group_prefix, ganglia_host_port, mail_server, mail_user| %>
-# Ganglia options
-export CHRONOS_GANGLIA_OPTIONS="--ganglia_group_prefix "<%= ganglia_group_prefix %>" --ganglia_host_port "<%= ganglia_host_port %>" --ganglia_reporting_interval "<%= ganglia_reporting_interval %>""
+<% if_p('chronos.graphite.group_prefix', 'chronos.graphite.host_port', 'chronos.graphite.reporting_interval') do |graphite_group_prefix, graphite_host_port, graphite_reporting_interval| %>
+# Graphite options
+export CHRONOS_GRAPHITE_OPTIONS="--graphite_group_prefix "<%= graphite_group_prefix %>" --graphite_host_port "<%= graphite_host_port %>" --graphite_reporting_interval "<%= graphite_reporting_interval %>""
 <% end %>
 
 # Credentials for accessing the Chronos http service
@@ -57,11 +71,11 @@ export CHRONOS_HTTPS_PORT="<%= p('chronos.https_port') %>"
 # The look-ahead time for scheduling tasks in milliseconds
 export CHRONOS_LEADER_MAX_IDLE_TIME="<%= p('chronos.leader_max_idle_time') %>"
 
-<% if_p('chronos.mail_from', 'chronos.mail_password', 'chronos.mail_server', 'chronos.mail_user') do |mail_from, mail_password, mail_server, mail_user| %>
+<% if_p('chronos.mail.from', 'chronos.mail.password', 'chronos.mail.server', 'chronos.mail.user') do |mail_from, mail_password, mail_server, mail_user| %>
 # Mail options
 export CHRONOS_MAIL_OPTIONS="--mail_from "<%= mail_from %>" --mail_password "<%= mail_password %>" --mail_server "<%= mail_server %>" --mail_user "<%= mail_user %>""
-<% if_p('chronos.mail_ssl') do |mail_ssl| %>
-export CHRONOS_MAIL_OPTIONS="$CHRONOS_MAIL_OPTIONS --mail_ssl"
+<% if_p('chronos.mail.ssl') do |mail_ssl| %>
+export CHRONOS_MAIL_OPTIONS="${CHRONOS_MAIL_OPTIONS} --mail_ssl"
 <% end %>
 <% end %>
 
@@ -85,14 +99,30 @@ export CHRONOS_MESOS_TASK_DISK="<%= p('chronos.mesos_task_disk') %>"
 # Amount of memory to request from Mesos for each task (MB)
 export CHRONOS_MESOS_TASK_MEM="<%= p('chronos.mesos_task_mem') %>"
 
+<% if_p('chronos.raven.dsn') do |raven_dsn| %>
+# Raven options
+export CHRONOS_RAVEN_OPTIONS="--raven_dsn "<%= raven_dsn %>""
+<% end %>
+
+# Reconciliation interval in seconds
+export CHRONOS_RECONCILIATION_INTERVAL="<%= p('chronos.reconciliation_interval') %>"
+
 # The look-ahead time for scheduling tasks in seconds
 export CHRONOS_SCHEDULE_HORIZON="<%= p('chronos.schedule_horizon') %>"
+
+<% if_p('chronos.slack.channel', 'chronos.slack.token', 'chronos.slack.url') do |slack_channel, slack_token, slack_url| %>
+# Slack options
+export HRONOS_SLACK_OPTIONS="--slack_channel "<%= slack_channel %>" --slack_token "<%= slack_token %>" --slack_url "<%= slack_url %>""
+<% end %>
+
+# The default epsilon value for tasks in seconds
+export CHRONOS_TASK_EPSILON="<%= p('chronos.task_epsilon') %>"
 
 # The mesos user to run the processes under
 export CHRONOS_MESOS_USER="<%= p('chronos.mesos_user') %>"
 
 # Path in ZooKeeper for storing Chronos state
-export CHRONOS_ZK_STATE="/<%= p('chronos.zk_state') %>"
+export CHRONOS_ZK_PATH="<%= p('chronos.zk_path') %>"
 
 # The timeout for ZooKeeper in milliseconds
 export CHRONOS_ZK_TIMEOUT="<%= p('chronos.zk_timeout') %>"

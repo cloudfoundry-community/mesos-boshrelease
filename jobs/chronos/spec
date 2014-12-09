@@ -2,11 +2,13 @@
 name: chronos
 
 packages:
+  - apr
   - bosh-helpers
-  - java
-  - sasl
-  - mesos
   - chronos
+  - java
+  - mesos
+  - sasl
+  - subversion
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
@@ -24,9 +26,9 @@ properties:
   chronos.java_heap_size:
     description: "Java Heap Size for Chronos"
     default: "2048m"
-  chronos.default_job_owner:
-    description: "Job Owner"
-    default: "bosh@cloudfoundry.com"
+  chronos.cluster_name:
+    description: "The name of the cluster where Chronos is run"
+    default: "Chronos Cluster"
   chronos.disable_after_failures:
     description: "Disables a job after this many failures have occurred"
     default: 0
@@ -36,12 +38,6 @@ properties:
   chronos.failure_retry:
     description: "Number of ms between retries"
     default: 60000
-  chronos.ganglia_group_prefix:
-    description: "Group prefix for Ganglia"
-  chronos.ganglia_host_port:
-    description: "Host and port for Ganglia"
-  chronos.ganglia_reporting_interval:
-    description: "Ganglia reporting interval (seconds)"
   chronos.http_credentials:
     description: "Credentials for accessing the Chronos http service (username:password format)"
     default: "chronos:chronos"
@@ -54,16 +50,6 @@ properties:
   chronos.leader_max_idle_time:
     description: "The look-ahead time for scheduling tasks in milliseconds"
     default: 5000
-  chronos.mail_from:
-    description: "Mail from field"
-  chronos.mail_password:
-    description: "Mail password (for auth)"
-  chronos.mail_server:
-    description: "Address of the mailserver"
-  chronos.mail_ssl:
-    description: "Mail SSL"
-  chronos.mail_user:
-    description: "Mail user (for auth)"
   chronos.enable_checkpoint:
     description: "Enable checkpointing"
     default: true
@@ -82,23 +68,77 @@ properties:
   chronos.mesos_task_mem:
     description: "Amount of memory to request from Mesos for each task (MB)"
     default: 128
+  chronos.reconciliation_interval:
+   description: "Reconciliation interval in seconds"
+   default: 600
   chronos.schedule_horizon:
     description: "The look-ahead time for scheduling tasks in seconds"
+    default: 60
+  chronos.task_epsilon:
+    description: "The default epsilon value for tasks in seconds"
     default: 60
   chronos.mesos_user:
     description: "The mesos user to run the processes under"
     default: "vcap"
-  chronos.zk_state:
+  chronos.zk_path:
     description: "Path in ZooKeeper for storing Chronos state"
-    default: "chronos"
+    default: "/chronos/state"
   chronos.zk_timeout:
     description: "The timeout for ZooKeeper in milliseconds"
     default: 10000
-  mesos.zk_state:
-    description: "Path in ZooKeeper for storing Mesos state"
-    default: "mesos"
+
+  chronos.cassandra.consistency:
+    description: "Consistency to use for Cassandra"
+    default: "ANY"
+  chronos.cassandra.contact_points:
+    description: "Comma separated list of contact points for Cassandra"
+  chronos.cassandra.keyspace:
+    description: "Keyspace to use for Cassandra"
+    default: "metrics"
+  chronos.cassandra.port:
+    description: "Port for Cassandra"
+    default: 9042
+  chronos.cassandra.table:
+    description: "Table to use for Cassandra"
+    default: "chronos"
+  chronos.cassandra.ttl:
+    description: "TTL for records written to Cassandra"
+    default: 31536000
+
+  chronos.graphite.group_prefix:
+    description: "Group prefix for Graphite"
+  chronos.graphite.host_port:
+    description: "Host and port for Graphite"
+  chronos.graphite.reporting_interval:
+    description: "Graphite reporting interval (seconds)"
+    default: 60
+
+  chronos.mail.from:
+    description: "Mail from field"
+  chronos.mail.password:
+    description: "Mail password (for auth)"
+  chronos.mail.server:
+    description: "Address of the mailserver"
+  chronos.mail.ssl:
+    description: "Mail SSL"
+  chronos.mail.user:
+    description: "Mail user (for auth)"
+
+  chronos.raven.dsn:
+    description: "Raven DSN for connecting to a raven or sentry event service"
+
+  chronos.slack.channel:
+    description: "The channel to post to in Slack"
+  chronos.slack.token:
+    description: "Token needed for posting to Slack"
+  chronos.slack.url:
+    description: "Webhook URL for posting to Slack"
+
   zookeeper.servers:
     description: "List of all Apache Zookeeper server host IP/hostnames"
   zookeeper.client_port:
     description: "Port at which the clients will connect to Apache Zookeeper"
     default: 2181
+  mesos.zk_state:
+    description: "Path in ZooKeeper for storing Mesos state"
+    default: "mesos"
