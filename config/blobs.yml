@@ -7,10 +7,6 @@ java/jdk-1.7.0_51.tar.gz:
   object_id: 4de0384e-57e2-454a-a143-22a9a303a5e7
   sha: bee3b085a90439c833ce18e138c9f1a615152891
   size: 138199690
-jenkins/mesos-0.17.0.hpi:
-  object_id: 05342b43-18df-4ddb-84b0-09a5d96174f6
-  sha: 73db0fc28467c37051866911bb38e51409c1b4cd
-  size: 878821
 nginx/nginx-1.4.5.tar.gz:
   object_id: b9c19042-65ba-4cb8-82ae-6675b26171f3
   sha: 96c1aecd314f73a3c30a0db8c39ad15ddacb074e
@@ -23,10 +19,6 @@ sasl/cyrus-sasl-2.1.26.tar.gz:
   object_id: 703c5060-94ae-4aa1-a6c4-7261e1e5ff5e
   sha: d6669fb91434192529bd13ee95737a8a5040241c
   size: 5220231
-jenkins/jenkins-1.532.2.war:
-  object_id: 8c217c24-aaf4-4fea-bf5c-22f49250bce3
-  sha: 38a7756c96a204f75747d8c4b9da510fd884ee36
-  size: 63525132
 maven/apache-maven-3.2.3-bin.tar.gz:
   object_id: 85dfe356-eb82-493b-a648-e3320fbb7c80
   sha: 1ce6641f7dcb4fd5785bedcdca2979da83f6d23f
@@ -107,3 +99,11 @@ chronos/chronos-2.3.0_mesos-0.21.0-SNAPSHOT.jar:
   object_id: 6aba68b3-578d-4f1f-857b-e7a32ccbd2c0
   sha: 3dc301bfe372ceea5556b36878cc1fb46c383b40
   size: 36073539
+jenkins/jenkins-1.580.1.war:
+  object_id: fd1a126e-4fae-47a4-b162-ce7d89e017e5
+  sha: b9320b2c1ea28247f035bbf0f313948e8a735b78
+  size: 68022189
+jenkins/mesos-0.21.0.hpi:
+  object_id: ce0d6aa1-9ff3-498d-8530-b401cbbb1f54
+  sha: 587991a011c8fdf3a21068685e89b19783457a84
+  size: 1922321
