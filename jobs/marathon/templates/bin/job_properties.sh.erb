@@ -5,19 +5,19 @@
 #
 
 # Directory to store the Marathon configuration files
-export MARATHON_CONF_DIR=$JOB_DIR/config
+export MARATHON_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Marathon log files
-export MARATHON_LOG_DIR=$LOG_DIR
+export MARATHON_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Marathon process IDs
-export MARATHON_PID_DIR=$RUN_DIR
+export MARATHON_PID_DIR=${RUN_DIR}
 
 # Directory to store the Marathon data files
-export MARATHON_STORE_DIR=$STORE_DIR
+export MARATHON_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Marathon temp files
-export MARATHON_TMP_DIR=$TMP_DIR
+export MARATHON_TMP_DIR=${TMP_DIR}
 
 # User which will own the Marathon services
 export MARATHON_USER="<%= p('marathon.user') %>"
@@ -36,6 +36,9 @@ export MARATHON_CHECKPOINT="--checkpoint"
 # The failover_timeout for Apache Mesos in seconds
 export MARATHON_FAILOVER_TIMEOUT="<%= p('marathon.failover_timeout') %>"
 
+# Framework name to register with Mesos
+export MARATHON_FRAMEWORK_NAME="<%= p('marathon.framework_name') %>"
+
 <% if_p('marathon.enable_ha') do |enable_ha| %>
 # Enable running Marathon in HA mode with leader election
 export MARATHON_HA="--ha"
@@ -50,11 +53,20 @@ export MARATHON_HTTP_PORT="<%= p('marathon.http_port') %>"
 # The port Marathon will listen on for HTTPS requests
 export MARATHON_HTTPS_PORT="<%= p('marathon.https_port') %>"
 
+# Max port number to use when Marathon assigns ports to apps
+export MARATHON_LOCAL_PORT_MAX="<%= p('marathon.local_port_max') %>"
+
 # Min port number to use when Marathon assigns ports to apps
 export MARATHON_LOCAL_PORT_MIN="<%= p('marathon.local_port_min') %>"
 
-# Max port number to use when Marathon assigns ports to apps
-export MARATHON_LOCAL_PORT_MAX="<%= p('marathon.local_port_max') %>"
+# Maximum time, in milliseconds, to wait for persistent storage operations to complete
+export MARATHON_STORE_TIMEOUT="<%= p('marathon.store_timeout') %>"
+
+<% if_p('marathon.framework_principal', 'marathon.framework_secret') do |framework_principal, framework_secret| %>
+# Mesos Framework principal and secret
+export MARATHON_AUTHENTICATION_PRINCIPAL="--mesos_authentication_principal <%= framework_principal %>"
+export MARATHON_AUTHENTICATION_SECRET="--mesos_authentication_secret_file <%= framework_secret %>"
+<% end %>
 
 # Mesos role for this framework
 export MARATHON_MESOS_ROLE="<%= p('marathon.mesos_role') %>"
@@ -76,4 +88,3 @@ export MARATHON_ZK_TIMEOUT="<%= p('marathon.zk_timeout') %>"
 
 # Apache Mesos Native Library
 export MESOS_NATIVE_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so
-

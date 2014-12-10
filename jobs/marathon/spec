@@ -2,11 +2,13 @@
 name: marathon
 
 packages:
+  - apr
   - bosh-helpers
-  - java
-  - sasl
-  - mesos
   - marathon
+  - java
+  - mesos
+  - sasl
+  - subversion
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
@@ -30,6 +32,13 @@ properties:
   marathon.failover_timeout:
     description: "The failover_timeout for Apache Mesos in seconds"
     default: 604800
+  marathon.framework_name:
+    description: "Framework name to register with Mesos"
+    default: "Marathon"
+  marathon.framework_principal:
+    description: "Mesos Framework principal"
+  marathon.framework_secret:
+    description: "Mesos Framework secret"
   marathon.enable_ha:
     description: "Enable running Marathon in HA mode with leader election"
     default: true
@@ -42,12 +51,15 @@ properties:
   marathon.https_port:
     description: "The port Marathon will listen on for HTTPS requests"
     default: 443
-  marathon.local_port_min:
-    description: "Min port number to use when Marathon assigns ports to apps"
-    default: 10000
   marathon.local_port_max:
     description: "Max port number to use when Marathon assigns ports to apps"
-    default: 20000
+    default: 2000
+  marathon.local_port_min:
+    description: "Min port number to use when Marathon assigns ports to apps"
+    default: 100000
+  marathon.store_timeout:
+    description: "Maximum time, in milliseconds, to wait for persistent storage operations to complete"
+    default: 2000
   marathon.mesos_role:
     description: "Mesos role for this framework"
     default: "*"
@@ -69,12 +81,12 @@ properties:
   marathon.zk_timeout:
     description: "The timeout for ZooKeeper in milliseconds"
     default: 10000
-  mesos.zk_state:
-    description: "Path in ZooKeeper for storing Apache Mesos state"
-    default: "mesos"
+
   zookeeper.servers:
     description: "List of all Apache Zookeeper server host IP/hostnames"
   zookeeper.client_port:
     description: "Port at which the clients will connect to Apache Zookeeper"
     default: 2181
-
+  mesos.zk_state:
+    description: "Path in ZooKeeper for storing Apache Mesos state"
+    default: "mesos"

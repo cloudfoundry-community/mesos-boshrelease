@@ -1,2 +1,1 @@
 zk://<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>/<%= p('marathon.zk_state') %>
-
