@@ -2,4 +2,4 @@
 name: marathon
 dependencies: {}
 files:
-  - marathon/marathon-0.7.0-RC4.tgz 
+  - marathon/marathon-0.7.6.tgz

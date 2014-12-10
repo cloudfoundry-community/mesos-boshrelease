@@ -18,4 +18,3 @@ fi
 # Copy Marathon package
 echo "Copying Marathon ${MARATHON_VERSION}..."
 cp -a ${BOSH_COMPILE_TARGET}/marathon-${MARATHON_VERSION}/marathon-${MARATHON_VERSION}.jar ${BOSH_INSTALL_TARGET}/marathon.jar
-

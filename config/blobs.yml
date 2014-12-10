@@ -55,10 +55,6 @@ ruby/yaml-0.1.6.tar.gz:
   object_id: c8e48f85-d597-4993-bf99-d903dd8d80a9
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
   size: 503012
-marathon/marathon-0.7.0-RC4.tgz:
-  object_id: f675f871-c7f6-433d-a5c4-ab04fcf7060c
-  sha: 18cd29b4a4a247db9f92fd472e81b1136eb04946
-  size: 63361758
 docker/bridge-utils-1.5.tar.gz:
   object_id: f220c677-8e73-4e6c-b5e7-adbff9320683
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
@@ -107,3 +103,7 @@ jenkins/mesos-0.21.0.hpi:
   object_id: ce0d6aa1-9ff3-498d-8530-b401cbbb1f54
   sha: 587991a011c8fdf3a21068685e89b19783457a84
   size: 1922321
+marathon/marathon-0.7.6.tgz:
+  object_id: badd7528-6f3d-468c-9a7e-024c711d08e9
+  sha: dfae189011848cd5c09d93bd9e182846da87c55b
+  size: 52223575
