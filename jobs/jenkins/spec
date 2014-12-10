@@ -2,12 +2,14 @@
 name: jenkins
 
 packages:
+  - apr
   - bosh-helpers
   - java
-  - sasl
-  - mesos
-  - nginx
   - jenkins
+  - nginx
+  - mesos
+  - sasl
+  - subversion
 
 templates:
   bin/jenkins_ctl.erb: bin/jenkins_ctl
@@ -51,15 +53,23 @@ properties:
   jenkins.prefix:
     description: "Prefix to append to Jenkins URL"
     default: ""
+
   jenkins.mesos.cluster_name:
     description: "Human readable name for the Jenkins Mesos cluster"
     default: "Jenkins on Mesos Cluster"
   jenkins.mesos.framework_name:
     description: "Mesos Framework name"
-    default: "Jenkins Scheduler"
+    default: "Jenkins"
+  jenkins.mesos.framework_principal:
+    description: "Mesos Framework principal"
+  jenkins.mesos.framework_secret:
+    description: "Mesos Framework secret"
   jenkins.mesos.enable_checkpoint:
     description: "Enable checkpointing of Jenkins tasks"
     default: true
+  jenkins.mesos.on_demand_registration:
+    description: "Enable to make Jenkins register as a framework when builds need to be performed. And, disconnect otherwise."
+    default: false
   jenkins.mesos.slave_cpus:
     description: "Jenkins Slave CPUs"
     default: 0.1
@@ -78,6 +88,12 @@ properties:
   jenkins.mesos.idle_termination:
     description: "Idle Termination Minutes"
     default: 3
+  jenkins.mesos.jvm_args:
+    description: "Additional Jenkins Slave JVM arguments"
+    default: "-Xms16m -XX:+UseConcMarkSweepGC -Djava.net.preferIPv4Stack=true"
+  jenkins.mesos.jnlp_args:
+    description: "Additional Jenkins Slave Agent JNLP arguments"
+
   jenkins.nginx.user:
     description: "User which will own the Nginx services"
     default: "root"
@@ -120,7 +136,8 @@ properties:
     description: "SSL Certificate (PEM encoded)"
   jenkins.nginx.ssl_only:
     description: "Enable only HTTPS requests"
-    default: true
+    default: false
+
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Mesos state"
     default: "mesos"

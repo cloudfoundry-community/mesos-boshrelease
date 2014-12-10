@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
-  <version>1.532.2</version>
+  <version>1.580.1</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -15,45 +15,30 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <org.jenkinsci.plugins.mesos.MesosCloud plugin="mesos@0.3.0-SNAPSHOT">
+    <org.jenkinsci.plugins.mesos.MesosCloud plugin="mesos@0.6.0-SNAPSHOT">
       <name>MesosCloud</name>
       <nativeLibraryPath>/var/vcap/packages/mesos/lib/libmesos.so</nativeLibraryPath>
-      <%
-        mesos_servers = []
-        p('zookeeper.servers').each do |server|
-          mesos_servers << "#{server}:#{p('zookeeper.client_port')}/#{p('mesos.zk_state')}"
-        end
-      %>
-      <master>zk://<%= mesos_servers.join(',') %></master>
+      <master>zk://<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>/<%= p('mesos.zk_state') %></master>
       <description><%= p('jenkins.mesos.cluster_name') %></description>
       <frameworkName><%= p('jenkins.mesos.framework_name') %></frameworkName>
+      <principal><%= p('jenkins.mesos.framework_principal', '') %></principal>
+      <secret><%= p('jenkins.mesos.framework_secret', '') %></secret>
       <checkpoint><%= p('jenkins.mesos.enable_checkpoint') %></checkpoint>
-      <slaveCpus><%= p('jenkins.mesos.slave_cpus') %></slaveCpus>
-      <slaveMem><%= p('jenkins.mesos.slave_mem') %></slaveMem>
-      <maxExecutors><%= p('jenkins.mesos.max_executors') %></maxExecutors>
-      <executorCpus><%= p('jenkins.mesos.executor_cpus') %></executorCpus>
-      <executorMem><%= p('jenkins.mesos.executor_mem') %></executorMem>
-      <idleTerminationMinutes><%= p('jenkins.mesos.idle_termination') %></idleTerminationMinutes>
-      <labelString>mesos</labelString>
-      <slaveAttributes>
-        <nullObject>false</nullObject>
-        <properties class="org.apache.commons.collections.map.ListOrderedMap" serialization="custom">
-          <unserializable-parents/>
-          <org.apache.commons.collections.map.ListOrderedMap>
-            <default>
-              <insertOrder>
-                <string>clusterType</string>
-              </insertOrder>
-            </default>
-            <map>
-              <entry>
-                <string>clusterType</string>
-                <string>jenkinsSlave</string>
-              </entry>
-            </map>
-          </org.apache.commons.collections.map.ListOrderedMap>
-        </properties>
-      </slaveAttributes>
+      <onDemandRegistration><%= p('jenkins.mesos.on_demand_registration') %></onDemandRegistration>
+      <slaveInfos>
+        <org.jenkinsci.plugins.mesos.MesosSlaveInfo>
+          <slaveCpus><%= p('jenkins.mesos.slave_cpus') %></slaveCpus>
+          <slaveMem><%= p('jenkins.mesos.slave_mem') %></slaveMem>
+          <maxExecutors><%= p('jenkins.mesos.max_executors') %></maxExecutors>
+          <executorCpus><%= p('jenkins.mesos.executor_cpus') %></executorCpus>
+          <executorMem><%= p('jenkins.mesos.executor_mem') %></executorMem>
+          <remoteFSRoot>jenkins</remoteFSRoot>
+          <idleTerminationMinutes><%= p('jenkins.mesos.idle_termination') %></idleTerminationMinutes>
+          <jvmArgs><%= p('jenkins.mesos.jvm_args', '') %></jvmArgs>
+          <jnlpArgs><%= p('jenkins.mesos.jnlp_args', '') %></jnlpArgs>
+          <labelString>mesos</labelString>
+        </org.jenkinsci.plugins.mesos.MesosSlaveInfo>
+      </slaveInfos>
     </org.jenkinsci.plugins.mesos.MesosCloud>
   </clouds>
   <slaves/>

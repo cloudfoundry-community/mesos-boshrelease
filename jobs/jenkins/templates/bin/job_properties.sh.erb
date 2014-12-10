@@ -5,25 +5,25 @@
 #
 
 # Directory to store the Jenkins configuration files
-export JENKINS_CONF_DIR=$JOB_DIR/config
+export JENKINS_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Jenkins log files
-export JENKINS_LOG_DIR=$LOG_DIR
+export JENKINS_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Jenkins process IDs
-export JENKINS_PID_DIR=$RUN_DIR
+export JENKINS_PID_DIR=${RUN_DIR}
 
 # Directory to store the Jenkins data files
-export JENKINS_STORE_DIR=$STORE_DIR
+export JENKINS_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Jenkins temp files
-export JENKINS_TMP_DIR=$TMP_DIR
+export JENKINS_TMP_DIR=${TMP_DIR}
 
 # Jenkins home directory
-export JENKINS_HOME=$JENKINS_STORE_DIR
+export JENKINS_HOME=${JENKINS_STORE_DIR}
 
 # Jenkins plugins directory
-export JENKINS_PLUGINS_DIR=$JENKINS_STORE_DIR/plugins
+export JENKINS_PLUGINS_DIR=${JENKINS_STORE_DIR}/plugins
 
 # User which will own the Jenkins services
 export JENKINS_USER="<%= p('jenkins.user') %>"
@@ -63,22 +63,22 @@ export MESOS_NATIVE_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so
 #
 
 # Directory to store the Nginx configuration files
-export NGINX_CONF_DIR=$JOB_DIR/config
+export NGINX_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Nginx log files
-export NGINX_LOG_DIR=$LOG_DIR
+export NGINX_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Nginx process IDs
-export NGINX_PID_DIR=$RUN_DIR
+export NGINX_PID_DIR=${RUN_DIR}
 
 # Directory to store the Nginx data files
-export NGINX_STORE_DIR=$STORE_DIR
+export NGINX_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Nginx temp files
-export NGINX_TMP_DIR=$TMP_DIR
+export NGINX_TMP_DIR=${TMP_DIR}
 
 # Directory to store the Nginx SSL certificates
-export NGINX_CERTS_DIR=$NGINX_CONF_DIR/ssl
+export NGINX_CERTS_DIR=${NGINX_CONF_DIR}/ssl
 
 # User which will own the Nginx services
 export NGINX_USER="<%= p('jenkins.nginx.user') %>"
