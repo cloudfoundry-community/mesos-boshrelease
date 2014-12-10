@@ -7,14 +7,6 @@ java/jdk-1.7.0_51.tar.gz:
   object_id: 4de0384e-57e2-454a-a143-22a9a303a5e7
   sha: bee3b085a90439c833ce18e138c9f1a615152891
   size: 138199690
-nginx/nginx-1.4.5.tar.gz:
-  object_id: b9c19042-65ba-4cb8-82ae-6675b26171f3
-  sha: 96c1aecd314f73a3c30a0db8c39ad15ddacb074e
-  size: 768728
-nginx/pcre-8.34.tar.gz:
-  object_id: 84641be9-6be7-4da1-9206-7b850a4eac6e
-  sha: d46e537337ee70df19084001a4b6815b3d69fe6c
-  size: 1933734
 sasl/cyrus-sasl-2.1.26.tar.gz:
   object_id: 703c5060-94ae-4aa1-a6c4-7261e1e5ff5e
   sha: d6669fb91434192529bd13ee95737a8a5040241c
@@ -107,3 +99,11 @@ marathon/marathon-0.7.6.tgz:
   object_id: badd7528-6f3d-468c-9a7e-024c711d08e9
   sha: dfae189011848cd5c09d93bd9e182846da87c55b
   size: 52223575
+nginx/nginx-1.6.2.tar.gz:
+  object_id: 7cc57abb-995c-4a8b-bab4-be5c7a08247c
+  sha: 1a5458bc15acf90eea16353a1dd17285cf97ec35
+  size: 804164
+nginx/pcre-8.36.tar.gz:
+  object_id: 062346e0-2bb0-4ba2-b2e5-1d6728b21fc9
+  sha: fb537757756818133d8157ec878bc11f5a93ef4d
+  size: 2009464
