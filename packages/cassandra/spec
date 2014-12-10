@@ -2,4 +2,4 @@
 name: cassandra
 dependencies: {}
 files:
-  - cassandra/cassandra-mesos-2.0.5-1.tgz
+  - cassandra/cassandra-mesos-2.1.2-1.tgz
