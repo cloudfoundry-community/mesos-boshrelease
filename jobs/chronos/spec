@@ -82,7 +82,7 @@ properties:
     default: "vcap"
   chronos.zk_path:
     description: "Path in ZooKeeper for storing Chronos state"
-    default: "/chronos/state"
+    default: "/chronos"
   chronos.zk_timeout:
     description: "The timeout for ZooKeeper in milliseconds"
     default: 10000
