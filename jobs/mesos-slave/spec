@@ -104,6 +104,7 @@ properties:
   mesos.slave.switch_user:
     description: "Whether to run tasks as the user who submitted them rather than the user running the slave"
     default: false
+
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"

@@ -63,7 +63,7 @@ case $1 in
            --slave_reregister_timeout="${MESOS_MASTER_SLAVE_REREGISTER_TIMEOUT}" \
            --user_sorter="${MESOS_MASTER_USER_SORTER}" \
            --weights="${MESOS_MASTER_WEIGHTS}" \
-           --whitelist=file://${MESOS_MASTER_CONF_DIR}/slaves_whitelist.cfg \
+           ${MESOS_MASTER_SLAVES_WHITELIST:-} \
            --work_dir="${MESOS_MASTER_TMP_DIR}" \
            --zk=file://${MESOS_MASTER_CONF_DIR}/zoo_mesos.cfg \
            >>${MESOS_MASTER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \

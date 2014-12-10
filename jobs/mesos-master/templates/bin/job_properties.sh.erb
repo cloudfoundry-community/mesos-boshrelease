@@ -90,3 +90,8 @@ export MESOS_MASTER_USER_SORTER="<%= p('mesos.master.user_sorter') %>"
 
 # A comma seperated list of role/weight pairs of the form 'role=weight,role=weight'
 export MESOS_MASTER_WEIGHTS="<%= p('mesos.master.weights') %>"
+
+<% if p('mesos.master.slaves_whitelist', []).any? %>
+# File containing the list of slaves to advertise offers for
+export MESOS_MASTER_SLAVES_WHITELIST="--whitelist=file://${MESOS_MASTER_CONF_DIR}/slaves_whitelist.cfg"
+<% end %>

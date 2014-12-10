@@ -90,7 +90,8 @@ properties:
     default: ""
   mesos.master.slaves_whitelist:
     description: "List of slaves to advertise offers for"
-    default: ["*"]
+    default: []
+
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"
