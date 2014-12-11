@@ -15,10 +15,6 @@ zookeeper/zookeeper-3.4.6.tar.gz:
   object_id: 1a0f69b8-62b8-41bb-b157-cd68632f162f
   sha: 2a9e53f5990dfe0965834a525fbcad226bf93474
   size: 17699306
-node/node-v0.10.32-linux-x64.tar.gz:
-  object_id: a50316cd-b91e-4b1b-811b-00cca8e8af4e
-  sha: fadefc15a992d21bd19d0d3ec174390d1e7fcb72
-  size: 5643126
 scala/scala-2.11.2.tgz:
   object_id: 909350c4-42a1-4b13-9488-3f52ba0040db
   sha: 904e9ee3bb96e8350b1e0f2502a704f836c0cdf1
@@ -107,3 +103,7 @@ git/git-2.2.0.tar.gz:
   object_id: 5bd4a33a-ed9e-476a-8d73-16b90dba9e71
   sha: b59ad3f9e9c933960b064e31d793757c145be83a
   size: 5157176
+node/node-v0.10.33-linux-x64.tar.gz:
+  object_id: ea00a173-65a4-440c-8b90-b21f4ff29676
+  sha: 4eba69caf7368d7f388700eb02996f85b06f457a
+  size: 5645609
