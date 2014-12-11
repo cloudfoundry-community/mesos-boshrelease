@@ -16,7 +16,7 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/slave_ctl.erb: bin/slave_ctl
+  bin/mesos_slave_ctl.erb: bin/mesos_slave_ctl
   config/framework_credentials.cfg.erb: config/framework_credentials.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 

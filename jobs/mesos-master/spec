@@ -11,7 +11,7 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/master_ctl.erb: bin/master_ctl
+  bin/mesos_master_ctl.erb: bin/mesos_master_ctl
   config/framework_credentials.cfg.erb: config/framework_credentials.cfg
   config/slaves_whitelist.cfg.erb: config/slaves_whitelist.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
