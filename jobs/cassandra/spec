@@ -30,7 +30,7 @@ properties:
     default: "2048m"
   cassandra.cluster_name:
     description: "Human readable name for the Apache Cassandra cluster"
-    default: "Cassandra Cluster"
+    default: "Cluster"
   cassandra.hw_nodes:
     description: "No of HW nodes we want it to run on"
     default: 1
