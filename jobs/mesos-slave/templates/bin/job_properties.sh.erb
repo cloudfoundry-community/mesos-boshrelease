@@ -23,7 +23,7 @@ export MESOS_SLAVE_TMP_DIR=${TMP_DIR}
 export MESOS_SLAVE_USER="<%= p('mesos.slave.user') %>"
 
 # Group which will own the Apache Mesos Slave services
-export MESOS_SLAVE_GROUP="<%= p('mesos.slave.user') %>"
+export MESOS_SLAVE_GROUP="<%= p('mesos.slave.group') %>"
 
 # Apache Mesos Home directory
 export MESOS_HOME=/var/vcap/packages/mesos
