@@ -6,8 +6,8 @@ packages:
   - bosh-helpers
   - java
   - jenkins
-  - nginx
   - mesos
+  - nginx
   - sasl
   - subversion
 

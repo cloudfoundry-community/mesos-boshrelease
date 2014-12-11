@@ -4,9 +4,14 @@ name: mesos-slave
 packages:
   - apr
   - bosh-helpers
+  - git
+  - golang
   - java
   - mesos
+  - node
+  - ruby
   - sasl
+  - scala
   - subversion
 
 templates:

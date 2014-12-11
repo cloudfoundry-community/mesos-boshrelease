@@ -4,8 +4,8 @@ name: marathon
 packages:
   - apr
   - bosh-helpers
-  - marathon
   - java
+  - marathon
   - mesos
   - sasl
   - subversion
