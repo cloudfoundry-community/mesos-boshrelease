@@ -2,7 +2,7 @@
 name: ruby
 dependencies: {}
 files:
-  - ruby/bundler-1.7.3.gem
-  - ruby/ruby-2.1.2.tar.gz
-  - ruby/rubygems-2.4.1.tgz
+  - ruby/bundler-1.7.9.gem
+  - ruby/ruby-2.1.5.tar.gz
+  - ruby/rubygems-2.4.5.tgz
   - ruby/yaml-0.1.6.tar.gz

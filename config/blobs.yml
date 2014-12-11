@@ -15,18 +15,6 @@ zookeeper/zookeeper-3.4.6.tar.gz:
   object_id: 1a0f69b8-62b8-41bb-b157-cd68632f162f
   sha: 2a9e53f5990dfe0965834a525fbcad226bf93474
   size: 17699306
-ruby/ruby-2.1.2.tar.gz:
-  object_id: 14bb5056-36bb-491f-8785-0e51cd04aee2
-  sha: b818d56b4638f1949239038623b761517d4a5686
-  size: 15096114
-ruby/rubygems-2.4.1.tgz:
-  object_id: aaf919dd-5f7a-4c87-8660-890f53d8f4c7
-  sha: 016b98d8ffca3b1af4c797788d75c1a67f38d41d
-  size: 437226
-ruby/bundler-1.7.3.gem:
-  object_id: 51f3077b-7811-41c3-885f-9aa4b6a38f6e
-  sha: 618fdf76f35e873e490e15cdac87be7f7247f81b
-  size: 299520
 ruby/yaml-0.1.6.tar.gz:
   object_id: c8e48f85-d597-4993-bf99-d903dd8d80a9
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
@@ -107,3 +95,15 @@ scala/scala-2.11.4.tgz:
   object_id: 6cb76410-2c4a-48c9-ae98-19a0140b8d55
   sha: a6d319b26ccabe9c609fadebc32e797bf9cb1084
   size: 26509669
+ruby/bundler-1.7.9.gem:
+  object_id: 49aea4b6-0c1c-4edd-b1c0-9d4fd57aa83d
+  sha: b5ab47356667085f4c696fc691b1632169ac2b5d
+  size: 305664
+ruby/ruby-2.1.5.tar.gz:
+  object_id: 33952d5b-7a0c-443c-b0d1-06a175df0162
+  sha: 9c0a238bd7839a4b51871641945a3da90997b8c2
+  size: 15127433
+ruby/rubygems-2.4.5.tgz:
+  object_id: d8578446-943a-42c8-908f-8fa3c31c6f65
+  sha: a7122c93b0f6b4aac5291772d5ed973a09c244cb
+  size: 446665
