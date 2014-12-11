@@ -107,3 +107,7 @@ ruby/rubygems-2.4.5.tgz:
   object_id: d8578446-943a-42c8-908f-8fa3c31c6f65
   sha: a7122c93b0f6b4aac5291772d5ed973a09c244cb
   size: 446665
+golang/go1.3.3.linux-amd64.tar.gz:
+  object_id: 36ed8146-7c46-4b35-80a1-7ce7532d766b
+  sha: 14068fbe349db34b838853a7878621bbd2b24646
+  size: 53204098
