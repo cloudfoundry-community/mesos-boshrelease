@@ -5,20 +5,20 @@
 #
 
 # Directory to store the Apache Cassandra configuration files
-export CASSANDRA_CONF_DIR=$JOB_DIR/conf
-export CASSANDRA_CONF=$CASSANDRA_CONF_DIR
+export CASSANDRA_CONF_DIR=${JOB_DIR}/config
+export CASSANDRA_CONF=${CASSANDRA_CONF_DIR}
 
 # Directory to store the Apache Cassandra log files
-export CASSANDRA_LOG_DIR=$LOG_DIR
+export CASSANDRA_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Apache Cassandra process IDs
-export CASSANDRA_PID_DIR=$RUN_DIR
+export CASSANDRA_PID_DIR=${RUN_DIR}
 
 # Directory to store the Apache Cassandra data files
-export CASSANDRA_STORE_DIR=$STORE_DIR
+export CASSANDRA_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Apache Cassandra temp files
-export CASSANDRA_TMP_DIR=$TMP_DIR
+export CASSANDRA_TMP_DIR=${TMP_DIR}
 
 # User which will own the Apache Cassandra services
 export CASSANDRA_USER="<%= p('cassandra.user') %>"
