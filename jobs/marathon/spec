@@ -65,7 +65,7 @@ properties:
     default: "*"
   marathon.mesos_user:
     description: "Mesos user for this framework"
-    default: "role"
+    default: "vcap"
   marathon.reconciliation_initial_delay:
     description: "This is the length of time, in milliseconds, before Marathon begins to periodically perform task reconciliation operations"
     default: 30000
