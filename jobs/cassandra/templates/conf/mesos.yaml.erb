@@ -15,6 +15,11 @@ java.library.path: '/var/vcap/packages/mesos/lib/libmesos.so'
 # (We can't start multiple Cassandra nodes of the same cluster on the same HW node due to port conflicts)
 cassandra.noOfHwNodes: <%= p('cassandra.hw_nodes') %>
 
+# Minimum no of Seed nodes we want it to run on
+# Driver will block until we have enough seed nodes
+# Must be equal or less than cassandra.noOfHwNodes
+cassandra.minNoOfSeedNodes: <%= p('cassandra.seed_nodes') %>
+
 # Mesos resource requests
 resource.cpus: <%= p('cassandra.mesos.resource_cpus') %>
 resource.mem: <%= p('cassandra.mesos.resource_mem') %>

@@ -34,6 +34,9 @@ properties:
   cassandra.hw_nodes:
     description: "No of HW nodes we want it to run on"
     default: 1
+  cassandra.seed_nodes:
+    description: "How many minimum no of seed nodes we want to configure when running Cassandra cluster"
+    default: 1
   cassandra.mesos.executor_uri:
     description: "Apache Cassandra on Mesos download location"
     default: "http://downloads.mesosphere.io/cassandra/cassandra-mesos-2.1.2-1.tgz"
