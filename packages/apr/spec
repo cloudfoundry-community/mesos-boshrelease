@@ -2,5 +2,5 @@
 name: apr
 dependencies: {}
 files:
-  - apr/apr-1.5.1.tar.gz
+  - apr/apr-1.5.2.tar.gz
   - apr/apr-util-1.5.4.tar.gz

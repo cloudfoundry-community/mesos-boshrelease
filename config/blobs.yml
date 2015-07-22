@@ -31,10 +31,6 @@ mesos/mesos-0.21.0.tar.gz:
   object_id: 3ee3c0ec-f33f-4cb8-b0e5-9b268f5bb0eb
   sha: 52cc62bd83903f42c289ecb647368881f918fa02
   size: 28140492
-apr/apr-1.5.1.tar.gz:
-  object_id: 363acf5a-ae19-4b10-9975-04776f2e7620
-  sha: 9caa83e3f50f3abc9fab7c4a3f2739a12b14c3a3
-  size: 1020833
 apr/apr-util-1.5.4.tar.gz:
   object_id: 4da12d84-1014-4b5e-b571-4097fdab27bf
   sha: 72cc3ac693b52fb831063d5c0de18723bc8e0095
@@ -111,3 +107,7 @@ maven/apache-maven-3.3.3-bin.tar.gz:
   object_id: 13edec60-bdc1-4e59-849e-9a1817194264
   sha: c8f257dce3381d9d8c420168a6df0fa25664337c
   size: 8042383
+apr/apr-1.5.2.tar.gz:
+  object_id: e6340707-fabd-4fa3-a759-1c0a75ff5ced
+  sha: 2ef2ac9a8de7f97f15ef32cddf1ed7325163d84c
+  size: 1031613
