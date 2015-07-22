@@ -2,4 +2,4 @@
 name: maven
 dependencies: {}
 files:
-  - maven/apache-maven-3.2.3-bin.tar.gz
+  - maven/apache-maven-3.3.3-bin.tar.gz

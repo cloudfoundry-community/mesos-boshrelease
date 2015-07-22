@@ -7,10 +7,6 @@ sasl/cyrus-sasl-2.1.26.tar.gz:
   object_id: 703c5060-94ae-4aa1-a6c4-7261e1e5ff5e
   sha: d6669fb91434192529bd13ee95737a8a5040241c
   size: 5220231
-maven/apache-maven-3.2.3-bin.tar.gz:
-  object_id: 85dfe356-eb82-493b-a648-e3320fbb7c80
-  sha: 1ce6641f7dcb4fd5785bedcdca2979da83f6d23f
-  size: 6956162
 zookeeper/zookeeper-3.4.6.tar.gz:
   object_id: 1a0f69b8-62b8-41bb-b157-cd68632f162f
   sha: 2a9e53f5990dfe0965834a525fbcad226bf93474
@@ -111,3 +107,7 @@ golang/go1.3.3.linux-amd64.tar.gz:
   object_id: 36ed8146-7c46-4b35-80a1-7ce7532d766b
   sha: 14068fbe349db34b838853a7878621bbd2b24646
   size: 53204098
+maven/apache-maven-3.3.3-bin.tar.gz:
+  object_id: 13edec60-bdc1-4e59-849e-9a1817194264
+  sha: c8f257dce3381d9d8c420168a6df0fa25664337c
+  size: 8042383
