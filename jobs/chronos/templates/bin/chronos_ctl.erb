@@ -35,7 +35,7 @@ case $1 in
            -Xms"${CHRONOS_JAVA_HEAP_SIZE}" \
            -Dfile.encoding=UTF-8 \
            -Djava.io.tmpdir=${CHRONOS_TMP_DIR} \
-           -cp /var/vcap/packages/chronos/chronos.jar com.airbnb.scheduler.Main \
+           -cp /var/vcap/packages/chronos/chronos.jar org.apache.mesos.chronos.scheduler.Main \
            ${CHRONOS_CASSANDRA_OPTIONS:-} \
            --cluster_name "${CHRONOS_CLUSTER_NAME}" \
            --disable_after_failures "${CHRONOS_DISABLE_AFTER_FAILURES}" \
