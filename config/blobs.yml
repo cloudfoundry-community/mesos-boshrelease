@@ -31,14 +31,6 @@ apr/apr-util-1.5.4.tar.gz:
   object_id: 4da12d84-1014-4b5e-b571-4097fdab27bf
   sha: 72cc3ac693b52fb831063d5c0de18723bc8e0095
   size: 874044
-sqlite/sqlite-amalgamation-3080703.zip:
-  object_id: d087e00a-e7c6-4b54-a604-5093a56476b0
-  sha: eccc4873e4af3f1ef117ff5b89362eb85c1eb594
-  size: 1547471
-subversion/subversion-1.8.10.tar.gz:
-  object_id: 2024e091-7afe-42c8-bf8b-f7b5ec6c6191
-  sha: 8e1e1e5fd97c3f575a81d66232c62dc902257a17
-  size: 9331079
 docker/docker-1.3.2:
   object_id: 640cb6ea-d172-42b7-b40d-867cac47bf1b
   sha: d22fa70f621654fc69c37fb41168034d5f9d1f90
@@ -111,3 +103,11 @@ scala/scala-2.11.7.tgz:
   object_id: 84821e4d-4134-4230-86ae-f2d40e18de67
   sha: 33de6d4bd3423be9e02465b842b9afc635e7cf0f
   size: 28460530
+sqlite/sqlite-amalgamation-3081002.zip:
+  object_id: e0d2f988-9711-49f8-a0ee-13974f0e51da
+  sha: 9ad3b477de04cc480fc0f7f1829c322c525f642d
+  size: 1596554
+subversion/subversion-1.8.13.tar.gz:
+  object_id: c9517065-b6a6-4f9c-8e3e-fbdfd8fe58b9
+  sha: 437cf662b7ed27d2254aa7ca334fdd74b49262ef
+  size: 9326793
