@@ -6,7 +6,6 @@ This BOSH release includes the following [Apache Mesos](http://mesos.apache.org/
 
 * [Airbnb Chronos](http://airbnb.github.io/chronos/): A distributed and fault-tolerant scheduler
 * [Mesosphere Marathon](https://github.com/mesosphere/marathon): An Apache Mesos framework for long-running services
-* [Apache Cassandra](http://cassandra.apache.org/): An open source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure
 * [Jenkins](http://jenkins-ci.org/): An extendable open source continuous integration server
 
 ## Disclaimer

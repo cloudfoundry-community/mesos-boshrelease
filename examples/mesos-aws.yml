@@ -3,7 +3,6 @@
 <% num_marathons = 2 %>
 <% num_chronos = 2 %>
 <% num_jenkins = 1 %>
-<% num_cassandras = 1 %>
 <% num_slaves = 3 %>
 <% deployment_name = "mesos-aws" %>
 <% os = "ubuntu" %>
@@ -83,15 +82,6 @@ resource_pools:
     cloud_properties:
       instance_type: m1.medium
 
-  - name: cassandra
-    network: default
-    size: <%= num_cassandras %>
-    stemcell:
-      name: bosh-aws-xen-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: m1.medium
-
   - name: slave
     network: default
     size: <%= num_slaves %>
@@ -143,15 +133,6 @@ jobs:
       - name: jenkins
     instances: <%= num_jenkins %>
     resource_pool: jenkins
-    networks:
-      - name: default
-        default: [dns, gateway]
-
-  - name: cassandra
-    templates:
-      - name: cassandra
-    instances: <%= num_cassandras %>
-    resource_pool: cassandra
     networks:
       - name: default
         default: [dns, gateway]
