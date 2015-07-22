@@ -51,14 +51,6 @@ marathon/marathon-0.7.6.tgz:
   object_id: badd7528-6f3d-468c-9a7e-024c711d08e9
   sha: dfae189011848cd5c09d93bd9e182846da87c55b
   size: 52223575
-nginx/nginx-1.6.2.tar.gz:
-  object_id: 7cc57abb-995c-4a8b-bab4-be5c7a08247c
-  sha: 1a5458bc15acf90eea16353a1dd17285cf97ec35
-  size: 804164
-nginx/pcre-8.36.tar.gz:
-  object_id: 062346e0-2bb0-4ba2-b2e5-1d6728b21fc9
-  sha: fb537757756818133d8157ec878bc11f5a93ef4d
-  size: 2009464
 cassandra/cassandra-mesos-2.1.2-1.tgz:
   object_id: 20c79a62-532e-4e2f-9cf4-fbc8094262d9
   sha: 781bd07a2d98dafe0882853900bc232bf6768b67
@@ -111,3 +103,11 @@ ruby/ruby-2.1.6.tar.gz:
   object_id: ec53ce17-06fe-48df-ba7b-ba0e5c345ac9
   sha: 426289b6647ce35ad101091825b6e7e5fce207f3
   size: 15141710
+nginx/nginx-1.8.0.tar.gz:
+  object_id: 496c5d65-8e7b-4d2b-887f-0be87ea97c5a
+  sha: 12bad312764feae50246685ab2e74512d1aa9b2f
+  size: 832104
+nginx/pcre-8.37.tar.gz:
+  object_id: 702e6c3a-690f-4b03-9352-bc619ebb5e6a
+  sha: 4a24a20c61347d8da4edc86d5475aaf70ac146bb
+  size: 2041593
