@@ -39,10 +39,6 @@ chronos/chronos-2.3.0_mesos-0.21.0-SNAPSHOT.jar:
   object_id: 6aba68b3-578d-4f1f-857b-e7a32ccbd2c0
   sha: 3dc301bfe372ceea5556b36878cc1fb46c383b40
   size: 36073539
-marathon/marathon-0.7.6.tgz:
-  object_id: badd7528-6f3d-468c-9a7e-024c711d08e9
-  sha: dfae189011848cd5c09d93bd9e182846da87c55b
-  size: 52223575
 cassandra/cassandra-mesos-2.1.2-1.tgz:
   object_id: 20c79a62-532e-4e2f-9cf4-fbc8094262d9
   sha: 781bd07a2d98dafe0882853900bc232bf6768b67
@@ -111,3 +107,7 @@ mesos/mesos-0.8.0.hpi:
   object_id: a9bd4899-360c-40f2-b387-0a22e8728df0
   sha: 888ac7faf36e1ceaf791e3f8e3340ae2ac778a24
   size: 3925500
+marathon/marathon-0.9.0.tgz:
+  object_id: bb58dbfb-089f-4571-8863-3e2c4b88c774
+  sha: 2b6eef7e7105f146b8993b06fcf5b0a6fc754df1
+  size: 57253214
