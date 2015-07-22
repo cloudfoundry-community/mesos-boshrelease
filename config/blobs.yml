@@ -35,10 +35,6 @@ docker/docker-1.3.2:
   object_id: 640cb6ea-d172-42b7-b40d-867cac47bf1b
   sha: d22fa70f621654fc69c37fb41168034d5f9d1f90
   size: 14173183
-chronos/chronos-2.3.0_mesos-0.21.0-SNAPSHOT.jar:
-  object_id: 6aba68b3-578d-4f1f-857b-e7a32ccbd2c0
-  sha: 3dc301bfe372ceea5556b36878cc1fb46c383b40
-  size: 36073539
 cassandra/cassandra-mesos-2.1.2-1.tgz:
   object_id: 20c79a62-532e-4e2f-9cf4-fbc8094262d9
   sha: 781bd07a2d98dafe0882853900bc232bf6768b67
@@ -111,3 +107,7 @@ marathon/marathon-0.9.0.tgz:
   object_id: bb58dbfb-089f-4571-8863-3e2c4b88c774
   sha: 2b6eef7e7105f146b8993b06fcf5b0a6fc754df1
   size: 57253214
+chronos/chronos-2.3.4.jar:
+  object_id: 98d97d72-f7e1-49a6-b0d6-54e59f20641d
+  sha: 55a527e9f3d67f63027c315c9b9480f557eb7e17
+  size: 36404003
