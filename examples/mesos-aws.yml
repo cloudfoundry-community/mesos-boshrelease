@@ -1,13 +1,13 @@
-<% num_zookeepers = 3 %>
-<% num_masters = 2 %>
-<% num_marathons = 2 %>
-<% num_chronos = 2 %>
-<% num_jenkins = 1 %>
-<% num_slaves = 3 %>
-<% deployment_name = "mesos-aws" %>
-<% os = "ubuntu" %>
-<% tld = "microbosh" %>
-<% director_uuid = "8d304045-17d5-49a4-a24f-41b4c4f46835" %>
+<%
+director_uuid = 'CHANGE-ME'
+deployment_name = 'mesos'
+num_zookeepers = 3
+num_masters = 2
+num_marathons = 2
+num_chronos = 2
+num_jenkins = 1
+num_slaves = 3
+%>
 ---
 name: <%= deployment_name %>
 director_uuid: <%= director_uuid %>
@@ -17,7 +17,7 @@ releases:
    version: latest
 
 compilation:
-  workers: 10
+  workers: 3
   network: default
   reuse_compilation_vms: true
   cloud_properties:
@@ -34,59 +34,23 @@ networks:
   - name: default
     type: dynamic
     cloud_properties:
-      security_groups: ['default']
+      security_groups:
+        - bosh
+        - <%= deployment_name %>
 
 resource_pools:
-  - name: zookeeper
+  - name: default
     network: default
-    size: <%= num_zookeepers %>
     stemcell:
-      name: bosh-aws-xen-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: m1.medium
-
-  - name: master
-    network: default
-    size: <%= num_masters %>
-    stemcell:
-      name: bosh-aws-xen-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: m1.medium
-
-  - name: marathon
-    network: default
-    size: <%= num_marathons %>
-    stemcell:
-      name: bosh-aws-xen-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: m1.medium
-
-  - name: chronos
-    network: default
-    size: <%= num_chronos %>
-    stemcell:
-      name: bosh-aws-xen-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: m1.medium
-
-  - name: jenkins
-    network: default
-    size: <%= num_jenkins %>
-    stemcell:
-      name: bosh-aws-xen-<%= os %>
+      name: bosh-aws-xen-ubuntu-trusty-go_agent
       version: latest
     cloud_properties:
       instance_type: m1.medium
 
   - name: slave
     network: default
-    size: <%= num_slaves %>
     stemcell:
-      name: bosh-aws-xen-<%= os %>
+      name: bosh-aws-xen-ubuntu-trusty-go_agent
       version: latest
     cloud_properties:
       instance_type: m1.xlarge
@@ -96,7 +60,7 @@ jobs:
     templates:
       - name: zookeeper
     instances: <%= num_zookeepers %>
-    resource_pool: zookeeper
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -105,7 +69,7 @@ jobs:
     templates:
       - name: mesos-master
     instances: <%= num_masters %>
-    resource_pool: master
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -114,7 +78,7 @@ jobs:
     templates:
       - name: marathon
     instances: <%= num_marathons %>
-    resource_pool: marathon
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -123,7 +87,7 @@ jobs:
     templates:
       - name: chronos
     instances: <%= num_chronos %>
-    resource_pool: chronos
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -132,7 +96,7 @@ jobs:
     templates:
       - name: jenkins
     instances: <%= num_jenkins %>
-    resource_pool: jenkins
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -153,5 +117,5 @@ properties:
   zookeeper:
     servers:
       <% num_zookeepers.times do |i| %>
-      <%= "- #{i}.zookeeper.default.#{deployment_name}.#{tld}\n" %>
+      <%= "- #{i}.zookeeper.default.#{deployment_name}.microbosh\n" %>
       <% end %>

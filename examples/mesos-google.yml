@@ -1,13 +1,13 @@
-<% num_zookeepers = 3 %>
-<% num_masters = 2 %>
-<% num_marathons = 2 %>
-<% num_chronos = 2 %>
-<% num_jenkins = 1 %>
-<% num_slaves = 3 %>
-<% deployment_name = "mesos-google" %>
-<% os = "ubuntu" %>
-<% tld = "microbosh" %>
-<% director_uuid = "ba632e75-ac92-4f67-8a22-11560c0339f7" %>
+<%
+director_uuid = 'CHANGE-ME'
+deployment_name = 'mesos'
+num_zookeepers = 3
+num_masters = 2
+num_marathons = 2
+num_chronos = 2
+num_jenkins = 1
+num_slaves = 3
+%>
 ---
 name: <%= deployment_name %>
 director_uuid: <%= director_uuid %>
@@ -17,11 +17,12 @@ releases:
    version: latest
 
 compilation:
-  workers: 10
+  workers: 3
   network: default
   reuse_compilation_vms: true
   cloud_properties:
-    instance_type: n1-standard-8
+    machine_type: n1-standard-8
+    preemptible: true
 
 update:
   canaries: 0
@@ -36,69 +37,32 @@ networks:
     cloud_properties:
       ephemeral_external_ip: true
       tags:
+        - bosh
         - <%= deployment_name %>
 
 resource_pools:
-  - name: zookeeper
+  - name: default
     network: default
-    size: <%= num_zookeepers %>
     stemcell:
-      name: bosh-google-kvm-<%= os %>
+      name: bosh-google-kvm-ubuntu-trusty-go_agent
       version: latest
     cloud_properties:
-      instance_type: n1-standard-2
-
-  - name: master
-    network: default
-    size: <%= num_masters %>
-    stemcell:
-      name: bosh-google-kvm-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: n1-standard-2
-
-  - name: marathon
-    network: default
-    size: <%= num_marathons %>
-    stemcell:
-      name: bosh-google-kvm-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: n1-standard-2
-
-  - name: chronos
-    network: default
-    size: <%= num_chronos %>
-    stemcell:
-      name: bosh-google-kvm-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: n1-standard-2
-
-  - name: jenkins
-    network: default
-    size: <%= num_jenkins %>
-    stemcell:
-      name: bosh-google-kvm-<%= os %>
-      version: latest
-    cloud_properties:
-      instance_type: n1-standard-2
+      machine_type: n1-standard-2
 
   - name: slave
     network: default
-    size: <%= num_slaves %>
     stemcell:
-      name: bosh-google-kvm-<%= os %>
+      name: bosh-google-kvm-ubuntu-trusty-go_agent
       version: latest
     cloud_properties:
-      instance_type: n1-highmem-8
+      machine_type: n1-highmem-8
 
 jobs:
   - name: zookeeper
     templates:
       - name: zookeeper
     instances: <%= num_zookeepers %>
-    resource_pool: zookeeper
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -107,7 +71,7 @@ jobs:
     templates:
       - name: mesos-master
     instances: <%= num_masters %>
-    resource_pool: master
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -116,7 +80,7 @@ jobs:
     templates:
       - name: marathon
     instances: <%= num_marathons %>
-    resource_pool: marathon
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -125,7 +89,7 @@ jobs:
     templates:
       - name: chronos
     instances: <%= num_chronos %>
-    resource_pool: chronos
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -134,7 +98,7 @@ jobs:
     templates:
       - name: jenkins
     instances: <%= num_jenkins %>
-    resource_pool: jenkins
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
@@ -155,5 +119,5 @@ properties:
   zookeeper:
     servers:
       <% num_zookeepers.times do |i| %>
-      <%= "- #{i}.zookeeper.default.#{deployment_name}.#{tld}\n" %>
+      <%= "- #{i}.zookeeper.default.#{deployment_name}.microbosh\n" %>
       <% end %>
