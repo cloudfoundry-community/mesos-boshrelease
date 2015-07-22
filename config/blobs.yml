@@ -71,10 +71,6 @@ cassandra/cassandra-mesos-2.1.2-1.tgz:
   object_id: 20c79a62-532e-4e2f-9cf4-fbc8094262d9
   sha: 781bd07a2d98dafe0882853900bc232bf6768b67
   size: 34032987
-node/node-v0.10.33-linux-x64.tar.gz:
-  object_id: ea00a173-65a4-440c-8b90-b21f4ff29676
-  sha: 4eba69caf7368d7f388700eb02996f85b06f457a
-  size: 5645609
 scala/scala-2.11.4.tgz:
   object_id: 6cb76410-2c4a-48c9-ae98-19a0140b8d55
   sha: a6d319b26ccabe9c609fadebc32e797bf9cb1084
@@ -111,3 +107,7 @@ git/git-2.4.6.tar.gz:
   object_id: c9e714f5-cadc-436d-a2ec-aec5f23c1d13
   sha: 230cb8b664fe47c838e199663f55dc882a3b9773
   size: 5349900
+node/node-v0.12.7-linux-x64.tar.gz:
+  object_id: 67d96b1f-492d-4603-8c1c-c06104d0be40
+  sha: 0a861a6ded50c8cda32ac39c3a54699c767742e6
+  size: 10060524

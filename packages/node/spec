@@ -2,4 +2,4 @@
 name: node
 dependencies: {}
 files:
-  - node/node-v0.10.33-linux-x64.tar.gz
+  - node/node-v0.12.7-linux-x64.tar.gz
