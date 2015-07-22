@@ -95,10 +95,6 @@ jenkins/mesos-0.8.0.hpi:
   object_id: a9bd4899-360c-40f2-b387-0a22e8728df0
   sha: 888ac7faf36e1ceaf791e3f8e3340ae2ac778a24
   size: 3925500
-marathon/marathon-0.9.0.tgz:
-  object_id: bb58dbfb-089f-4571-8863-3e2c4b88c774
-  sha: 2b6eef7e7105f146b8993b06fcf5b0a6fc754df1
-  size: 57253214
 chronos/chronos-2.3.4.jar:
   object_id: 98d97d72-f7e1-49a6-b0d6-54e59f20641d
   sha: 55a527e9f3d67f63027c315c9b9480f557eb7e17
@@ -107,3 +103,7 @@ docker/docker-1.7.1:
   object_id: d3dbd732-d8c4-4740-ad2f-bce5e75848aa
   sha: 386f6e91114dc252a13b266fe2ac3a27e83bd0f7
   size: 16296881
+marathon/marathon-0.9.0.tgz:
+  object_id: 8efb2007-a9d9-45cf-b57a-aa1fa9890c70
+  sha: af6b1b3b95171871ea1aabb73a44c268a2aa9beb
+  size: 56502876
