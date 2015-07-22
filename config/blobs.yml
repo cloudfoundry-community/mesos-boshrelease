@@ -39,14 +39,6 @@ chronos/chronos-2.3.0_mesos-0.21.0-SNAPSHOT.jar:
   object_id: 6aba68b3-578d-4f1f-857b-e7a32ccbd2c0
   sha: 3dc301bfe372ceea5556b36878cc1fb46c383b40
   size: 36073539
-jenkins/jenkins-1.580.1.war:
-  object_id: fd1a126e-4fae-47a4-b162-ce7d89e017e5
-  sha: b9320b2c1ea28247f035bbf0f313948e8a735b78
-  size: 68022189
-jenkins/mesos-0.21.0.hpi:
-  object_id: ce0d6aa1-9ff3-498d-8530-b401cbbb1f54
-  sha: 587991a011c8fdf3a21068685e89b19783457a84
-  size: 1922321
 marathon/marathon-0.7.6.tgz:
   object_id: badd7528-6f3d-468c-9a7e-024c711d08e9
   sha: dfae189011848cd5c09d93bd9e182846da87c55b
@@ -111,3 +103,11 @@ nginx/pcre-8.37.tar.gz:
   object_id: 702e6c3a-690f-4b03-9352-bc619ebb5e6a
   sha: 4a24a20c61347d8da4edc86d5475aaf70ac146bb
   size: 2041593
+jenkins/jenkins-1.621.0.war:
+  object_id: ebdb2848-4922-43a6-a908-6c4053584a25
+  sha: 74d90d810663c82e5dd2815adf459a600e7d11c0
+  size: 63264175
+mesos/mesos-0.8.0.hpi:
+  object_id: a9bd4899-360c-40f2-b387-0a22e8728df0
+  sha: 888ac7faf36e1ceaf791e3f8e3340ae2ac778a24
+  size: 3925500

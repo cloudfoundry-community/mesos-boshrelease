@@ -2,5 +2,5 @@
 name: jenkins
 dependencies: {}
 files:
-  - jenkins/jenkins-1.580.1.war
-  - jenkins/mesos-0.21.0.hpi
+  - jenkins/jenkins-1.621.0.war
+  - jenkins/mesos-0.8.0.hpi
