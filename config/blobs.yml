@@ -95,10 +95,6 @@ ruby/rubygems-2.4.5.tgz:
   object_id: d8578446-943a-42c8-908f-8fa3c31c6f65
   sha: a7122c93b0f6b4aac5291772d5ed973a09c244cb
   size: 446665
-golang/go1.3.3.linux-amd64.tar.gz:
-  object_id: 36ed8146-7c46-4b35-80a1-7ce7532d766b
-  sha: 14068fbe349db34b838853a7878621bbd2b24646
-  size: 53204098
 maven/apache-maven-3.3.3-bin.tar.gz:
   object_id: 13edec60-bdc1-4e59-849e-9a1817194264
   sha: c8f257dce3381d9d8c420168a6df0fa25664337c
@@ -111,3 +107,7 @@ mesos/mesos-0.22.1.tar.gz:
   object_id: 94a40551-1486-4768-9e7c-9d40ae6834c9
   sha: 599c09d83ee69804cd12936c8c3df57f45f30b4d
   size: 28260536
+golang/go1.4.2.linux-amd64.tar.gz:
+  object_id: 212fcf49-fca8-493c-82b4-4e94b6bd94ff
+  sha: 5020af94b52b65cc9b6f11d50a67e4bae07b0aff
+  size: 62442704
