@@ -31,10 +31,6 @@ apr/apr-util-1.5.4.tar.gz:
   object_id: 4da12d84-1014-4b5e-b571-4097fdab27bf
   sha: 72cc3ac693b52fb831063d5c0de18723bc8e0095
   size: 874044
-docker/docker-1.3.2:
-  object_id: 640cb6ea-d172-42b7-b40d-867cac47bf1b
-  sha: d22fa70f621654fc69c37fb41168034d5f9d1f90
-  size: 14173183
 cassandra/cassandra-mesos-2.1.2-1.tgz:
   object_id: 20c79a62-532e-4e2f-9cf4-fbc8094262d9
   sha: 781bd07a2d98dafe0882853900bc232bf6768b67
@@ -111,3 +107,7 @@ chronos/chronos-2.3.4.jar:
   object_id: 98d97d72-f7e1-49a6-b0d6-54e59f20641d
   sha: 55a527e9f3d67f63027c315c9b9480f557eb7e17
   size: 36404003
+docker/docker-1.7.1:
+  object_id: d3dbd732-d8c4-4740-ad2f-bce5e75848aa
+  sha: 386f6e91114dc252a13b266fe2ac3a27e83bd0f7
+  size: 16296881
