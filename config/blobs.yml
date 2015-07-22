@@ -63,18 +63,6 @@ cassandra/cassandra-mesos-2.1.2-1.tgz:
   object_id: 20c79a62-532e-4e2f-9cf4-fbc8094262d9
   sha: 781bd07a2d98dafe0882853900bc232bf6768b67
   size: 34032987
-ruby/bundler-1.7.9.gem:
-  object_id: 49aea4b6-0c1c-4edd-b1c0-9d4fd57aa83d
-  sha: b5ab47356667085f4c696fc691b1632169ac2b5d
-  size: 305664
-ruby/ruby-2.1.5.tar.gz:
-  object_id: 33952d5b-7a0c-443c-b0d1-06a175df0162
-  sha: 9c0a238bd7839a4b51871641945a3da90997b8c2
-  size: 15127433
-ruby/rubygems-2.4.5.tgz:
-  object_id: d8578446-943a-42c8-908f-8fa3c31c6f65
-  sha: a7122c93b0f6b4aac5291772d5ed973a09c244cb
-  size: 446665
 maven/apache-maven-3.3.3-bin.tar.gz:
   object_id: 13edec60-bdc1-4e59-849e-9a1817194264
   sha: c8f257dce3381d9d8c420168a6df0fa25664337c
@@ -111,3 +99,15 @@ subversion/subversion-1.8.13.tar.gz:
   object_id: c9517065-b6a6-4f9c-8e3e-fbdfd8fe58b9
   sha: 437cf662b7ed27d2254aa7ca334fdd74b49262ef
   size: 9326793
+ruby/bundler-1.10.5.gem:
+  object_id: 1ccd4f0b-ebfc-43ae-8562-81c9fe2c42b0
+  sha: d8a934e1fcc000eb89c87697e8b73f8812bd498c
+  size: 251392
+ruby/rubygems-2.4.8.tgz:
+  object_id: f6661b63-8ede-402d-af9b-19fcd643ebea
+  sha: 0db6b2f1cdd2267fe19f1f875057c2f2ce9f5696
+  size: 447712
+ruby/ruby-2.1.6.tar.gz:
+  object_id: ec53ce17-06fe-48df-ba7b-ba0e5c345ac9
+  sha: 426289b6647ce35ad101091825b6e7e5fce207f3
+  size: 15141710
