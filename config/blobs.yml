@@ -71,10 +71,6 @@ cassandra/cassandra-mesos-2.1.2-1.tgz:
   object_id: 20c79a62-532e-4e2f-9cf4-fbc8094262d9
   sha: 781bd07a2d98dafe0882853900bc232bf6768b67
   size: 34032987
-scala/scala-2.11.4.tgz:
-  object_id: 6cb76410-2c4a-48c9-ae98-19a0140b8d55
-  sha: a6d319b26ccabe9c609fadebc32e797bf9cb1084
-  size: 26509669
 ruby/bundler-1.7.9.gem:
   object_id: 49aea4b6-0c1c-4edd-b1c0-9d4fd57aa83d
   sha: b5ab47356667085f4c696fc691b1632169ac2b5d
@@ -111,3 +107,7 @@ node/node-v0.12.7-linux-x64.tar.gz:
   object_id: 67d96b1f-492d-4603-8c1c-c06104d0be40
   sha: 0a861a6ded50c8cda32ac39c3a54699c767742e6
   size: 10060524
+scala/scala-2.11.7.tgz:
+  object_id: 84821e4d-4134-4230-86ae-f2d40e18de67
+  sha: 33de6d4bd3423be9e02465b842b9afc635e7cf0f
+  size: 28460530
