@@ -43,7 +43,7 @@ case $1 in
            --authenticate="${MESOS_MASTER_AUTHENTICATE_FRAMEWORKS}" \
            --authenticate_slaves="${MESOS_MASTER_AUTHENTICATE_SLAVES}" \
            --cluster="${MESOS_CLUSTER_NAME}" \
-           --credentials=file://${MESOS_MASTER_CONF_DIR}/framework_credentials.cfg \
+           ${MESOS_MASTER_CREDENTIALS:-} \
            --framework_sorter="${MESOS_MASTER_FRAMEWORK_SORTER}" \
            --initialize_driver_logging="${MESOS_MASTER_INITIALIZE_DRIVER_LOGGING}" \
            --ip=<%= listen_ip %> \
@@ -66,6 +66,7 @@ case $1 in
            ${MESOS_MASTER_SLAVES_WHITELIST:-} \
            --work_dir="${MESOS_MASTER_TMP_DIR}" \
            --zk=file://${MESOS_MASTER_CONF_DIR}/zoo_mesos.cfg \
+           --zk_session_timeout="${MESOS_MASTER_ZK_SESSION_TIMEOUT}" \
            >>${MESOS_MASTER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
            2>>${MESOS_MASTER_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;

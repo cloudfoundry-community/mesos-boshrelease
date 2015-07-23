@@ -40,6 +40,11 @@ export MESOS_MASTER_AUTHENTICATE_SLAVES="<%= p('mesos.master.authenticate_slaves
 # Human readable name for the Apache Mesos cluster
 export MESOS_CLUSTER_NAME="<%= p('mesos.cluster_name') %>"
 
+<% if p('mesos.framework_credentials', []).any? %>
+# File containing the list credentials
+export MESOS_MASTER_CREDENTIALS="--credentials=file://${MESOS_MASTER_CONF_DIR}/framework_credentials.cfg"
+<% end %>
+
 # Policy to use for allocating resources between a given user's frameworks
 export MESOS_MASTER_FRAMEWORK_SORTER="<%= p('mesos.master.framework_sorter') %>"
 
@@ -95,3 +100,6 @@ export MESOS_MASTER_WEIGHTS="<%= p('mesos.master.weights') %>"
 # File containing the list of slaves to advertise offers for
 export MESOS_MASTER_SLAVES_WHITELIST="--whitelist=file://${MESOS_MASTER_CONF_DIR}/slaves_whitelist.cfg"
 <% end %>
+
+# ZooKeeper session timeout
+export MESOS_MASTER_ZK_SESSION_TIMEOUT="<%= p('mesos.master.zk_session_timeout') %>"

@@ -91,6 +91,9 @@ properties:
   mesos.master.slaves_whitelist:
     description: "List of slaves to advertise offers for"
     default: []
+  mesos.master.zk_session_timeout:
+    description: "ZooKeeper session timeout"
+    default: "10secs"
 
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
