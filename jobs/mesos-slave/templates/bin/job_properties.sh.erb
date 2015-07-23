@@ -43,6 +43,9 @@ export MESOS_SLAVE_CGROUPS_LIMIT_SWAP="<%= p('mesos.slave.cgroups_limit_swap') %
 # Name of the root cgroup
 export MESOS_SLAVE_CGROUPS_ROOT="<%= p('mesos.slave.cgroups_root') %>"
 
+# The interval between disk quota checks for containers
+export MESOS_SLAVE_CONTAINER_DISK_WATCH_INTERVAL="<%= p('mesos.slave.container_disk_watch_interval') %>"
+
 # Framework credential file
 export MESOS_SLAVE_CREDENTIAL=""
 <% if_p('mesos.framework_credentials.principal', 'mesos.framework_credentials.secret') do %>
@@ -55,6 +58,9 @@ export MESOS_SLAVE_DEFAULT_ROLE="<%= p('mesos.slave.default_role') %>"
 # Periodic time interval (e.g., 10secs, 2mins, etc) to check the disk usage
 export MESOS_SLAVE_DISK_WATCH_INTERVAL="<%= p('mesos.slave.disk_watch_interval') %>"
 
+# Whether to enable disk quota enforcement for containers
+export MESOS_SLAVE_ENFORCE_CONTAINER_DISK_QUOTA="<%= p('mesos.slave.enforce_container_disk_quota') %>"
+
 # Amount of time to wait for an executor to register with the slave before considering it hung and shutting it down
 export MESOS_SLAVE_EXECUTOR_REGISTRATION_TIMEOUT="<%= p('mesos.slave.executor_registration_timeout') %>"
 
@@ -63,6 +69,9 @@ export MESOS_SLAVE_EXECUTOR_SHUTDOWN_GRACE_PERIOD="<%= p('mesos.slave.executor_s
 
 # Maximum amount of time to wait before cleaning up executor directories
 export MESOS_SLAVE_GC_DELAY="<%= p('mesos.slave.gc_delay') %>"
+
+# Adjust disk headroom used to calculate maximum executor directory age
+export MESOS_SLAVE_GC_DISK_HEADROOM="<%= p('mesos.slave.gc_disk_headroom') %>"
 
 # Whether to automatically initialize google logging of scheduler and/or executor drivers
 export MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.slave.initialize_driver_logging') %>"
@@ -110,4 +119,4 @@ export MESOS_SLAVE_SUBSYSTEMS="<%= p('mesos.slave.subsystems') %>"
 export MESOS_SLAVE_STRICT="<%= p('mesos.slave.strict') %>"
 
 # Whether to run tasks as the user who submitted them rather than the user running the slave
-export MESOS_SWITCH_USER="<%= p('mesos.slave.switch_user') %>"
+export MESOS_SLAVE_SWITCH_USER="<%= p('mesos.slave.switch_user') %>"

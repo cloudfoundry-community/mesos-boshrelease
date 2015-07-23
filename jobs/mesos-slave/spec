@@ -42,6 +42,9 @@ properties:
   mesos.slave.cgroups_root:
     description: "Name of the root cgroup"
     default: "mesos"
+  mesos.slave.container_disk_watch_interval:
+    description: "The interval between disk quota checks for containers"
+    default: "15secs"
   mesos.framework_credentials.principal:
     description: "'principal' framework credentials"
   mesos.framework_credentials.secret:
@@ -52,6 +55,9 @@ properties:
   mesos.slave.disk_watch_interval:
     description: "Periodic time interval (e.g., 10secs, 2mins, etc) to check the disk usage"
     default: "1mins"
+  mesos.slave.enforce_container_disk_quota:
+    description: "Whether to enable disk quota enforcement for containers"
+    default: false
   mesos.slave.executor_registration_timeout:
     description: "Amount of time to wait for an executor to register with the slave before considering it hung and shutting it down"
     default: "1mins"
@@ -61,12 +67,15 @@ properties:
   mesos.slave.gc_delay:
     description: "Maximum amount of time to wait before cleaning up executor directories"
     default: "1weeks"
+  mesos.slave.gc_disk_headroom:
+    description: "Adjust disk headroom used to calculate maximum executor directory age"
+    default: "0.1"
   mesos.slave.initialize_driver_logging:
     description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
     default: true
   mesos.slave.isolation:
     description: "Apache Mesos Slave isolation mechanism (process, cgroups)"
-    default: "posix/cpu,posix/mem"
+    default: "cgroups/cpu,cgroups/mem"
   mesos.slave.logbufsecs:
     description: "How many seconds to buffer log messages for"
     default: 0
@@ -102,7 +111,7 @@ properties:
     default: ""
   mesos.slave.subsystems:
     description: "List of comma-separated cgroup subsystems to run the slave binary"
-    default: ""
+    default: "cpu,memory"
   mesos.slave.strict:
     description: "Whether to do Apache Mesos Slaves recovery in strict mode"
     default: true
