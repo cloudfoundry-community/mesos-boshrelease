@@ -62,7 +62,7 @@ properties:
     default: 4000
   zookeeper.pre_allocation_size:
     description: "preAllocSize kilobytes for transaction log blocks"
-    default: "64M"
+    default: "65536"
   zookeeper.snap_count:
     description: "Number of transactions before a snapshot is started and a new transaction log file is created"
     default: 100000
