@@ -29,15 +29,16 @@ export CHRONOS_GROUP="<%= p('chronos.group') %>"
 export CHRONOS_JAVA_HEAP_SIZE="<%= p('chronos.java_heap_size') %>"
 
 <% if_p('chronos.cassandra.consistency', 'chronos.cassandra.contact_points', 'chronos.cassandra.keyspace',
-        'chronos.cassandra.port', 'chronos.cassandra.table', 'chronos.cassandra.ttl') do
+        'chronos.cassandra.port', 'chronos.cassandra_stat_count_table', 'chronos.cassandra.table', 'chronos.cassandra.ttl') do
         |cassandra_consistency, cassandra_contact_points, cassandra_keyspace,
-        cassandra_port, cassandra_table, cassandra_ttl| %>
+        cassandra_port, cassandra_stat_count_table, cassandra_table, cassandra_ttl| %>
 # Cassandra options
 export CHRONOS_CASSANDRA_OPTIONS=""
 export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_consistency "<%= cassandra_consistency %>""
 export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_contact_points "<%= cassandra_contact_points %>""
 export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_keyspace "<%= cassandra_keyspace %>""
 export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_port "<%= cassandra_port %>""
+export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_stat_count_table "<%= cassandra_stat_count_table %>""
 export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_table "<%= cassandra_table %>""
 export CHRONOS_CASSANDRA_OPTIONS="${CHRONOS_CASSANDRA_OPTIONS} --cassandra_ttl "<%= cassandra_ttl %>""
 <% end %>
@@ -65,8 +66,14 @@ export CHRONOS_HTTP_CREDENTIALS="<%= p('chronos.http_credentials') %>"
 # The port Chronos will listen on for HTTP requests
 export CHRONOS_HTTP_PORT="<%= p('chronos.http_port') %>"
 
+# The security realm associated with the credentials
+export CHRONOS_HTTP_REALM="<%= p('chronos.http_realm') %>"
+
 # The port Chronos will listen on for HTTPS requests
 export CHRONOS_HTTPS_PORT="<%= p('chronos.https_port') %>"
+
+# Number of past job executions to show in history view
+export CHRONOS_JOB_HISTORY_LIMIT="<%= p('chronos.job_history_limit') %>"
 
 # The look-ahead time for scheduling tasks in milliseconds
 export CHRONOS_LEADER_MAX_IDLE_TIME="<%= p('chronos.leader_max_idle_time') %>"
@@ -82,6 +89,12 @@ export CHRONOS_MAIL_OPTIONS="${CHRONOS_MAIL_OPTIONS} --mail_ssl"
 <% if_p('chronos.enable_checkpoint') do |enable_checkpoint| %>
 # Enable checkpointing
 export CHRONOS_CHECKPOINT="--mesos_checkpoint"
+<% end %>
+
+<% if_p('chronos.framework_principal', 'chronos.framework_secret') do |framework_principal, framework_secret| %>
+# Mesos Framework principal and secret
+export CHRONOS_AUTHENTICATION_PRINCIPAL="--mesos_authentication_principal <%= framework_principal %>"
+export CHRONOS_AUTHENTICATION_SECRET="--mesos_authentication_secret_file <%= framework_secret %>"
 <% end %>
 
 # The framework name

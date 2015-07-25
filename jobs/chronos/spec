@@ -34,7 +34,7 @@ properties:
     default: 0
   chronos.failover_timeout:
     description: "The failover timeout in seconds for Mesos"
-    default: 1200
+    default: 604800
   chronos.failure_retry:
     description: "Number of ms between retries"
     default: 60000
@@ -44,15 +44,25 @@ properties:
   chronos.http_port:
     description: "The port Chronos will listen on for HTTP requests"
     default: 80
+  chronos.http_realm:
+    description: "The security realm associated with the credentials"
+    default: "mesos"
   chronos.https_port:
     description: "The port Chronos will listen on for HTTPS requests"
     default: 443
+  chronos.job_history_limit:
+    description: "Number of past job executions to show in history view"
+    default: 5
   chronos.leader_max_idle_time:
     description: "The look-ahead time for scheduling tasks in milliseconds"
     default: 5000
   chronos.enable_checkpoint:
     description: "Enable checkpointing"
     default: true
+  chronos.framework_principal:
+    description: "Mesos Framework principal"
+  chronos.framework_secret:
+    description: "Mesos Framework secret"
   chronos.mesos_framework_name:
     description: "The framework name"
     default: "Chronos"
@@ -98,6 +108,9 @@ properties:
   chronos.cassandra.port:
     description: "Port for Cassandra"
     default: 9042
+  chronos.cassandra_stat_count_table:
+    description: "Table to track stat counts in Cassandra"
+    default: "chronos_stat_count"
   chronos.cassandra.table:
     description: "Table to use for Cassandra"
     default: "chronos"

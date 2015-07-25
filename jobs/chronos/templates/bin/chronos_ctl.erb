@@ -13,6 +13,17 @@ else
     hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
 fi
 
+<%
+   def openstruct_to_hash(os)
+     os.marshal_dump.map do |key, element|
+       element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+     end.reduce(&:merge)
+   end
+
+   networks = openstruct_to_hash(spec.networks)
+   listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+%>
+
 case $1 in
 
   start)
@@ -27,7 +38,13 @@ case $1 in
     create_user ${CHRONOS_USER} ${CHRONOS_GROUP}
 
     # Read ZooKeeper Hosts
-    ZK_HOSTS=`cat $CHRONOS_CONF_DIR/zoo_hosts.cfg`
+    ZK_MESOS=`cat ${CHRONOS_CONF_DIR}/zoo_mesos.cfg`
+
+    # Read ZooKeeper Hosts
+    ZK_HOSTS=`cat ${CHRONOS_CONF_DIR}/zoo_hosts.cfg`
+
+    # Process IP
+    export LIBPROCESS_IP=<%= listen_ip %>
 
     # Start Chronos service
     exec chpst -u ${CHRONOS_USER}:${CHRONOS_GROUP} java \
@@ -44,11 +61,15 @@ case $1 in
            ${CHRONOS_GRAPHITE_OPTIONS:-} \
            --http_credentials "${CHRONOS_HTTP_CREDENTIALS}" \
            --http_port "${CHRONOS_HTTP_PORT}" \
+           --http_realm "${CHRONOS_HTTP_REALM}" \
            --https_port "${CHRONOS_HTTPS_PORT}" \
+           --job_history_limit "${CHRONOS_JOB_HISTORY_LIMIT}" \
            --leader_max_idle_time "${CHRONOS_LEADER_MAX_IDLE_TIME}" \
            ${CHRONOS_MAIL_OPTIONS:-} \
-           --master file://${CHRONOS_CONF_DIR}/zoo_mesos.cfg \
+           --master ${ZK_MESOS} \
            ${CHRONOS_CHECKPOINT:-} \
+           ${CHRONOS_AUTHENTICATION_PRINCIPAL:-} \
+           ${CHRONOS_AUTHENTICATION_SECRET:-} \
            --mesos_framework_name "${CHRONOS_MESOS_FRAMEWORK_NAME}" \
            --mesos_role "${CHRONOS_MESOS_ROLE}" \
            --mesos_task_cpu "${CHRONOS_MESOS_TASK_CPU}" \
