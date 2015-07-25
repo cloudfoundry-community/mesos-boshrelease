@@ -40,6 +40,12 @@ case $1 in
     # Remove slave info
     rm -f ${MESOS_SLAVE_TMP_DIR}/meta/slaves/latest
 
+    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+    # Set proper credentials file permissions
+    chmod 0600 ${MESOS_SLAVE_CONF_DIR}/credentials
+    chown ${MESOS_SLAVE_USER}:${MESOS_SLAVE_GROUP} ${MESOS_SLAVE_CONF_DIR}/credentials
+    <% end %>
+
     # Calculate consumable resources if not set by user
     if [[ -z ${MESOS_SLAVE_RESOURCES} ]]; then
         CPUS=`grep processor /proc/cpuinfo | wc -l`
@@ -51,12 +57,13 @@ case $1 in
     # Start Apache Mesos Slave service
     exec chpst -u ${MESOS_SLAVE_USER}:${MESOS_SLAVE_GROUP} mesos-slave \
            --attributes="${MESOS_SLAVE_ATTRIBUTES}" \
+           --authenticatee="${MESOS_SLAVE_AUTHENTICATEE}" \
            --cgroups_enable_cfs="${MESOS_SLAVE_CGROUPS_ENABLE_CFS}" \
            --cgroups_hierarchy="${MESOS_SLAVE_CGROUPS_HIERARCHY}" \
            --cgroups_limit_swap="${MESOS_SLAVE_CGROUPS_LIMIT_SWAP}" \
            --cgroups_root="${MESOS_SLAVE_CGROUPS_ROOT}" \
            --container_disk_watch_interval="${MESOS_SLAVE_CONTAINER_DISK_WATCH_INTERVAL}" \
-           ${MESOS_SLAVE_CREDENTIAL} \
+           ${MESOS_SLAVE_CREDENTIALS:-} \
            --default_role="${MESOS_SLAVE_DEFAULT_ROLE}" \
            --disk_watch_interval="${MESOS_SLAVE_DISK_WATCH_INTERVAL}" \
            --enforce_container_disk_quota="${MESOS_SLAVE_ENFORCE_CONTAINER_DISK_QUOTA}" \

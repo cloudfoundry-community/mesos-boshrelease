@@ -13,6 +13,8 @@ packages:
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/marathon_ctl.erb: bin/marathon_ctl
+  config/logrotate.conf.erb: config/logrotate.conf
+  config/marathon_logrotate.cron.erb: config/marathon_logrotate.cron
   config/zoo_hosts.cfg.erb: config/zoo_hosts.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
@@ -44,10 +46,6 @@ properties:
   marathon.framework_name:
     description: "Framework name to register with Mesos"
     default: "Marathon"
-  marathon.framework_principal:
-    description: "Mesos Framework principal"
-  marathon.framework_secret:
-    description: "Mesos Framework secret"
   marathon.enable_ha:
     description: "Enable running Marathon in HA mode with leader election"
     default: true
@@ -129,3 +127,8 @@ properties:
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"
+
+  mesos.principal:
+    description: "Mesos principal"
+  mesos.secret:
+    description: "Mesos secret"

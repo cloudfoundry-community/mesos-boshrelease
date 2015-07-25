@@ -12,7 +12,7 @@ packages:
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/mesos_master_ctl.erb: bin/mesos_master_ctl
-  config/framework_credentials.cfg.erb: config/framework_credentials.cfg
+  config/credentials.erb: config/credentials
   config/slaves_whitelist.cfg.erb: config/slaves_whitelist.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
@@ -32,12 +32,12 @@ properties:
   mesos.master.authenticate_slaves:
     description: "Only authenticated slaves are allowed to register?"
     default: false
+  mesos.master.authenticators:
+    description: "Authenticator implementation to use when authenticating frameworks and/or slaves"
+    default: "crammd5"
   mesos.cluster_name:
     description: "Human readable name for the Apache Mesos cluster"
     default: "Mesos Cluster"
-  mesos.framework_credentials:
-    description: "Array of credentials. Each item contains a 'principal' and 'secret' separated by whitespace"
-    default: []
   mesos.master.framework_sorter:
     description: "Policy to use for allocating resources between a given user's frameworks"
     default: "drf"
@@ -103,3 +103,8 @@ properties:
   zookeeper.client_port:
     description: "Port at which the clients will connect to Apache Zookeeper"
     default: 2181
+
+  mesos.principal:
+    description: "Mesos principal"
+  mesos.secret:
+    description: "Mesos secret"

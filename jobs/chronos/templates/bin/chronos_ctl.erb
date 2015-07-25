@@ -37,6 +37,13 @@ case $1 in
     create_group ${CHRONOS_GROUP}
     create_user ${CHRONOS_USER} ${CHRONOS_GROUP}
 
+    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+    # Set framework secrets file
+    echo -n '<%= secret %>' > ${CHRONOS_CONF_DIR}/authentication_secret_file
+    chmod 0600 ${CHRONOS_CONF_DIR}/authentication_secret_file
+    chown ${CHRONOS_USER}:${CHRONOS_GROUP} ${CHRONOS_CONF_DIR}/authentication_secret_file
+    <% end %>
+
     # Read ZooKeeper Hosts
     ZK_MESOS=`cat ${CHRONOS_CONF_DIR}/zoo_mesos.cfg`
 

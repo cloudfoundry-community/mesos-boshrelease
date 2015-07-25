@@ -37,11 +37,18 @@ case $1 in
     create_group ${MESOS_MASTER_GROUP}
     create_user ${MESOS_MASTER_USER} ${MESOS_MASTER_GROUP}
 
+    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+    # Set proper credentials file permissions
+    chmod 0600 ${MESOS_MASTER_CONF_DIR}/credentials
+    chown ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} ${MESOS_MASTER_CONF_DIR}/credentials
+    <% end %>
+
     # Start Apache Mesos Master service
     exec chpst -u ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} mesos-master \
            --allocation_interval="${MESOS_MASTER_ALLOCATION_INTERVAL}" \
            --authenticate="${MESOS_MASTER_AUTHENTICATE_FRAMEWORKS}" \
            --authenticate_slaves="${MESOS_MASTER_AUTHENTICATE_SLAVES}" \
+           --authenticators="${MESOS_MASTER_AUTHENTICATORS}" \
            --cluster="${MESOS_CLUSTER_NAME}" \
            ${MESOS_MASTER_CREDENTIALS:-} \
            --framework_sorter="${MESOS_MASTER_FRAMEWORK_SORTER}" \

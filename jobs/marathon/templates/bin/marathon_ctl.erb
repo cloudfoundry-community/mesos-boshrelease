@@ -37,6 +37,13 @@ case $1 in
     create_group ${MARATHON_GROUP}
     create_user ${MARATHON_USER} ${MARATHON_GROUP}
 
+    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+    # Set framework secrets file
+    echo -n '<%= secret %>' > ${MARATHON_CONF_DIR}/authentication_secret_file
+    chmod 0600 ${MARATHON_CONF_DIR}/authentication_secret_file
+    chown ${MARATHON_USER}:${MARATHON_GROUP} ${MARATHON_CONF_DIR}/authentication_secret_file
+    <% end %>
+
     # Read ZooKeeper Hosts
     ZK_MESOS=`cat ${MARATHON_CONF_DIR}/zoo_mesos.cfg`
 

@@ -13,6 +13,8 @@ packages:
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/chronos_ctl.erb: bin/chronos_ctl
+  config/chronos_logrotate.cron.erb: config/chronos_logrotate.cron
+  config/logrotate.conf.erb: config/logrotate.conf
   config/zoo_hosts.cfg.erb: config/zoo_hosts.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
@@ -59,10 +61,6 @@ properties:
   chronos.enable_checkpoint:
     description: "Enable checkpointing"
     default: true
-  chronos.framework_principal:
-    description: "Mesos Framework principal"
-  chronos.framework_secret:
-    description: "Mesos Framework secret"
   chronos.mesos_framework_name:
     description: "The framework name"
     default: "Chronos"
@@ -155,3 +153,8 @@ properties:
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Mesos state"
     default: "mesos"
+
+  mesos.principal:
+    description: "Mesos principal"
+  mesos.secret:
+    description: "Mesos secret"

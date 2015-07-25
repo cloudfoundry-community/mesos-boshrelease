@@ -87,10 +87,10 @@ export MARATHON_LOGGING_LEVEL="<%= p('marathon.logging_level') %>"
 # Maximum time, in milliseconds, to wait for persistent storage operations to complete
 export MARATHON_STORE_TIMEOUT="<%= p('marathon.store_timeout') %>"
 
-<% if_p('marathon.framework_principal', 'marathon.framework_secret') do |framework_principal, framework_secret| %>
-# Mesos Framework principal and secret
-export MARATHON_AUTHENTICATION_PRINCIPAL="--mesos_authentication_principal <%= framework_principal %>"
-export MARATHON_AUTHENTICATION_SECRET="--mesos_authentication_secret_file <%= framework_secret %>"
+<% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+# Mesos principal and secret
+export MARATHON_AUTHENTICATION_PRINCIPAL="--mesos_authentication_principal <%= principal %>"
+export MARATHON_AUTHENTICATION_SECRET="--mesos_authentication_secret_file ${MARATHON_CONF_DIR}/authentication_secret_file"
 <% end %>
 
 # Maximally launch this number of tasks per offer
@@ -131,3 +131,6 @@ export MARATHON_ZK_SESSION_TIMEOUT="<%= p('marathon.zk_session_timeout') %>"
 
 # Apache Mesos Native Library
 export MESOS_NATIVE_JAVA_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so
+
+# SASL plugins
+export SASL_PATH=/var/vcap/packages/sasl/lib/sasl2/

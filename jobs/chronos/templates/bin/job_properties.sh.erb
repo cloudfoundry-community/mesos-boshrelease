@@ -91,10 +91,10 @@ export CHRONOS_MAIL_OPTIONS="${CHRONOS_MAIL_OPTIONS} --mail_ssl"
 export CHRONOS_CHECKPOINT="--mesos_checkpoint"
 <% end %>
 
-<% if_p('chronos.framework_principal', 'chronos.framework_secret') do |framework_principal, framework_secret| %>
-# Mesos Framework principal and secret
-export CHRONOS_AUTHENTICATION_PRINCIPAL="--mesos_authentication_principal <%= framework_principal %>"
-export CHRONOS_AUTHENTICATION_SECRET="--mesos_authentication_secret_file <%= framework_secret %>"
+<% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+# Mesos principal and secret
+export CHRONOS_AUTHENTICATION_PRINCIPAL="--mesos_authentication_principal <%= principal %>"
+export CHRONOS_AUTHENTICATION_SECRET="--mesos_authentication_secret_file ${CHRONOS_CONF_DIR}/authentication_secret_file"
 <% end %>
 
 # The framework name
@@ -142,3 +142,7 @@ export CHRONOS_ZK_TIMEOUT="<%= p('chronos.zk_timeout') %>"
 
 # Apache Mesos Native Library
 export MESOS_NATIVE_JAVA_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so
+
+# SASL plugins
+export SASL_PATH=/var/vcap/packages/sasl/lib/sasl2/
+

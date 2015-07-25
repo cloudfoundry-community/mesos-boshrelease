@@ -37,12 +37,15 @@ export MESOS_MASTER_AUTHENTICATE_FRAMEWORKS="<%= p('mesos.master.authenticate_fr
 # Only authenticated slaves are allowed to register?
 export MESOS_MASTER_AUTHENTICATE_SLAVES="<%= p('mesos.master.authenticate_slaves') %>"
 
+# Authenticator implementation to use when authenticating frameworks and/or slaves
+export MESOS_MASTER_AUTHENTICATORS="<%= p('mesos.master.authenticators') %>"
+
 # Human readable name for the Apache Mesos cluster
 export MESOS_CLUSTER_NAME="<%= p('mesos.cluster_name') %>"
 
-<% if p('mesos.framework_credentials', []).any? %>
-# File containing the list credentials
-export MESOS_MASTER_CREDENTIALS="--credentials=file://${MESOS_MASTER_CONF_DIR}/framework_credentials.cfg"
+<% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+# File containing the list of credentials
+export MESOS_MASTER_CREDENTIALS="--credentials=file://${MESOS_MASTER_CONF_DIR}/credentials"
 <% end %>
 
 # Policy to use for allocating resources between a given user's frameworks
@@ -103,3 +106,7 @@ export MESOS_MASTER_SLAVES_WHITELIST="--whitelist=file://${MESOS_MASTER_CONF_DIR
 
 # ZooKeeper session timeout
 export MESOS_MASTER_ZK_SESSION_TIMEOUT="<%= p('mesos.master.zk_session_timeout') %>"
+
+# SASL plugins
+export SASL_PATH=/var/vcap/packages/sasl/lib/sasl2/
+

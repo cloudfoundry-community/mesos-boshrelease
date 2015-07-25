@@ -31,6 +31,9 @@ export MESOS_HOME=/var/vcap/packages/mesos
 # Attributes of machine
 export MESOS_SLAVE_ATTRIBUTES="<%= p('mesos.slave.attributes') %>"
 
+# Authenticatee implementation to use when authenticating against the master
+export MESOS_SLAVE_AUTHENTICATEE="<%= p('mesos.slave.authenticatee') %>"
+
 # Cgroups feature flag to enable hard limits on CPU resources via the CFS bandwidth limiting subfeature
 export MESOS_SLAVE_CGROUPS_ENABLE_CFS="<%= p('mesos.slave.cgroups_enable_cfs') %>"
 
@@ -46,10 +49,9 @@ export MESOS_SLAVE_CGROUPS_ROOT="<%= p('mesos.slave.cgroups_root') %>"
 # The interval between disk quota checks for containers
 export MESOS_SLAVE_CONTAINER_DISK_WATCH_INTERVAL="<%= p('mesos.slave.container_disk_watch_interval') %>"
 
-# Framework credential file
-export MESOS_SLAVE_CREDENTIAL=""
-<% if_p('mesos.framework_credentials.principal', 'mesos.framework_credentials.secret') do %>
-export MESOS_SLAVE_CREDENTIAL="--credential=file://${MESOS_SLAVE_CONF_DIR}/framework_credentials.cfg"
+<% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+# File containing the list of credentials
+export MESOS_SLAVE_CREDENTIALS="--credential=file://${MESOS_SLAVE_CONF_DIR}/credentials"
 <% end %>
 
 # Default role
@@ -120,3 +122,7 @@ export MESOS_SLAVE_STRICT="<%= p('mesos.slave.strict') %>"
 
 # Whether to run tasks as the user who submitted them rather than the user running the slave
 export MESOS_SLAVE_SWITCH_USER="<%= p('mesos.slave.switch_user') %>"
+
+# SASL plugins
+export SASL_PATH=/var/vcap/packages/sasl/lib/sasl2/
+
