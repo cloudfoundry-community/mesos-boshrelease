@@ -37,6 +37,10 @@ case $1 in
     create_group ${MESOS_MASTER_GROUP}
     create_user ${MESOS_MASTER_USER} ${MESOS_MASTER_GROUP}
 
+    # Enable logrotate crontab
+    (crontab -l | sed /mesos_master.*logrotate/d; cat ${MESOS_MASTER_CONF_DIR}/mesos_master_logrotate.cron) | sed /^$/d | crontab
+
+
     <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
     # Set proper credentials file permissions
     chmod 0600 ${MESOS_MASTER_CONF_DIR}/credentials

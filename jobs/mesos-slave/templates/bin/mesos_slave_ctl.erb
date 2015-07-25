@@ -37,6 +37,9 @@ case $1 in
     create_group ${MESOS_SLAVE_GROUP}
     create_user ${MESOS_SLAVE_USER} ${MESOS_SLAVE_GROUP}
 
+    # Enable logrotate crontab
+    (crontab -l | sed /mesos_slave.*logrotate/d; cat ${MESOS_SLAVE_CONF_DIR}/mesos_slave_logrotate.cron) | sed /^$/d | crontab
+
     # Remove slave info
     rm -f ${MESOS_SLAVE_TMP_DIR}/meta/slaves/latest
 

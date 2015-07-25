@@ -145,6 +145,16 @@ properties:
   chronos.slack.url:
     description: "Webhook URL for posting to Slack"
 
+  chronos.logrotate.frequency:
+    description: "Frequency to run logrotate for Chronos log files (crontab five time and date fields)"
+    default: "0 * * * *"
+  chronos.logrotate.rotate:
+    description: "Number of times Chronos log files are rotated before being removed"
+    default: "7"
+  chronos.logrotate.size:
+    description: "Size before Chronos log files are rotated"
+    default: "10M"
+
   zookeeper.servers:
     description: "List of all Apache Zookeeper server host IP/hostnames"
   zookeeper.client_port:

@@ -18,6 +18,8 @@ templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/mesos_slave_ctl.erb: bin/mesos_slave_ctl
   config/credentials.erb: config/credentials
+  config/logrotate.conf.erb: config/logrotate.conf
+  config/mesos_slave_logrotate.cron.erb: config/mesos_slave_logrotate.cron
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
 properties:
@@ -117,6 +119,16 @@ properties:
   mesos.slave.switch_user:
     description: "Whether to run tasks as the user who submitted them rather than the user running the slave"
     default: false
+
+  mesos.slave.logrotate.frequency:
+    description: "Frequency to run logrotate for Mesos Slave log files (crontab five time and date fields)"
+    default: "0 * * * *"
+  mesos.slave.logrotate.rotate:
+    description: "Number of times Mesos Slave log files are rotated before being removed"
+    default: "7"
+  mesos.slave.logrotate.size:
+    description: "Size before Mesos Slave log files are rotated"
+    default: "10M"
 
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"

@@ -1,0 +1,10 @@
+/var/vcap/sys/log/chronos/*.log {
+  missingok
+  rotate <%= p('chronos.logrotate.rotate') %>
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+  size <%= p('chronos.logrotate.size') %>
+  su <%= p('chronos.user') %> <%= p('chronos.group') %>
+}

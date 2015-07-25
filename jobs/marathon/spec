@@ -119,6 +119,16 @@ properties:
     description: "The timeout for zookeeper sessions in milliseconds"
     default: 1800000
 
+  marathon.logrotate.frequency:
+    description: "Frequency to run logrotate for Marathon log files (crontab five time and date fields)"
+    default: "0 * * * *"
+  marathon.logrotate.rotate:
+    description: "Number of times Marathon log files are rotated before being removed"
+    default: "7"
+  marathon.logrotate.size:
+    description: "Size before Marathon log files are rotated"
+    default: "10M"
+
   zookeeper.servers:
     description: "List of all Apache Zookeeper server host IP/hostnames"
   zookeeper.client_port:

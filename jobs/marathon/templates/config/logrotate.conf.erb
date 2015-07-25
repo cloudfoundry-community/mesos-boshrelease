@@ -1,0 +1,10 @@
+/var/vcap/sys/log/marathon/*.log {
+  missingok
+  rotate <%= p('marathon.logrotate.rotate') %>
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+  size <%= p('marathon.logrotate.size') %>
+  su <%= p('marathon.user') %> <%= p('marathon.group') %>
+}

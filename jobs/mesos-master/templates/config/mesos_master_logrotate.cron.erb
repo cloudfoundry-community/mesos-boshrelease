@@ -1,0 +1,1 @@
+<%= p('mesos.master.logrotate.frequency') %> test -x /usr/sbin/logrotate && /usr/sbin/logrotate --state /var/vcap/sys/tmp/mesos-master/logrotate.status /var/vcap/jobs/mesos-master/config/logrotate.conf >>/var/vcap/sys/log/mesos-master/mesos_master_logrotate_cron.log 2>&1d

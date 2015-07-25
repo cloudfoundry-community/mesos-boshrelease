@@ -37,6 +37,9 @@ case $1 in
     create_group ${CHRONOS_GROUP}
     create_user ${CHRONOS_USER} ${CHRONOS_GROUP}
 
+    # Enable logrotate crontab
+    (crontab -l | sed /chronos.*logrotate/d; cat ${CHRONOS_CONF_DIR}/chronos_logrotate.cron) | sed /^$/d | crontab
+
     <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
     # Set framework secrets file
     echo -n '<%= secret %>' > ${CHRONOS_CONF_DIR}/authentication_secret_file
