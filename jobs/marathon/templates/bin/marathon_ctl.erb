@@ -13,6 +13,17 @@ else
     hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
 fi
 
+<%
+   def openstruct_to_hash(os)
+     os.marshal_dump.map do |key, element|
+       element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+     end.reduce(&:merge)
+   end
+
+   networks = openstruct_to_hash(spec.networks)
+   listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+%>
+
 case $1 in
 
   start)
@@ -27,7 +38,13 @@ case $1 in
     create_user ${MARATHON_USER} ${MARATHON_GROUP}
 
     # Read ZooKeeper Hosts
+    ZK_MESOS=`cat ${MARATHON_CONF_DIR}/zoo_mesos.cfg`
+
+    # Read ZooKeeper Hosts
     ZK_HOSTS=`cat ${MARATHON_CONF_DIR}/zoo_hosts.cfg`
+
+    # Process IP
+    export LIBPROCESS_IP=<%= listen_ip %>
 
     # Start Marathon service
     exec chpst -u ${MARATHON_USER}:${MARATHON_GROUP} java \
@@ -38,25 +55,38 @@ case $1 in
            -cp /var/vcap/packages/marathon/marathon.jar mesosphere.marathon.Main \
            --artifact_store "file://${MARATHON_STORE_DIR}" \
            ${MARATHON_CHECKPOINT:-} \
+           ${MARATHON_ENABLE_METRICS:-} \
+           ${MARATHON_ENABLE_TRACING:-} \
+           --event_stream_max_outstanding_messages "${MARATHON_EVENT_STREAM_MAX_OUTSTANDING_MESSAGES}" \
            --failover_timeout "${MARATHON_FAILOVER_TIMEOUT}" \
            --framework_name "${MARATHON_FRAMEWORK_NAME}" \
            ${MARATHON_HA:-} \
            --http_credentials "${MARATHON_HTTP_CREDENTIALS}" \
            --http_port "${MARATHON_HTTP_PORT}" \
+           --http_realm "${MARATHON_HTTP_REALM}" \
            --https_port "${MARATHON_HTTPS_PORT}" \
-           --local_port_max "${MARATHON_LOCAL_PORT_MAX}" \
+           --leader_proxy_connection_timeout "${MARATHON_LEADER_PROXY_CONNECTION_TIMEOUT}" \
+           --leader_proxy_read_timeout "${MARATHON_LEADER_PROXY_READ_TIMEOUT}" \
            --local_port_min "${MARATHON_LOCAL_PORT_MIN}" \
+           --local_port_max "${MARATHON_LOCAL_PORT_MAX}" \
+           --logging_level "${MARATHON_LOGGING_LEVEL}" \
            --marathon_store_timeout "${MARATHON_STORE_TIMEOUT}" \
-           --master file://${MARATHON_CONF_DIR}/zoo_mesos.cfg \
+           --master ${ZK_MESOS} \
            ${MARATHON_AUTHENTICATION_PRINCIPAL:-} \
            ${MARATHON_AUTHENTICATION_SECRET:-} \
+           --max_tasks_per_offer "${MARATHON_MAX_TASKS_PER_OFFER}" \
+           --max_tasks_per_offer_cycle "${MARATHON_MAX_TASKS_PER_OFFER_CYCLE}" \
            --mesos_role "${MARATHON_MESOS_ROLE}" \
            --mesos_user "${MARATHON_MESOS_USER}" \
            --reconciliation_initial_delay "${MARATHON_RECONCILIATION_INITIAL_DELAY}" \
            --reconciliation_interval "${MARATHON_RECONCILIATION_INTERVAL}" \
+           --scale_apps_initial_delay "${MARATHON_SCALE_APPS_INITIAL_DELAY}" \
+           --scale_apps_interval "${MARATHON_SCALE_APPS_INTERVAL}" \
            --task_launch_timeout "${MARATHON_TASK_LAUNCH_TIMEOUT}" \
            --zk ${ZK_HOSTS} \
+           --zk_max_versions "${MARATHON_ZK_MAX_VERSIONS}" \
            --zk_timeout "${MARATHON_ZK_TIMEOUT}" \
+           --zk_session_timeout "${MARATHON_ZK_SESSION_TIMEOUT}" \
            >>${MARATHON_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
            2>>${MARATHON_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;

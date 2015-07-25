@@ -29,6 +29,15 @@ properties:
   marathon.enable_checkpoint:
     description: "Enable checkpointing of tasks"
     default: true
+  marathon.enable_metrics:
+    description: "Enable metric measurement of service method calls"
+    default: true
+  marathon.enable_tracing:
+    description: "Enable trace logging ofservice method calls"
+    default: false
+  marathon.event_stream_max_outstanding_messages:
+    description: "The event stream buffers events that are not already consumed by clients"
+    default: 50
   marathon.failover_timeout:
     description: "The failover_timeout for Apache Mesos in seconds"
     default: 604800
@@ -48,18 +57,36 @@ properties:
   marathon.http_port:
     description: "The port Marathon will listen on for HTTP requests"
     default: 80
+  marathon.http_realm:
+    description: "The security realm associated with the credentials"
+    default: "mesos"
   marathon.https_port:
     description: "The port Marathon will listen on for HTTPS requests"
     default: 443
-  marathon.local_port_max:
-    description: "Max port number to use when Marathon assigns ports to apps"
-    default: 2000
+  marathon.leader_proxy_connection_timeout:
+    description: "Maximum time, in milliseconds, to wait for connecting to the current Marathon leader from another Marathon instance"
+    default: 5000
+  marathon.leader_proxy_read_timeout:
+    description: "Maximum time, in milliseconds, for reading from the current Marathon leader"
+    default: 10000
   marathon.local_port_min:
     description: "Min port number to use when Marathon assigns ports to apps"
-    default: 100000
+    default: 10000
+  marathon.local_port_max:
+    description: "Max port number to use when Marathon assigns ports to apps"
+    default: 20000
+  marathon.logging_level:
+    description: "Set logging level to one of: off, fatal, error, warn, info, debug, trace, all"
+    default: "info"
   marathon.store_timeout:
     description: "Maximum time, in milliseconds, to wait for persistent storage operations to complete"
     default: 2000
+  marathon.max_tasks_per_offer:
+    description: "Maximally launch this number of tasks per offer"
+    default: 1
+  marathon.max_tasks_per_offer_cycle:
+    description: "Maximally launch this number of tasks per offer cycle"
+    default: 1000
   marathon.mesos_role:
     description: "Mesos role for this framework"
     default: "*"
@@ -68,19 +95,31 @@ properties:
     default: "vcap"
   marathon.reconciliation_initial_delay:
     description: "This is the length of time, in milliseconds, before Marathon begins to periodically perform task reconciliation operations"
-    default: 30000
+    default: 15000
   marathon.reconciliation_interval:
     description: "This is the length of time, in milliseconds, between task reconciliation operations"
-    default: 30000
+    default: 300000
+  marathon.scale_apps_initial_delay:
+    description: "This is the length of time, in milliseconds, before Marathon begins to periodically attempt to scale apps"
+    default: 15000
+  marathon.scale_apps_interval:
+    description: "This is the length of time, in milliseconds, between task scale apps"
+    default: 300000
   marathon.task_launch_timeout:
     description: "Time, in milliseconds, to wait for a task to enter the TASK_RUNNING state before killing it"
-    default: 60000
+    default: 300000
   marathon.zk_state:
     description: "Path in ZooKeeper for storing Marathon state"
     default: "marathon"
+  marathon.zk_max_versions:
+    description: "Limit the number of versions, stored for one entity"
+    default: 25
   marathon.zk_timeout:
     description: "The timeout for ZooKeeper in milliseconds"
     default: 10000
+  marathon.zk_session_timeout:
+    description: "The timeout for zookeeper sessions in milliseconds"
+    default: 1800000
 
   zookeeper.servers:
     description: "List of all Apache Zookeeper server host IP/hostnames"

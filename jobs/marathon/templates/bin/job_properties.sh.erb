@@ -33,6 +33,19 @@ export MARATHON_JAVA_HEAP_SIZE="<%= p('marathon.java_heap_size') %>"
 export MARATHON_CHECKPOINT="--checkpoint"
 <% end %>
 
+<% if_p('marathon.enable_metrics') do |enable_metrics| %>
+# Enable metric measurement of service method calls
+export MARATHON_ENABLE_METRICS="--enable_metrics"
+<% end %>
+
+<% if_p('marathon.enable_tracing') do |enable_tracing| %>
+# Enable trace logging ofservice method calls
+export MARATHON_ENABLE_TRACING="--enable_tracing"
+<% end %>
+
+# The event stream buffers events that are not already consumed by clients
+export MARATHON_EVENT_STREAM_MAX_OUTSTANDING_MESSAGES="<%= p('marathon.event_stream_max_outstanding_messages') %>"
+
 # The failover_timeout for Apache Mesos in seconds
 export MARATHON_FAILOVER_TIMEOUT="<%= p('marathon.failover_timeout') %>"
 
@@ -50,14 +63,26 @@ export MARATHON_HTTP_CREDENTIALS="<%= p('marathon.http_credentials') %>"
 # The port Marathon will listen on for HTTP requests
 export MARATHON_HTTP_PORT="<%= p('marathon.http_port') %>"
 
+# The security realm associated with the credentials
+export MARATHON_HTTP_REALM="<%= p('marathon.http_realm') %>"
+
 # The port Marathon will listen on for HTTPS requests
 export MARATHON_HTTPS_PORT="<%= p('marathon.https_port') %>"
+
+# Maximum time, in milliseconds, to wait for connecting to the current Marathon leader from another Marathon instance
+export MARATHON_LEADER_PROXY_CONNECTION_TIMEOUT="<%= p('marathon.leader_proxy_connection_timeout') %>"
+
+# Maximum time, in milliseconds, for reading from the current Marathon leader
+export MARATHON_LEADER_PROXY_READ_TIMEOUT="<%= p('marathon.leader_proxy_read_timeout') %>"
+
+# Min port number to use when Marathon assigns ports to apps
+export MARATHON_LOCAL_PORT_MIN="<%= p('marathon.local_port_min') %>"
 
 # Max port number to use when Marathon assigns ports to apps
 export MARATHON_LOCAL_PORT_MAX="<%= p('marathon.local_port_max') %>"
 
-# Min port number to use when Marathon assigns ports to apps
-export MARATHON_LOCAL_PORT_MIN="<%= p('marathon.local_port_min') %>"
+# Set logging level
+export MARATHON_LOGGING_LEVEL="<%= p('marathon.logging_level') %>"
 
 # Maximum time, in milliseconds, to wait for persistent storage operations to complete
 export MARATHON_STORE_TIMEOUT="<%= p('marathon.store_timeout') %>"
@@ -67,6 +92,12 @@ export MARATHON_STORE_TIMEOUT="<%= p('marathon.store_timeout') %>"
 export MARATHON_AUTHENTICATION_PRINCIPAL="--mesos_authentication_principal <%= framework_principal %>"
 export MARATHON_AUTHENTICATION_SECRET="--mesos_authentication_secret_file <%= framework_secret %>"
 <% end %>
+
+# Maximally launch this number of tasks per offer
+export MARATHON_MAX_TASKS_PER_OFFER="<%= p('marathon.max_tasks_per_offer') %>"
+
+# Maximally launch this number of tasks per offer cycle
+export MARATHON_MAX_TASKS_PER_OFFER_CYCLE="<%= p('marathon.max_tasks_per_offer_cycle') %>"
 
 # Mesos role for this framework
 export MARATHON_MESOS_ROLE="<%= p('marathon.mesos_role') %>"
@@ -80,11 +111,23 @@ export MARATHON_RECONCILIATION_INITIAL_DELAY="<%= p('marathon.reconciliation_ini
 # This is the length of time, in milliseconds, between task reconciliation operations
 export MARATHON_RECONCILIATION_INTERVAL="<%= p('marathon.reconciliation_interval') %>"
 
+# This is the length of time, in milliseconds, before Marathon begins to periodically attempt to scale apps
+export MARATHON_SCALE_APPS_INITIAL_DELAY="<%= p('marathon.scale_apps_initial_delay') %>"
+
+# This is the length of time, in milliseconds, between task scale apps
+export MARATHON_SCALE_APPS_INTERVAL="<%= p('marathon.scale_apps_interval') %>"
+
 # Time, in milliseconds, to wait for a task to enter the TASK_RUNNING state before killing it
 export MARATHON_TASK_LAUNCH_TIMEOUT="<%= p('marathon.task_launch_timeout') %>"
 
+# Limit the number of versions, stored for one entity
+export MARATHON_ZK_MAX_VERSIONS="<%= p('marathon.zk_max_versions') %>"
+
 # The timeout for ZooKeeper in milliseconds
 export MARATHON_ZK_TIMEOUT="<%= p('marathon.zk_timeout') %>"
+
+# The timeout for zookeeper sessions in milliseconds
+export MARATHON_ZK_SESSION_TIMEOUT="<%= p('marathon.zk_session_timeout') %>"
 
 # Apache Mesos Native Library
 export MESOS_NATIVE_JAVA_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so
