@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors/>
-  <version>1.580.1</version>
+  <version>1.621</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -15,14 +15,15 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <org.jenkinsci.plugins.mesos.MesosCloud plugin="mesos@0.6.0-SNAPSHOT">
+    <org.jenkinsci.plugins.mesos.MesosCloud plugin="mesos@0.9.0-SNAPSHOT">
       <name>MesosCloud</name>
       <nativeLibraryPath>/var/vcap/packages/mesos/lib/libmesos.so</nativeLibraryPath>
       <master>zk://<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>/<%= p('mesos.zk_state') %></master>
       <description><%= p('jenkins.mesos.cluster_name') %></description>
       <frameworkName><%= p('jenkins.mesos.framework_name') %></frameworkName>
-      <principal><%= p('jenkins.mesos.framework_principal', '') %></principal>
-      <secret><%= p('jenkins.mesos.framework_secret', '') %></secret>
+      <slavesUser>vcap</slavesUser>
+      <principal><%= p('mesos.principal', '') %></principal>
+      <secret><%= p('mesos.secret', '') %></secret>
       <checkpoint><%= p('jenkins.mesos.enable_checkpoint') %></checkpoint>
       <onDemandRegistration><%= p('jenkins.mesos.on_demand_registration') %></onDemandRegistration>
       <slaveInfos>
@@ -32,16 +33,16 @@
           <maxExecutors><%= p('jenkins.mesos.max_executors') %></maxExecutors>
           <executorCpus><%= p('jenkins.mesos.executor_cpus') %></executorCpus>
           <executorMem><%= p('jenkins.mesos.executor_mem') %></executorMem>
-          <remoteFSRoot>jenkins</remoteFSRoot>
+          <remoteFSRoot>vcap</remoteFSRoot>
           <idleTerminationMinutes><%= p('jenkins.mesos.idle_termination') %></idleTerminationMinutes>
           <jvmArgs><%= p('jenkins.mesos.jvm_args', '') %></jvmArgs>
           <jnlpArgs><%= p('jenkins.mesos.jnlp_args', '') %></jnlpArgs>
+          <mode>NORMAL</mode>
           <labelString>mesos</labelString>
         </org.jenkinsci.plugins.mesos.MesosSlaveInfo>
       </slaveInfos>
     </org.jenkinsci.plugins.mesos.MesosCloud>
   </clouds>
-  <slaves/>
   <quietPeriod>5</quietPeriod>
   <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
   <views>

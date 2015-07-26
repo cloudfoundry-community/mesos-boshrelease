@@ -60,10 +60,6 @@ properties:
   jenkins.mesos.framework_name:
     description: "Mesos Framework name"
     default: "Jenkins"
-  jenkins.mesos.framework_principal:
-    description: "Mesos Framework principal"
-  jenkins.mesos.framework_secret:
-    description: "Mesos Framework secret"
   jenkins.mesos.enable_checkpoint:
     description: "Enable checkpointing of Jenkins tasks"
     default: true
@@ -146,3 +142,8 @@ properties:
   zookeeper.client_port:
     description: "Port at which the clients will connect to Apache Zookeeper"
     default: 2181
+
+  mesos.principal:
+    description: "Mesos principal"
+  mesos.secret:
+    description: "Mesos secret"
