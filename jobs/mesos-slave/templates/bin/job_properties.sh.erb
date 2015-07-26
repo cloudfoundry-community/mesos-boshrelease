@@ -60,6 +60,15 @@ export MESOS_SLAVE_DEFAULT_ROLE="<%= p('mesos.slave.default_role') %>"
 # Periodic time interval (e.g., 10secs, 2mins, etc) to check the disk usage
 export MESOS_SLAVE_DISK_WATCH_INTERVAL="<%= p('mesos.slave.disk_watch_interval') %>"
 
+# The amount of time to wait before removing docker containers
+export MESOS_SLAVE_DOCKER_REMOVE_DELAY="<%= p('mesos.slave.docker.remove_delay') %>"
+
+# The absolute path for the directory in the container where the sandbox is mapped to
+export MESOS_SLAVE_DOCKER_SANDBOX_DIRECTORY="<%= p('mesos.slave.docker.sandbox_directory') %>"
+
+# The time as a duration for docker to wait after stopping an instance before it kills that instance
+export MESOS_SLAVE_DOCKER_STOP_TIMEOUT="<%= p('mesos.slave.docker.stop_timeout') %>"
+
 # Whether to enable disk quota enforcement for containers
 export MESOS_SLAVE_ENFORCE_CONTAINER_DISK_QUOTA="<%= p('mesos.slave.enforce_container_disk_quota') %>"
 
@@ -125,4 +134,7 @@ export MESOS_SLAVE_SWITCH_USER="<%= p('mesos.slave.switch_user') %>"
 
 # SASL plugins
 export SASL_PATH=/var/vcap/packages/sasl/lib/sasl2/
+
+# Docker UNIX socket
+export DOCKER_HOST=unix:///var/vcap/sys/run/docker/docker.sock
 

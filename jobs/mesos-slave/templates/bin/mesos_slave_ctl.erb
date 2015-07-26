@@ -22,6 +22,9 @@ fi
 
    networks = openstruct_to_hash(spec.networks)
    listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+
+   docker_template = spec.job.templates.select { |template| template.name == 'docker' }
+   containerizers = docker_template.any? ? "docker,mesos" : "mesos"
 %>
 
 case $1 in
@@ -67,8 +70,13 @@ case $1 in
            --cgroups_root="${MESOS_SLAVE_CGROUPS_ROOT}" \
            --container_disk_watch_interval="${MESOS_SLAVE_CONTAINER_DISK_WATCH_INTERVAL}" \
            ${MESOS_SLAVE_CREDENTIALS:-} \
+           --containerizers=<%= containerizers %> \
            --default_role="${MESOS_SLAVE_DEFAULT_ROLE}" \
            --disk_watch_interval="${MESOS_SLAVE_DISK_WATCH_INTERVAL}" \
+           --docker="/var/vcap/packages/docker/bin/docker" \
+           --docker_remove_delay="${MESOS_SLAVE_DOCKER_REMOVE_DELAY}" \
+           --docker_sandbox_directory="${MESOS_SLAVE_DOCKER_SANDBOX_DIRECTORY}" \
+           --docker_stop_timeout="${MESOS_SLAVE_DOCKER_STOP_TIMEOUT}" \
            --enforce_container_disk_quota="${MESOS_SLAVE_ENFORCE_CONTAINER_DISK_QUOTA}" \
            --executor_registration_timeout="${MESOS_SLAVE_EXECUTOR_REGISTRATION_TIMEOUT}" \
            --executor_shutdown_grace_period="${MESOS_SLAVE_EXECUTOR_SHUTDOWN_GRACE_PERIOD}" \

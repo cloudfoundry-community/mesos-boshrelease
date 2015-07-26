@@ -130,6 +130,16 @@ properties:
     description: "Size before Mesos Slave log files are rotated"
     default: "10M"
 
+  mesos.slave.docker.remove_delay:
+    description: "The amount of time to wait before removing docker containers"
+    default: "6hrs"
+  mesos.slave.docker.sandbox_directory:
+    description: "The absolute path for the directory in the container where the sandbox is mapped to"
+    default: "/mnt/mesos/sandbox"
+  mesos.slave.docker.stop_timeout:
+    description: "The time as a duration for docker to wait after stopping an instance before it kills that instance"
+    default: "0ns"
+
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"
