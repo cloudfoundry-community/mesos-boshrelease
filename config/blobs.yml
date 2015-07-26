@@ -87,10 +87,6 @@ nginx/pcre-8.37.tar.gz:
   object_id: 702e6c3a-690f-4b03-9352-bc619ebb5e6a
   sha: 4a24a20c61347d8da4edc86d5475aaf70ac146bb
   size: 2041593
-jenkins/jenkins-1.621.0.war:
-  object_id: ebdb2848-4922-43a6-a908-6c4053584a25
-  sha: 74d90d810663c82e5dd2815adf459a600e7d11c0
-  size: 63264175
 jenkins/mesos-0.8.0.hpi:
   object_id: a9bd4899-360c-40f2-b387-0a22e8728df0
   sha: 888ac7faf36e1ceaf791e3f8e3340ae2ac778a24
@@ -107,3 +103,7 @@ marathon/marathon-0.9.0.tgz:
   object_id: 8efb2007-a9d9-45cf-b57a-aa1fa9890c70
   sha: af6b1b3b95171871ea1aabb73a44c268a2aa9beb
   size: 56502876
+jenkins/jenkins-1.621.war:
+  object_id: d365e79c-7ac3-4f90-9367-f5687b043ea5
+  sha: 8f8fff4e969acc37dc9ca19a47994ae77c3ed8d3
+  size: 63302047
