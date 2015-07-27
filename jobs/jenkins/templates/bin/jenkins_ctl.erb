@@ -14,14 +14,18 @@ else
 fi
 
 <%
-   def openstruct_to_hash(os)
-     os.marshal_dump.map do |key, element|
-       element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-     end.reduce(&:merge)
-   end
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
 
-   networks = openstruct_to_hash(spec.networks)
-   listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+networks = openstruct_to_hash(spec.networks)
+default_network = networks.values.find { |net| net.has_key?(:default) }
+private_ip = default_network[:ip]
+
+vip_network = networks.values.find { |net| net[:type] == 'vip' }
+public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
 %>
 
 case $1 in
@@ -48,7 +52,7 @@ case $1 in
     chown -R ${JENKINS_USER}:${JENKINS_GROUP} ${JENKINS_PLUGINS_DIR}
 
     # Process IP
-    export LIBPROCESS_IP=<%= listen_ip %>
+    export LIBPROCESS_IP=<%= private_ip %>
 
     # Start Jenkins service
     exec chpst -u ${JENKINS_USER}:${JENKINS_GROUP} java \

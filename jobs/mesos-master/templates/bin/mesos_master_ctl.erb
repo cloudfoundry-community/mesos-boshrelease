@@ -6,13 +6,6 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'mesos-master'
 export MESOS_MASTER_PID_FILE=${MESOS_MASTER_PID_DIR}/mesos-master.pid
 
-# Set the hostname
-if hostname=$(public_hostname); then
-    hostname $hostname
-else
-    hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
-fi
-
 <%
 def openstruct_to_hash(os)
   os.marshal_dump.map do |key, element|
@@ -21,8 +14,18 @@ def openstruct_to_hash(os)
 end
 
 networks = openstruct_to_hash(spec.networks)
-listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+default_network = networks.values.find { |net| net.has_key?(:default) }
+private_ip = default_network[:ip]
+
+vip_network = networks.values.find { |net| net[:type] == 'vip' }
+public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
 %>
+
+if public_ip=$(public_ip_address); then
+  public_ip=$public_ip
+else
+  public_ip=<%= public_ip %>
+fi
 
 case $1 in
 
@@ -56,8 +59,9 @@ case $1 in
            --cluster="${MESOS_CLUSTER_NAME}" \
            ${MESOS_MASTER_CREDENTIALS:-} \
            --framework_sorter="${MESOS_MASTER_FRAMEWORK_SORTER}" \
+           --hostname="${public_ip}" \
            --initialize_driver_logging="${MESOS_MASTER_INITIALIZE_DRIVER_LOGGING}" \
-           --ip=<%= listen_ip %> \
+           --ip=<%= private_ip %> \
            --log_auto_initialize="${MESOS_MASTER_LOG_AUTO_INITIALIZE}" \
            --log_dir="${MESOS_MASTER_LOG_DIR}" \
            --logbufsecs="${MESOS_MASTER_LOGBUFSECS}" \

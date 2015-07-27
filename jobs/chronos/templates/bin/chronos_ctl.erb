@@ -6,23 +6,26 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'chronos'
 export CHRONOS_PID_FILE=${CHRONOS_PID_DIR}/chronos.pid
 
-# Set the hostname
-if hostname=$(public_hostname); then
-    hostname $hostname
-else
-    hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
-fi
-
 <%
-   def openstruct_to_hash(os)
-     os.marshal_dump.map do |key, element|
-       element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-     end.reduce(&:merge)
-   end
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
 
-   networks = openstruct_to_hash(spec.networks)
-   listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+networks = openstruct_to_hash(spec.networks)
+default_network = networks.values.find { |net| net.has_key?(:default) }
+private_ip = default_network[:ip]
+
+vip_network = networks.values.find { |net| net[:type] == 'vip' }
+public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
 %>
+
+if public_ip=$(public_ip_address); then
+  public_ip=$public_ip
+else
+  public_ip=<%= public_ip %>
+fi
 
 case $1 in
 
@@ -54,7 +57,7 @@ case $1 in
     ZK_HOSTS=`cat ${CHRONOS_CONF_DIR}/zoo_hosts.cfg`
 
     # Process IP
-    export LIBPROCESS_IP=<%= listen_ip %>
+    export LIBPROCESS_IP=<%= private_ip %>
 
     # Start Chronos service
     exec chpst -u ${CHRONOS_USER}:${CHRONOS_GROUP} java \
@@ -73,6 +76,7 @@ case $1 in
            --http_port "${CHRONOS_HTTP_PORT}" \
            --http_realm "${CHRONOS_HTTP_REALM}" \
            --https_port "${CHRONOS_HTTPS_PORT}" \
+           --hostname "${public_ip}" \
            --job_history_limit "${CHRONOS_JOB_HISTORY_LIMIT}" \
            --leader_max_idle_time "${CHRONOS_LEADER_MAX_IDLE_TIME}" \
            ${CHRONOS_MAIL_OPTIONS:-} \

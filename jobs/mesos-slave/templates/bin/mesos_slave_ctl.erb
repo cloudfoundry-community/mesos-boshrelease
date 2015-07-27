@@ -6,26 +6,29 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'mesos-slave'
 export MESOS_SLAVE_PID_FILE=${MESOS_SLAVE_PID_DIR}/mesos-slave.pid
 
-# Set the hostname
-if hostname=$(public_hostname); then
-    hostname $hostname
-else
-    hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
-fi
-
 <%
-   def openstruct_to_hash(os)
-     os.marshal_dump.map do |key, element|
-       element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-     end.reduce(&:merge)
-   end
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
 
-   networks = openstruct_to_hash(spec.networks)
-   listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+networks = openstruct_to_hash(spec.networks)
+default_network = networks.values.find { |net| net.has_key?(:default) }
+private_ip = default_network[:ip]
 
-   docker_template = spec.job.templates.select { |template| template.name == 'docker' }
-   containerizers = docker_template.any? ? "docker,mesos" : "mesos"
+vip_network = networks.values.find { |net| net[:type] == 'vip' }
+public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
+
+docker_template = spec.job.templates.select { |template| template.name == 'docker' }
+containerizers = docker_template.any? ? "docker,mesos" : "mesos"
 %>
+
+if public_ip=$(public_ip_address); then
+  public_ip=$public_ip
+else
+  public_ip=<%= public_ip %>
+fi
 
 case $1 in
 
@@ -80,11 +83,12 @@ case $1 in
            --enforce_container_disk_quota="${MESOS_SLAVE_ENFORCE_CONTAINER_DISK_QUOTA}" \
            --executor_registration_timeout="${MESOS_SLAVE_EXECUTOR_REGISTRATION_TIMEOUT}" \
            --executor_shutdown_grace_period="${MESOS_SLAVE_EXECUTOR_SHUTDOWN_GRACE_PERIOD}" \
+           --hostname="${public_ip}" \
            --frameworks_home="${MESOS_SLAVE_STORE_DIR}" \
            --gc_delay="${MESOS_SLAVE_GC_DELAY}" \
            --gc_disk_headroom="${MESOS_SLAVE_GC_DISK_HEADROOM}" \
            --initialize_driver_logging="${MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING}" \
-           --ip=<%= listen_ip %> \
+           --ip=<%= private_ip %> \
            --isolation="${MESOS_SLAVE_ISOLATION}" \
            --log_dir="${MESOS_SLAVE_LOG_DIR}" \
            --logbufsecs="${MESOS_SLAVE_LOGBUFSECS}" \

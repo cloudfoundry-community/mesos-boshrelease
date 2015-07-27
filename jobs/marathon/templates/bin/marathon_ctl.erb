@@ -6,23 +6,26 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'marathon'
 export MARATHON_PID_FILE=${MARATHON_PID_DIR}/marathon.pid
 
-# Set the hostname
-if hostname=$(public_hostname); then
-    hostname $hostname
-else
-    hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
-fi
-
 <%
-   def openstruct_to_hash(os)
-     os.marshal_dump.map do |key, element|
-       element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-     end.reduce(&:merge)
-   end
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
 
-   networks = openstruct_to_hash(spec.networks)
-   listen_ip = networks.values.find { |net| net.has_key?(:default) }[:ip]
+networks = openstruct_to_hash(spec.networks)
+default_network = networks.values.find { |net| net.has_key?(:default) }
+private_ip = default_network[:ip]
+
+vip_network = networks.values.find { |net| net[:type] == 'vip' }
+public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
 %>
+
+if public_ip=$(public_ip_address); then
+  public_ip=$public_ip
+else
+  public_ip=<%= public_ip %>
+fi
 
 case $1 in
 
@@ -54,7 +57,7 @@ case $1 in
     ZK_HOSTS=`cat ${MARATHON_CONF_DIR}/zoo_hosts.cfg`
 
     # Process IP
-    export LIBPROCESS_IP=<%= listen_ip %>
+    export LIBPROCESS_IP=<%= private_ip %>
 
     # Start Marathon service
     exec chpst -u ${MARATHON_USER}:${MARATHON_GROUP} java \
@@ -75,6 +78,7 @@ case $1 in
            --http_port "${MARATHON_HTTP_PORT}" \
            --http_realm "${MARATHON_HTTP_REALM}" \
            --https_port "${MARATHON_HTTPS_PORT}" \
+           --hostname "${public_ip}" \
            --leader_proxy_connection_timeout "${MARATHON_LEADER_PROXY_CONNECTION_TIMEOUT}" \
            --leader_proxy_read_timeout "${MARATHON_LEADER_PROXY_READ_TIMEOUT}" \
            --local_port_min "${MARATHON_LOCAL_PORT_MIN}" \
