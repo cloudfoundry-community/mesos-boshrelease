@@ -1,10 +1,10 @@
 <%
 director_uuid = 'CHANGE-ME'
 deployment_name = 'mesos'
-num_zookeepers = 3
-num_masters = 2
-num_marathons = 2
-num_chronos = 2
+num_zookeepers = 3 # Odd number
+num_masters = 3 # Odd number
+num_marathons = 1
+num_chronos = 1
 num_jenkins = 1
 num_slaves = 3
 %>
@@ -61,6 +61,7 @@ jobs:
       - name: zookeeper
     instances: <%= num_zookeepers %>
     resource_pool: default
+    persistent_disk: 10240
     networks:
       - name: default
         default: [dns, gateway]
@@ -97,6 +98,7 @@ jobs:
       - name: jenkins
     instances: <%= num_jenkins %>
     resource_pool: default
+    persistent_disk: 20480
     networks:
       - name: default
         default: [dns, gateway]
@@ -106,14 +108,20 @@ jobs:
       - name: mesos-slave
     instances: <%= num_slaves %>
     resource_pool: slave
+    persistent_disk: 65536
     networks:
       - name: default
         default: [dns, gateway]
 
 properties:
   mesos:
+    principal: "principal"
+    secret: "secret"
     master:
       quorum: <%= (num_masters/2) + 1 %>
+      authenticate_frameworks: true
+      authenticate_slaves: true
+
   zookeeper:
     servers:
       <% num_zookeepers.times do |i| %>
