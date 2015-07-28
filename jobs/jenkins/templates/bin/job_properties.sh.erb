@@ -34,11 +34,20 @@ export JENKINS_GROUP="<%= p('jenkins.group') %>"
 # Java Heap Size for Jenkinss
 export JENKINS_JAVA_HEAP_SIZE="<%= p('jenkins.java_heap_size') %>"
 
+# Set the level of debug msgs (1-9)
+export JENKINS_DEBUG_LEVEL="<%= p('jenkins.debug_level') %>"
+
 # Port Jenkins will listen using standard http protocol
 export JENKINS_PORT="<%= p('jenkins.port') %>"
 
 # IP address where to bind Jenkins using standard http protocol
 export JENKINS_LISTEN_ADDRESS="<%= p('jenkins.listen_address') %>"
+
+# Enable/disable host name lookups on incoming http connections
+export JENKINS_HTTP_DO_HOSTNAME_LOOKUPS="<%= p('jenkins.http_do_hostname_lookup') %>"
+
+# How long idle HTTP keep-alive connections are kept around (in ms)
+export JENKINS_HTTP_KEEPALIVE_TIMEOUT="<%= p('jenkins.http_keepalive_timeout') %>"
 
 # Port Jenkins will listen using standard AJP13 protocol
 export JENKINS_AJP_PORT="<%= p('jenkins.ajp_port') %>"
@@ -46,14 +55,26 @@ export JENKINS_AJP_PORT="<%= p('jenkins.ajp_port') %>"
 # IP address where to bind Jenkins using standard AJP13 protocol
 export JENKINS_AJP_LISTEN_ADDRESS="<%= p('jenkins.ajp_listen_address') %>"
 
+# Set the no of worker threads to spawn at startup
+export JENKINS_HANDLER_COUNT_STARTUP="<%= p('jenkins.handler_count_startup') %>"
+
+# Set the max no of worker threads to allow
+export JENKINS_HANDLER_COUNT_MAX="<%= p('jenkins.handler_count_max') %>"
+
+# Set the max no of idle worker threads to allow
+export JENKINS_HANDLER_COUNT_MAX_IDLE="<%= p('jenkins.handler_count_max_idle') %>"
+
+# Set the max number of parameters allowed in a form submission to protect against hash DoS attack
+export JENKINS_MAX_PARM_COUNT="<%= p('jenkins.max_parm_count') %>"
+
+# Prefix to append to Jenkins URL
+export JENKINS_PREFIX="<%= p('jenkins.prefix') %>"
+
 # Jenkins admin user
 export JENKINS_ADMIN_USER="<%= p('jenkins.admin_user') %>"
 
 # Jenkins admin password
 export JENKINS_ADMIN_PASSWORD="<%= p('jenkins.admin_password') %>"
-
-# Prefix to append to Jenkins URL
-export JENKINS_PREFIX="<%= p('jenkins.prefix') %>"
 
 # Apache Mesos Native Library
 export MESOS_NATIVE_JAVA_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so

@@ -32,27 +32,48 @@ properties:
   jenkins.java_heap_size:
     description: "Java Heap Size for Jenkins"
     default: "2048m"
+  jenkins.debug_level:
+    description: "Set the level of debug msgs (1-9)"
+    default: 5
   jenkins.port:
     description: "Port Jenkins will listen using standard http protocol"
     default: 8080
   jenkins.listen_address:
     description: "IP address where to bind Jenkins using standard http protocol"
     default: "127.0.0.1"
+  jenkins.http_do_hostname_lookup:
+    description: "Enable/disable host name lookups on incoming http connections"
+    default: false
+  jenkins.http_keepalive_timeout:
+    description: "How long idle HTTP keep-alive connections are kept around (in ms)"
+    default: 5000
   jenkins.ajp_port:
     description: "Port Jenkins will listen using standard AJP13 protocol"
     default: 8009
   jenkins.ajp_listen_address:
     description: "IP address where to bind Jenkins using standard AJP13 protocol"
     default: "127.0.0.1"
+  jenkins.handler_count_startup:
+    description: "Set the no of worker threads to spawn at startup"
+    default: 4
+  jenkins.handler_count_max:
+    description: "Set the max no of worker threads to allow"
+    default: 40
+  jenkins.handler_count_max_idle:
+    description: "Set the max no of idle worker threads to allow"
+    default: 5
+  jenkins.max_parm_count:
+    description: "Set the max number of parameters allowed in a form submission to protect against hash DoS attack"
+    default: 10000
+  jenkins.prefix:
+    description: "Prefix to append to Jenkins URL"
+    default: ""
   jenkins.admin_user:
     description: "Jenkins admin user"
     default: "jenkins"
   jenkins.admin_password:
     description: "Jenkins admin password"
     default: "jenkins"
-  jenkins.prefix:
-    description: "Prefix to append to Jenkins URL"
-    default: ""
 
   jenkins.mesos.cluster_name:
     description: "Human readable name for the Jenkins Mesos cluster"

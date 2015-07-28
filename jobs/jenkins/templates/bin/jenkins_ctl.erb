@@ -6,13 +6,6 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'jenkins'
 export JENKINS_PID_FILE=${JENKINS_PID_DIR}/jenkins.pid
 
-# Set the hostname
-if hostname=$(public_hostname); then
-    hostname $hostname
-else
-    hostname <%= index %>.<%= name %>.<%= spec.networks.methods(false).grep(/[^=]$/).first.to_s %>.<%= spec.deployment %>.<%= spec.dns_domain_name %>
-fi
-
 <%
 def openstruct_to_hash(os)
   os.marshal_dump.map do |key, element|
@@ -26,7 +19,21 @@ private_ip = default_network[:ip]
 
 vip_network = networks.values.find { |net| net[:type] == 'vip' }
 public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
+
+if p('jenkins.nginx.ssl_only')
+  jenkins_url_protocol = "https"
+  jenkins_url_port = p('jenkins.nginx.https.port')
+else
+  jenkins_url_protocol = "http"
+  jenkins_url_port = p('jenkins.nginx.http.port')
+end
 %>
+
+if public_ip=$(public_ip_address); then
+  export public_ip=$public_ip
+else
+  export public_ip=<%= public_ip %>
+fi
 
 case $1 in
 
@@ -54,6 +61,9 @@ case $1 in
     # Process IP
     export LIBPROCESS_IP=<%= private_ip %>
 
+    # Jenkins URL
+    export JENKINS_URL="<%= jenkins_url_protocol %>://${public_ip}:<%= jenkins_url_port %>"
+
     # Start Jenkins service
     exec chpst -u ${JENKINS_USER}:${JENKINS_GROUP} java \
            -Xmx"${JENKINS_JAVA_HEAP_SIZE}" \
@@ -61,13 +71,20 @@ case $1 in
            -Dfile.encoding=UTF-8 \
            -Djava.io.tmpdir=${JENKINS_TMP_DIR} \
            -jar /var/vcap/packages/jenkins/jenkins.war  \
+           --debug="${JENKINS_DEBUG_LEVEL}" \
            --httpPort="${JENKINS_PORT}" \
            --httpListenAddress="${JENKINS_LISTEN_ADDRESS}" \
+           --httpDoHostnameLookups="${JENKINS_HTTP_DO_HOSTNAME_LOOKUPS}" \
+           --httpKeepAliveTimeout="${JENKINS_HTTP_KEEPALIVE_TIMEOUT}" \
            --ajp13Port="${JENKINS_AJP_PORT}" \
            --ajp13ListenAddress="${JENKINS_AJP_LISTEN_ADDRESS}" \
+           --handlerCountStartup="${JENKINS_HANDLER_COUNT_STARTUP}" \
+           --handlerCountMax="${JENKINS_HANDLER_COUNT_MAX}" \
+           --handlerCountMaxIdle="${JENKINS_HANDLER_COUNT_MAX_IDLE}" \
+           --maxParamCount="${JENKINS_MAX_PARM_COUNT}" \
+           --prefix="${JENKINS_PREFIX}" \
            --argumentsRealm.passwd.${JENKINS_ADMIN_USER}="${JENKINS_ADMIN_PASSWORD}" \
            --argumentsRealm.roles.${JENKINS_ADMIN_USER}=admin \
-           --prefix="${JENKINS_PREFIX}" \
            >>${JENKINS_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
            2>>${JENKINS_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
