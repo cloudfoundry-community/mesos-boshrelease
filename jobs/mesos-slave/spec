@@ -61,7 +61,7 @@ properties:
     default: false
   mesos.slave.executor_registration_timeout:
     description: "Amount of time to wait for an executor to register with the slave before considering it hung and shutting it down"
-    default: "1mins"
+    default: "5mins"
   mesos.slave.executor_shutdown_grace_period:
     description: "Amount of time to wait for an executor to shut down"
     default: "5secs"
