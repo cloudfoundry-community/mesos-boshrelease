@@ -6,6 +6,7 @@ num_masters = 3 # Odd number
 num_marathons = 1
 num_chronos = 1
 num_jenkins = 1
+num_storm = 1
 num_slaves = 3
 %>
 ---
@@ -99,6 +100,15 @@ jobs:
     instances: <%= num_jenkins %>
     resource_pool: default
     persistent_disk: 20480
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: storm
+    templates:
+      - name: storm
+    instances: <%= num_storm %>
+    resource_pool: default
     networks:
       - name: default
         default: [dns, gateway]
