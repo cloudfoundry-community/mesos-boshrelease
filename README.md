@@ -5,8 +5,9 @@ One of the fastest ways to get [Apache Mesos](http://mesos.apache.org/) running 
 This BOSH release includes the following [Apache Mesos](http://mesos.apache.org/) frameworks:
 
 * [Chronos](http://mesos.github.io/chronos/): A fault tolerant job scheduler for Mesos which handles dependencies and ISO8601 based schedules
-* [Mesosphere Marathon](https://mesosphere.github.io/marathon/): A cluster-wide init and control system for services in cgroups or Docker containers
+* [Marathon](https://mesosphere.github.io/marathon/): A cluster-wide init and control system for services in cgroups or Docker containers
 * [Jenkins](http://jenkins-ci.org/): An extendable open source continuous integration server
+* [Storm](https://storm.apache.org/): A distributed realtime computation system
 
 ## Disclaimer
 
