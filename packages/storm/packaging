@@ -1,0 +1,21 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=`grep -c ^processor /proc/cpuinfo`
+
+# We grab the latest versions that are in the directory
+STORM_VERSION=`ls -r storm/storm-mesos-*.tgz | sed 's/storm\/storm-mesos-\(.*\)\.tgz/\1/' | head -1`
+
+# Extract Storm package
+echo "Extracting Storm ${STORM_VERSION}..."
+tar xzvf ${BOSH_COMPILE_TARGET}/storm/storm-mesos-${STORM_VERSION}.tgz
+if [[ $? != 0 ]] ; then
+  echo "Failed extracting Storm ${STORM_VERSION}"
+  exit 1
+fi
+
+# Copy Storm package
+echo "Copying Storm ${STORM_VERSION}..."
+cp ${BOSH_COMPILE_TARGET}/storm/storm-mesos-${STORM_VERSION}.tgz ${BOSH_INSTALL_TARGET}
+cp -a ${BOSH_COMPILE_TARGET}/storm-mesos-${STORM_VERSION}/* ${BOSH_INSTALL_TARGET}

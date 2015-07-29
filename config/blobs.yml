@@ -107,3 +107,7 @@ jenkins/jenkins-1.621.war:
   object_id: d365e79c-7ac3-4f90-9367-f5687b043ea5
   sha: 8f8fff4e969acc37dc9ca19a47994ae77c3ed8d3
   size: 63302047
+storm/storm-mesos-0.9.3.tgz:
+  object_id: 864778ce-133e-4677-a95a-f48cece97de6
+  sha: a3554ecdce47fcc357a8deea81c8f7ed12788415
+  size: 25924250
