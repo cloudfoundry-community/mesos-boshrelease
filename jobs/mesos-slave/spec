@@ -12,6 +12,7 @@ packages:
   - ruby
   - sasl
   - scala
+  - storm
   - subversion
 
 templates:
