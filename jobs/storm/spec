@@ -1,0 +1,99 @@
+---
+name: storm
+
+packages:
+  - apr
+  - bosh-helpers
+  - java
+  - mesos
+  - sasl
+  - storm
+  - subversion
+
+templates:
+  bin/job_properties.sh.erb: bin/job_properties.sh
+  bin/storm_nimbus_ctl.erb: bin/storm_nimbus_ctl
+  bin/storm_ui_ctl.erb: bin/storm_ui_ctl
+  config/cluster.xml.erb: config/cluster.xml
+  config/logrotate.conf.erb: config/logrotate.conf
+  config/storm.yaml.erb: config/storm.yaml
+  config/storm_logrotate.cron.erb: config/storm_logrotate.cron
+
+properties:
+  storm.user:
+    description: "User which will own the Storm services"
+    default: "root"
+  storm.group:
+    description: "Group which will own the Storm services"
+    default: "vcap"
+  storm.java_heap_size:
+    description: "Java Heap Size for Marathon"
+    default: "1024m"
+  storm.ui.port:
+    description: "Storm UI port"
+    default: 80
+  storm.mesos.framework_checkpoint:
+    description: "Enable/disable framework checkpoint"
+    default: true
+  storm.mesos.framework_name:
+    description: "Framework name"
+    default: "Storm"
+  storm.mesos.framework_role:
+    description: "Framework role to use"
+    default: "*"
+  storm.mesos.master_failover_timeout_secs:
+    description: "Framework failover timeout in second"
+    default: 3600
+  storm.mesos.offer_lru_cache_size:
+    description: "LRU cache size"
+    default: 1000
+  storm.mesos.local_file_server_port:
+    description: "Port for the local file server to bind to (defaults to a random port)"
+  storm.mesos.supervisor_suicide_inactive_timeout_secs:
+    description: "Seconds to wait before supervisor to suicides if supervisor has no task to run"
+    default: 120
+  storm.mesos.allowed_hosts:
+    description: "Allowed hosts to run topology, which takes hostname list as a white list"
+    default: []
+  storm.mesos.disallowed_hosts:
+    description: "Disallowed hosts to run topology, which takes hostname list as a back list"
+    default: []
+  storm.zk_state:
+    description: "Path in ZooKeeper for storing Storm state"
+    default: "storm"
+  storm.topology.mesos.worker_cpu:
+    description: "CPUs per worker"
+    default: 1
+  storm.topology.mesos.worker_mem_mb:
+    description: "Memory (in MiB) per worker"
+    default: 1024
+  storm.topology.mesos.executor_cpu:
+    description: "CPUs per executor"
+    default: 1
+  storm.topology.mesos.executor_mem_mb:
+    description: "Memory (in MiB) per executor"
+    default: 1024
+
+  storm.logrotate.frequency:
+    description: "Frequency to run logrotate for Storm log files (crontab five time and date fields)"
+    default: "0 * * * *"
+  storm.logrotate.rotate:
+    description: "Number of times Storm log files are rotated before being removed"
+    default: "7"
+  storm.logrotate.size:
+    description: "Size before Storm log files are rotated"
+    default: "10M"
+
+  zookeeper.servers:
+    description: "List of all Apache Zookeeper server host IP/hostnames"
+  zookeeper.client_port:
+    description: "Port at which the clients will connect to Apache Zookeeper"
+    default: 2181
+  mesos.zk_state:
+    description: "Path in ZooKeeper for storing Apache Mesos state"
+    default: "mesos"
+
+  mesos.principal:
+    description: "Mesos principal"
+  mesos.secret:
+    description: "Mesos secret"

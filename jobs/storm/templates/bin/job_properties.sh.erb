@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+#
+# Storm properties
+#
+
+# Directory to store the Storm configuration files
+export STORM_CONF_DIR=${JOB_DIR}/config
+
+# Directory to store the Storm log files
+export STORM_LOG_DIR=${LOG_DIR}
+
+# Directory to store the Storm process IDs
+export STORM_PID_DIR=${RUN_DIR}
+
+# Directory to store the Storm data files
+export STORM_STORE_DIR=${STORE_DIR}
+
+# Directory to store the Storm temp files
+export STORM_TMP_DIR=${TMP_DIR}
+
+# User which will own the Storm services
+export STORM_USER="<%= p('storm.user') %>"
+
+# Group which will own the Storm services
+export STORM_GROUP="<%= p('storm.group') %>"
+
+# Java Heap Size for Storm
+export STORM_JAVA_HEAP_SIZE="<%= p('storm.java_heap_size') %>"
+
+# Apache Mesos Native Library
+export MESOS_NATIVE_JAVA_LIBRARY=/var/vcap/packages/mesos/lib/libmesos.so
+
+# SASL plugins
+export SASL_PATH=/var/vcap/packages/sasl/lib/sasl2/

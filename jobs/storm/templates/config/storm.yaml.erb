@@ -1,0 +1,62 @@
+java.library.path: "/var/vcap/packages/java/jdk/lib"
+
+storm.local.dir: "/var/vcap/store/storm"
+
+storm.zookeeper.servers:
+<%= p('zookeeper.servers').map { |server| "- \"#{server}\""}.join("\n") %>
+storm.zookeeper.port: <%= p('zookeeper.client_port') %>
+storm.zookeeper.root: "/<%= p('storm.zk_state') %>"
+storm.messaging.transport: "backtype.storm.messaging.netty.Context"
+
+<%
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
+
+networks = openstruct_to_hash(spec.networks)
+default_network = networks.values.find { |net| net.has_key?(:default) }
+private_ip = default_network[:ip]
+
+vip_network = networks.values.find { |net| net[:type] == 'vip' }
+public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
+%>
+nimbus.host: "<%= public_ip %>"
+
+ui.port: <%= p('storm.ui.port') %>
+
+mesos.master.url: "zk://<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>/<%= p('mesos.zk_state') %>"
+mesos.framework.checkpoint: <%= p('storm.mesos.framework_checkpoint') %>
+mesos.framework.name: "<%= p('storm.mesos.framework_name') %>"
+mesos.framework.role: "<%= p('storm.mesos.framework_role') %>"
+
+<% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+mesos.framework.principal: "<%= principal %>"
+mesos.framework.secret.file: /var/vcap/jobs/storm/config/authentication_secret_file
+<% end %>
+
+mesos.master.failover.timeout.secs: <%= p('storm.mesos.master_failover_timeout_secs') %>
+mesos.offer.lru.cache.size: <%= p('storm.mesos.offer_lru_cache_size') %>
+
+<% if_p('storm.mesos.local_file_server_port') do |local_file_server_port| %>
+mesos.local.file.server.port: <%= local_file_server_port %>
+<% end %>
+
+mesos.supervisor.suicide.inactive.timeout.secs: <%= p('storm.mesos.supervisor_suicide_inactive_timeout_secs') %>
+
+<% if p('storm.mesos.allowed_hosts', []).any? %>
+mesos.allowed.hosts: <%= p('storm.mesos.allowed_hosts').map { |host| "- \"#{host}\"" }.join("\n") %>
+<% end %>
+
+<% if p('storm.mesos.disallowed_hosts', []).any? %>
+mesos.disallowed.hosts: <%= p('storm.mesos.disallowed_hosts').map { |host| "- \"#{host}\"" }.join("\n") %>
+<% end %>
+
+# Use the relase Storm package
+mesos.executor.uri: "file:///var/vcap/packages/storm/storm-mesos-0.9.3.tgz"
+
+topology.mesos.worker.cpu: <%= p('storm.topology.mesos.worker_cpu') %>
+topology.mesos.worker.mem.mb: <%= p('storm.topology.mesos.worker_mem_mb') %>
+topology.mesos.executor.cpu: <%= p('storm.topology.mesos.executor_cpu') %>
+topology.mesos.executor.mem.mb: <%= p('storm.topology.mesos.executor_mem_mb') %>

@@ -1,0 +1,11 @@
+check process storm_nimbus
+  with pidfile /var/vcap/sys/run/storm/storm_nimbus.pid
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger storm_nimbus_ctl '/var/vcap/jobs/storm/bin/storm_nimbus_ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger storm_nimbus_ctl '/var/vcap/jobs/storm/bin/storm_nimbus_ctl stop'"
+  group vcap
+
+check process storm_ui
+  with pidfile /var/vcap/sys/run/storm/storm_ui.pid
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger storm_ui_ctl '/var/vcap/jobs/storm/bin/storm_ui_ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger storm_ui_ctl '/var/vcap/jobs/storm/bin/storm_ui_ctl stop'"
+  group vcap

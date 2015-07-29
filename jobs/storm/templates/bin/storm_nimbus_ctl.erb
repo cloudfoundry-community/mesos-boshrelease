@@ -1,0 +1,101 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+
+# Setup common env vars and folders
+source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'storm' 'storm_nimbus'
+export STORM_PID_FILE=${STORM_PID_DIR}/storm_nimbus.pid
+
+<%
+def openstruct_to_hash(os)
+  os.marshal_dump.map do |key, element|
+    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
+  end.reduce(&:merge)
+end
+
+networks = openstruct_to_hash(spec.networks)
+default_network = networks.values.find { |net| net.has_key?(:default) }
+private_ip = default_network[:ip]
+
+vip_network = networks.values.find { |net| net[:type] == 'vip' }
+public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
+%>
+
+if public_ip=$(public_ip_address); then
+  public_ip=$public_ip
+else
+  public_ip=<%= public_ip %>
+fi
+
+case $1 in
+
+  start)
+    pid_guard ${STORM_PID_FILE} ${JOB_NAME}
+    echo $$ > ${STORM_PID_FILE}
+
+    # Increase the default number of open file descriptors
+    ulimit -n 8192
+
+    # Create Storm user & group
+    create_group ${STORM_GROUP}
+    create_user ${STORM_USER} ${STORM_GROUP}
+
+    # Enable logrotate crontab
+    (crontab -l | sed /storm.*logrotate/d; cat ${STORM_CONF_DIR}/storm_logrotate.cron) | sed /^$/d | crontab
+
+    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+    # Set framework secrets file
+    echo -n '<%= secret %>' > ${STORM_CONF_DIR}/authentication_secret_file
+    chmod 0600 ${STORM_CONF_DIR}/authentication_secret_file
+    chown ${STORM_USER}:${STORM_GROUP} ${STORM_CONF_DIR}/authentication_secret_file
+    <% end %>
+
+    # Process IP
+    export LIBPROCESS_IP=<%= private_ip %>
+
+    # Mesos Nimbus Host
+    export MESOS_NIMBUS_HOST=<%= private_ip %>
+
+    # Storm Classpath
+    storm_classpath=''
+    for package_jar_dir in $(ls -d /var/vcap/packages/storm/*/*.jar)
+    do
+      storm_classpath=${package_jar_dir}:${storm_classpath}
+    done
+    storm_classpath=${storm_classpath}:${STORM_CONF_DIR}
+
+    # Copy storm conf file into the user dir
+    mkdir -p ${STORM_STORE_DIR}/conf
+    cp ${STORM_CONF_DIR}/storm.yaml ${STORM_STORE_DIR}/conf
+    chown -R ${STORM_USER}:${STORM_GROUP} ${STORM_STORE_DIR}/conf
+
+    # Start Storm service
+    exec chpst -u ${STORM_USER}:${STORM_GROUP} java -server \
+           -Xmx"${STORM_JAVA_HEAP_SIZE}" \
+           -Xms"${STORM_JAVA_HEAP_SIZE}" \
+           -Dfile.encoding=UTF-8 \
+           -Djava.io.tmpdir=${STORM_TMP_DIR} \
+           -Duser.dir=${STORM_STORE_DIR} \
+           -Dstorm.options= \
+           -Dstorm.home=/var/vcap/packages/storm \
+           -Dstorm.log.dir=${STORM_LOG_DIR} \
+           -Dlogback.configurationFile=${STORM_CONF_DIR}/cluster.xml \
+           -Dlogfile.name=nimbus.log \
+           -cp ${storm_classpath} \
+           storm.mesos.MesosNimbus \
+           >>${STORM_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
+           2>>${STORM_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
+    ;;
+
+  stop)
+    # Stop Storm service
+    kill_and_wait ${STORM_PID_FILE}
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+
+esac
+exit 0

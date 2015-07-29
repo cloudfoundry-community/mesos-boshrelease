@@ -1,0 +1,10 @@
+/var/vcap/sys/log/storm/*.log {
+  missingok
+  rotate <%= p('storm.logrotate.rotate') %>
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+  size <%= p('storm.logrotate.size') %>
+  su <%= p('storm.user') %> <%= p('storm.group') %>
+}
