@@ -29,10 +29,9 @@ else
 end
 %>
 
-if public_ip=$(public_ip_address); then
-  export public_ip=$public_ip
-else
-  export public_ip=<%= public_ip %>
+public_ip=$(public_ip_address)
+if [ -z $public_ip ]; then
+  public_ip=<%= public_ip %>
 fi
 
 case $1 in

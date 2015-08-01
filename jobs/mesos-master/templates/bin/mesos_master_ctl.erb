@@ -21,9 +21,8 @@ vip_network = networks.values.find { |net| net[:type] == 'vip' }
 public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
 %>
 
-if public_ip=$(public_ip_address); then
-  public_ip=$public_ip
-else
+public_ip=$(public_ip_address)
+if [ -z $public_ip ]; then
   public_ip=<%= public_ip %>
 fi
 
