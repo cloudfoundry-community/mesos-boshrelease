@@ -23,7 +23,7 @@ To use this BOSH release, first upload it to your BOSH:
 bosh target BOSH_HOST
 git clone https://github.com/cf-platform-eng/mesos-boshrelease.git
 cd mesos-boshrelease
-bosh upload release releases/mesos/mesos-3.yml
+bosh upload release releases/mesos/mesos-4.yml
 ```
 
 ### Create a BOSH deployment manifest
