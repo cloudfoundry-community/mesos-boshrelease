@@ -1,0 +1,212 @@
+<%
+director_uuid = 'CHANGE-ME'
+deployment_name = 'mesos'
+%>
+---
+name: <%= deployment_name %>
+director_uuid: <%= director_uuid %>
+
+releases:
+ - name: mesos
+   version: latest
+
+compilation:
+  workers: 3
+  network: default
+  reuse_compilation_vms: true
+  cloud_properties: {}
+
+update:
+  canaries: 0
+  canary_watch_time: 30000-60000
+  update_watch_time: 30000-60000
+  max_in_flight: 32
+  serial: false
+
+networks:
+  - name: default
+    type: manual
+    subnets:
+      - cloud_properties: {}
+        range: 10.244.0.0/30
+        reserved:
+          - 10.244.0.1
+        static:
+          - 10.244.0.2
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.4/30
+        reserved:
+          - 10.244.0.5
+        static:
+          - 10.244.0.6
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.8/30
+        reserved:
+          - 10.244.0.9
+        static:
+          - 10.244.0.10
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.12/30
+        reserved:
+          - 10.244.0.13
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.16/30
+        reserved:
+          - 10.244.0.17
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.20/30
+        reserved:
+          - 10.244.0.21
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.24/30
+        reserved:
+          - 10.244.0.25
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.28/30
+        reserved:
+          - 10.244.0.29
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.32/30
+        reserved:
+          - 10.244.0.33
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.36/30
+        reserved:
+          - 10.244.0.37
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.40/30
+        reserved:
+          - 10.244.0.41
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.44/30
+        reserved:
+          - 10.244.0.45
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.48/30
+        reserved:
+          - 10.244.0.49
+
+      - cloud_properties: {}
+        name: random
+        range: 10.244.0.52/30
+        reserved:
+          - 10.244.0.53
+
+resource_pools:
+  - name: default
+    network: default
+    stemcell:
+      name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+      version: latest
+    cloud_properties: {}
+
+jobs:
+  - name: zookeeper
+    templates:
+      - name: zookeeper
+    instances: 3
+    resource_pool: default
+    persistent_disk: 10240
+    networks:
+      - name: default
+        default: [dns, gateway]
+        static_ips:
+          - 10.244.0.2
+          - 10.244.0.6
+          - 10.244.0.10
+
+  - name: mesos-master
+    templates:
+      - name: mesos-master
+    instances: 1
+    resource_pool: default
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: marathon
+    templates:
+      - name: marathon
+    instances: 1
+    resource_pool: default
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: chronos
+    templates:
+      - name: chronos
+    instances: 1
+    resource_pool: default
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: jenkins
+    templates:
+      - name: jenkins
+    instances: 1
+    resource_pool: default
+    persistent_disk: 20480
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: storm
+    templates:
+      - name: storm
+    instances: 1
+    resource_pool: default
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: mesos-slave
+    templates:
+      - name: mesos-slave
+      - name: docker
+    instances: 3
+    resource_pool: default
+    persistent_disk: 65536
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+properties:
+  mesos:
+    principal: "principal"
+    secret: "secret"
+    master:
+      quorum: 1
+      authenticate_frameworks: true
+      authenticate_slaves: true
+
+  zookeeper:
+    servers:
+      - 10.244.0.2
+      - 10.244.0.6
+      - 10.244.0.10
