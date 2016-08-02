@@ -1,113 +1,113 @@
 ---
-java/jdk-1.7.0_51.tar.gz:
-  object_id: 4de0384e-57e2-454a-a143-22a9a303a5e7
-  sha: bee3b085a90439c833ce18e138c9f1a615152891
-  size: 138199690
-sasl/cyrus-sasl-2.1.26.tar.gz:
-  object_id: 703c5060-94ae-4aa1-a6c4-7261e1e5ff5e
-  sha: d6669fb91434192529bd13ee95737a8a5040241c
-  size: 5220231
-zookeeper/zookeeper-3.4.6.tar.gz:
-  object_id: 1a0f69b8-62b8-41bb-b157-cd68632f162f
-  sha: 2a9e53f5990dfe0965834a525fbcad226bf93474
-  size: 17699306
-ruby/yaml-0.1.6.tar.gz:
-  object_id: c8e48f85-d597-4993-bf99-d903dd8d80a9
-  sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
-  size: 503012
-docker/bridge-utils-1.5.tar.gz:
-  object_id: f220c677-8e73-4e6c-b5e7-adbff9320683
-  sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
-  size: 33472
-docker/autoconf-2.69.tar.gz:
-  object_id: 0927a3d0-b43c-4aba-915a-d46959ae7a1b
-  sha: 562471cbcb0dd0fa42a76665acf0dbb68479b78a
-  size: 1927468
-docker/aufs-tools_20120411-3_amd64.deb:
-  object_id: 2f3cad6d-0ca6-4cf4-b75b-d48f92b87f53
-  sha: 2dfc1fe386cd3f05ac7e0b4ebcf3ebc8a7f3b04d
-  size: 91762
-apr/apr-util-1.5.4.tar.gz:
-  object_id: 4da12d84-1014-4b5e-b571-4097fdab27bf
-  sha: 72cc3ac693b52fb831063d5c0de18723bc8e0095
-  size: 874044
-maven/apache-maven-3.3.3-bin.tar.gz:
-  object_id: 13edec60-bdc1-4e59-849e-9a1817194264
-  sha: c8f257dce3381d9d8c420168a6df0fa25664337c
-  size: 8042383
 apr/apr-1.5.2.tar.gz:
-  object_id: e6340707-fabd-4fa3-a759-1c0a75ff5ced
+  object_id: 9970f6b8-e6a8-4dd3-91ec-8f67846748b2
   sha: 2ef2ac9a8de7f97f15ef32cddf1ed7325163d84c
   size: 1031613
-mesos/mesos-0.22.1.tar.gz:
-  object_id: 94a40551-1486-4768-9e7c-9d40ae6834c9
-  sha: 599c09d83ee69804cd12936c8c3df57f45f30b4d
-  size: 28260536
-golang/go1.4.2.linux-amd64.tar.gz:
-  object_id: 212fcf49-fca8-493c-82b4-4e94b6bd94ff
-  sha: 5020af94b52b65cc9b6f11d50a67e4bae07b0aff
-  size: 62442704
+apr/apr-util-1.5.4.tar.gz:
+  object_id: 59217abd-a8b7-4048-92bc-8877855d8f9a
+  sha: 72cc3ac693b52fb831063d5c0de18723bc8e0095
+  size: 874044
+chronos/chronos-2.3.4.jar:
+  object_id: af134521-003a-4085-b4cd-8d52083080d6
+  sha: 55a527e9f3d67f63027c315c9b9480f557eb7e17
+  size: 36404003
+docker/aufs-tools_20120411-3_amd64.deb:
+  object_id: 80bdc9c1-0fd0-4da6-8d5f-11afe137a9b2
+  sha: 2dfc1fe386cd3f05ac7e0b4ebcf3ebc8a7f3b04d
+  size: 91762
+docker/autoconf-2.69.tar.gz:
+  object_id: 5d36059d-a787-4b24-b776-cff7088e8cf1
+  sha: 562471cbcb0dd0fa42a76665acf0dbb68479b78a
+  size: 1927468
+docker/bridge-utils-1.5.tar.gz:
+  object_id: a9a92149-4c9f-4e33-a4e1-24485c34f4f0
+  sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
+  size: 33472
+docker/docker-1.7.1:
+  object_id: 994c3d0c-68c5-409e-9aac-d86082be8009
+  sha: 386f6e91114dc252a13b266fe2ac3a27e83bd0f7
+  size: 16296881
 git/git-2.4.6.tar.gz:
-  object_id: c9e714f5-cadc-436d-a2ec-aec5f23c1d13
+  object_id: 77b59653-ecc4-472e-9722-26f0a88b7a72
   sha: 230cb8b664fe47c838e199663f55dc882a3b9773
   size: 5349900
+java/jdk-1.7.0_51.tar.gz:
+  object_id: d3d8a85b-4ed5-4c98-9cf6-5e5375f6324c
+  sha: bee3b085a90439c833ce18e138c9f1a615152891
+  size: 138199690
+jenkins/jenkins-1.621.war:
+  object_id: 353d884c-8f06-4e66-a8b8-eb305a4e0606
+  sha: 8f8fff4e969acc37dc9ca19a47994ae77c3ed8d3
+  size: 63302047
+jenkins/mesos-0.8.0.hpi:
+  object_id: 4850fcb0-70ce-4f21-b439-9c83ce74b424
+  sha: 888ac7faf36e1ceaf791e3f8e3340ae2ac778a24
+  size: 3925500
+marathon/marathon-0.9.0.tgz:
+  object_id: 1c5878e5-4f92-493e-8cae-717c5183473c
+  sha: af6b1b3b95171871ea1aabb73a44c268a2aa9beb
+  size: 56502876
+maven/apache-maven-3.3.3-bin.tar.gz:
+  object_id: ec3bab0f-6bd7-494e-8c30-bfcb0b91911d
+  sha: c8f257dce3381d9d8c420168a6df0fa25664337c
+  size: 8042383
+mesos/mesos-0.22.1.tar.gz:
+  object_id: 14a38062-db66-40a2-93d6-58b4673dbdbd
+  sha: 599c09d83ee69804cd12936c8c3df57f45f30b4d
+  size: 28260536
+nginx/nginx-1.8.0.tar.gz:
+  object_id: d14f83bf-5a83-450f-8f62-d64b2ac6b4e3
+  sha: 12bad312764feae50246685ab2e74512d1aa9b2f
+  size: 832104
 node/node-v0.12.7-linux-x64.tar.gz:
-  object_id: 67d96b1f-492d-4603-8c1c-c06104d0be40
+  object_id: 13da8bf4-4c36-4a7f-80f9-ebb126e04f6b
   sha: 0a861a6ded50c8cda32ac39c3a54699c767742e6
   size: 10060524
+ruby/bundler-1.10.5.gem:
+  object_id: a6655bd3-e372-4820-8d31-e1db05841264
+  sha: d8a934e1fcc000eb89c87697e8b73f8812bd498c
+  size: 251392
+ruby/ruby-2.1.6.tar.gz:
+  object_id: 5aaf8b63-4f69-4029-85a2-9df504c121db
+  sha: 426289b6647ce35ad101091825b6e7e5fce207f3
+  size: 15141710
+ruby/rubygems-2.4.8.tgz:
+  object_id: adae3f2d-910a-489d-91a8-592e82f44cfb
+  sha: 0db6b2f1cdd2267fe19f1f875057c2f2ce9f5696
+  size: 447712
+ruby/yaml-0.1.6.tar.gz:
+  object_id: bd2df6ef-6435-421f-89ad-0f42454a9fd1
+  sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
+  size: 503012
+sasl/cyrus-sasl-2.1.26.tar.gz:
+  object_id: 828deed1-8500-4f7f-9732-772ad7998f7f
+  sha: d6669fb91434192529bd13ee95737a8a5040241c
+  size: 5220231
 scala/scala-2.11.7.tgz:
-  object_id: 84821e4d-4134-4230-86ae-f2d40e18de67
+  object_id: 56d9e0b2-5ffa-4cfb-871b-fcea29d1a29e
   sha: 33de6d4bd3423be9e02465b842b9afc635e7cf0f
   size: 28460530
 sqlite/sqlite-amalgamation-3081002.zip:
-  object_id: e0d2f988-9711-49f8-a0ee-13974f0e51da
+  object_id: 8672a2ae-548f-48fd-af69-9f7457816624
   sha: 9ad3b477de04cc480fc0f7f1829c322c525f642d
   size: 1596554
-subversion/subversion-1.8.13.tar.gz:
-  object_id: c9517065-b6a6-4f9c-8e3e-fbdfd8fe58b9
-  sha: 437cf662b7ed27d2254aa7ca334fdd74b49262ef
-  size: 9326793
-ruby/bundler-1.10.5.gem:
-  object_id: 1ccd4f0b-ebfc-43ae-8562-81c9fe2c42b0
-  sha: d8a934e1fcc000eb89c87697e8b73f8812bd498c
-  size: 251392
-ruby/rubygems-2.4.8.tgz:
-  object_id: f6661b63-8ede-402d-af9b-19fcd643ebea
-  sha: 0db6b2f1cdd2267fe19f1f875057c2f2ce9f5696
-  size: 447712
-ruby/ruby-2.1.6.tar.gz:
-  object_id: ec53ce17-06fe-48df-ba7b-ba0e5c345ac9
-  sha: 426289b6647ce35ad101091825b6e7e5fce207f3
-  size: 15141710
-nginx/nginx-1.8.0.tar.gz:
-  object_id: 496c5d65-8e7b-4d2b-887f-0be87ea97c5a
-  sha: 12bad312764feae50246685ab2e74512d1aa9b2f
-  size: 832104
-nginx/pcre-8.37.tar.gz:
-  object_id: 702e6c3a-690f-4b03-9352-bc619ebb5e6a
-  sha: 4a24a20c61347d8da4edc86d5475aaf70ac146bb
-  size: 2041593
-jenkins/mesos-0.8.0.hpi:
-  object_id: a9bd4899-360c-40f2-b387-0a22e8728df0
-  sha: 888ac7faf36e1ceaf791e3f8e3340ae2ac778a24
-  size: 3925500
-chronos/chronos-2.3.4.jar:
-  object_id: 98d97d72-f7e1-49a6-b0d6-54e59f20641d
-  sha: 55a527e9f3d67f63027c315c9b9480f557eb7e17
-  size: 36404003
-docker/docker-1.7.1:
-  object_id: d3dbd732-d8c4-4740-ad2f-bce5e75848aa
-  sha: 386f6e91114dc252a13b266fe2ac3a27e83bd0f7
-  size: 16296881
-marathon/marathon-0.9.0.tgz:
-  object_id: 8efb2007-a9d9-45cf-b57a-aa1fa9890c70
-  sha: af6b1b3b95171871ea1aabb73a44c268a2aa9beb
-  size: 56502876
-jenkins/jenkins-1.621.war:
-  object_id: d365e79c-7ac3-4f90-9367-f5687b043ea5
-  sha: 8f8fff4e969acc37dc9ca19a47994ae77c3ed8d3
-  size: 63302047
 storm/storm-mesos-0.9.3.tgz:
-  object_id: 864778ce-133e-4677-a95a-f48cece97de6
+  object_id: 38609397-1b5e-474e-8133-cb0ea98e7958
   sha: a3554ecdce47fcc357a8deea81c8f7ed12788415
   size: 25924250
+subversion/subversion-1.8.13.tar.gz:
+  object_id: c3fff4dd-735e-4108-9595-d6b9b23f9044
+  sha: 437cf662b7ed27d2254aa7ca334fdd74b49262ef
+  size: 9326793
+zookeeper/zookeeper-3.4.6.tar.gz:
+  object_id: e67dddd9-b0bb-42a6-a791-a738e3896e85
+  sha: 2a9e53f5990dfe0965834a525fbcad226bf93474
+  size: 17699306
+golang/go1.4.2.linux-amd64.tar.gz:
+  object_id: 54ebad03-e033-486c-a62f-c22247411efd
+  sha: 5020af94b52b65cc9b6f11d50a67e4bae07b0aff
+  size: 62442704
+nginx/pcre-8.37.tar.gz:
+  object_id: 76f7726b-9fb6-48d3-837f-29db336ab888
+  sha: 4a24a20c61347d8da4edc86d5475aaf70ac146bb
+  size: 2041593
