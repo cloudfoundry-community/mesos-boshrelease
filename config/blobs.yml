@@ -99,10 +99,6 @@ subversion/subversion-1.8.13.tar.gz:
   object_id: c3fff4dd-735e-4108-9595-d6b9b23f9044
   sha: 437cf662b7ed27d2254aa7ca334fdd74b49262ef
   size: 9326793
-zookeeper/zookeeper-3.4.6.tar.gz:
-  object_id: e67dddd9-b0bb-42a6-a791-a738e3896e85
-  sha: 2a9e53f5990dfe0965834a525fbcad226bf93474
-  size: 17699306
 golang/go1.4.2.linux-amd64.tar.gz:
   object_id: 54ebad03-e033-486c-a62f-c22247411efd
   sha: 5020af94b52b65cc9b6f11d50a67e4bae07b0aff
@@ -111,3 +107,7 @@ nginx/pcre-8.37.tar.gz:
   object_id: 76f7726b-9fb6-48d3-837f-29db336ab888
   sha: 4a24a20c61347d8da4edc86d5475aaf70ac146bb
   size: 2041593
+zookeeper/zookeeper-3.4.8.tar.gz:
+  object_id: ed3bac45-13f6-4253-a57d-0ce6d2c8c7c2
+  sha: 51b61611a329294f75aed82f3a4517a4b6ff116f
+  size: 22261552
