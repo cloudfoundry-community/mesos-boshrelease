@@ -18,6 +18,12 @@ templates:
   config/slaves_whitelist.cfg.erb: config/slaves_whitelist.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
+consumes:
+- name: zookeeper
+  type: zookeeper
+  properties:
+  - zookeeper.client_port
+
 properties:
   mesos.master.user:
     description: "User which will own the Apache Mesos Master services"
@@ -110,11 +116,6 @@ properties:
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"
-  zookeeper.servers:
-    description: "List of all Apache Zookeeper server host IP/hostnames"
-  zookeeper.client_port:
-    description: "Port at which the clients will connect to Apache Zookeeper"
-    default: 2181
 
   mesos.principal:
     description: "Mesos principal"

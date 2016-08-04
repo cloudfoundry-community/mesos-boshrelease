@@ -1,1 +1,3 @@
-zk://<%= p('zookeeper.servers').map { |server| "#{server}:#{p('zookeeper.client_port')}" }.join(',') %>/<%= p('mesos.zk_state') %>
+<% zookeeper = link('zookeeper') %>
+
+zk://<%= zookeeper.instances.map { |server| "#{server.address}:#{zookeeper.p('zookeeper.client_port')}" }.join(',') %>/<%= p('mesos.zk_state') %>

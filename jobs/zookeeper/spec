@@ -14,6 +14,22 @@ templates:
   config/myid.erb: config/myid
   config/zoo.cfg.erb: config/zoo.cfg
 
+consumes:
+- name: peers
+  type: zookeeper_peers
+
+provides:
+- name: conn
+  type: zookeeper
+  properties:
+  - zookeeper.client_port
+- name: peers
+  type: zookeeper_peers
+  properties:
+  - zookeeper.client_port
+  - zookeeper.quorum_port
+  - zookeeper.leader_election_port
+
 properties:
   zookeeper.user:
     description: "User which will own the Apache ZooKeeper services"
@@ -75,8 +91,6 @@ properties:
   zookeeper.tick_time:
     description: "The length of a single tick, which is the basic time unit used by ZooKeeper, as measured in milliseconds"
     default: 2000
-  zookeeper.servers:
-    description: "List of all Apache Zookeeper server host IP/hostnames"
   zookeeper.quorum_port:
     description: "Apache Zookeeper Client quorum port"
     default: 2888

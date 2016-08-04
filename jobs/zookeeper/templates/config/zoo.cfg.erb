@@ -19,6 +19,7 @@ syncEnabled=<%= p('zookeeper.sync_enabled') %>
 syncLimit=<%= p('zookeeper.sync_limit') %>
 tickTime=<%= p('zookeeper.tick_time') %>
 
-<% p('zookeeper.servers').each_with_index do |server, index| %>
-server.<%= index + 1 %>=<%= server %>:<%= p('zookeeper.quorum_port') %>:<%= p('zookeeper.leader_election_port') %>
+<% peers = link('peers') %>
+<% peers.instances.each do |instance| %>
+server.<%= instance.index + 1 %>=<%= instance.address %>:<%= peers.p('zookeeper.quorum_port') %>:<%= peers.p('zookeeper.leader_election_port') %>
 <% end %>
