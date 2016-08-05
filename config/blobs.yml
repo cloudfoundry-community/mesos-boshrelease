@@ -27,10 +27,6 @@ git/git-2.4.6.tar.gz:
   object_id: 77b59653-ecc4-472e-9722-26f0a88b7a72
   sha: 230cb8b664fe47c838e199663f55dc882a3b9773
   size: 5349900
-java/jdk-1.7.0_51.tar.gz:
-  object_id: d3d8a85b-4ed5-4c98-9cf6-5e5375f6324c
-  sha: bee3b085a90439c833ce18e138c9f1a615152891
-  size: 138199690
 jenkins/jenkins-1.621.war:
   object_id: 353d884c-8f06-4e66-a8b8-eb305a4e0606
   sha: 8f8fff4e969acc37dc9ca19a47994ae77c3ed8d3
@@ -115,3 +111,7 @@ docker/docker-1.11.0.tgz:
   object_id: 0ec727d1-e31c-4446-83ab-65410a638d94
   sha: 242b6a3e6def6719f5002a4d3d5b35e587036c4e
   size: 20520756
+java/jdk-1.8.0_92.tar.gz:
+  object_id: 2f95e895-f963-4c27-a502-22a2af3461ee
+  sha: ffe40a85eeb40cb893b1158e302d2519bf66c0b1
+  size: 56275978
