@@ -5,132 +5,132 @@
 #
 
 # Directory to store the Apache Mesos Slave configuration files
-export MESOS_SLAVE_CONF_DIR=${JOB_DIR}/config
+export MESOS_AGENT_CONF_DIR=${JOB_DIR}/config
 
 # Directory to store the Apache Mesos Slave log files
-export MESOS_SLAVE_LOG_DIR=${LOG_DIR}
+export MESOS_AGENT_LOG_DIR=${LOG_DIR}
 
 # Directory to store the Apache Mesos Slave process IDs
-export MESOS_SLAVE_PID_DIR=${RUN_DIR}
+export MESOS_AGENT_PID_DIR=${RUN_DIR}
 
 # Directory to store the Apache Mesos Slave data files
-export MESOS_SLAVE_STORE_DIR=${STORE_DIR}
+export MESOS_AGENT_STORE_DIR=${STORE_DIR}
 
 # Directory to store the Apache Mesos Slave temp files
-export MESOS_SLAVE_TMP_DIR=${TMP_DIR}
+export MESOS_AGENT_TMP_DIR=${TMP_DIR}
 
 # User which will own the Apache Mesos Slave services
-export MESOS_SLAVE_USER="<%= p('mesos.slave.user') %>"
+export MESOS_AGENT_USER="<%= p('mesos.agent.user') %>"
 
 # Group which will own the Apache Mesos Slave services
-export MESOS_SLAVE_GROUP="<%= p('mesos.slave.group') %>"
+export MESOS_AGENT_GROUP="<%= p('mesos.agent.group') %>"
 
 # Apache Mesos Home directory
 export MESOS_HOME=/var/vcap/packages/mesos
 
 # Attributes of machine
-export MESOS_SLAVE_ATTRIBUTES="<%= p('mesos.slave.attributes') %>"
+export MESOS_AGENT_ATTRIBUTES="<%= p('mesos.agent.attributes') %>"
 
 # Authenticatee implementation to use when authenticating against the master
-export MESOS_SLAVE_AUTHENTICATEE="<%= p('mesos.slave.authenticatee') %>"
+export MESOS_AGENT_AUTHENTICATEE="<%= p('mesos.agent.authenticatee') %>"
 
 # Cgroups feature flag to enable hard limits on CPU resources via the CFS bandwidth limiting subfeature
-export MESOS_SLAVE_CGROUPS_ENABLE_CFS="<%= p('mesos.slave.cgroups_enable_cfs') %>"
+export MESOS_AGENT_CGROUPS_ENABLE_CFS="<%= p('mesos.agent.cgroups_enable_cfs') %>"
 
 # The path to the cgroups hierarchy root
-export MESOS_SLAVE_CGROUPS_HIERARCHY="<%= p('mesos.slave.cgroups_hierarchy') %>"
+export MESOS_AGENT_CGROUPS_HIERARCHY="<%= p('mesos.agent.cgroups_hierarchy') %>"
 
 # Cgroups feature flag to enable memory limits on both memory and swap instead of just memory
-export MESOS_SLAVE_CGROUPS_LIMIT_SWAP="<%= p('mesos.slave.cgroups_limit_swap') %>"
+export MESOS_AGENT_CGROUPS_LIMIT_SWAP="<%= p('mesos.agent.cgroups_limit_swap') %>"
 
 # Name of the root cgroup
-export MESOS_SLAVE_CGROUPS_ROOT="<%= p('mesos.slave.cgroups_root') %>"
+export MESOS_AGENT_CGROUPS_ROOT="<%= p('mesos.agent.cgroups_root') %>"
 
 # The interval between disk quota checks for containers
-export MESOS_SLAVE_CONTAINER_DISK_WATCH_INTERVAL="<%= p('mesos.slave.container_disk_watch_interval') %>"
+export MESOS_AGENT_CONTAINER_DISK_WATCH_INTERVAL="<%= p('mesos.agent.container_disk_watch_interval') %>"
 
 <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
 # File containing the list of credentials
-export MESOS_SLAVE_CREDENTIALS="--credential=file://${MESOS_SLAVE_CONF_DIR}/credentials"
+export MESOS_AGENT_CREDENTIALS="--credential=file://${MESOS_AGENT_CONF_DIR}/credentials"
 <% end %>
 
 # Default role
-export MESOS_SLAVE_DEFAULT_ROLE="<%= p('mesos.slave.default_role') %>"
+export MESOS_AGENT_DEFAULT_ROLE="<%= p('mesos.agent.default_role') %>"
 
 # Periodic time interval (e.g., 10secs, 2mins, etc) to check the disk usage
-export MESOS_SLAVE_DISK_WATCH_INTERVAL="<%= p('mesos.slave.disk_watch_interval') %>"
+export MESOS_AGENT_DISK_WATCH_INTERVAL="<%= p('mesos.agent.disk_watch_interval') %>"
 
 # The amount of time to wait before removing docker containers
-export MESOS_SLAVE_DOCKER_REMOVE_DELAY="<%= p('mesos.slave.docker.remove_delay') %>"
+export MESOS_AGENT_DOCKER_REMOVE_DELAY="<%= p('mesos.agent.docker.remove_delay') %>"
 
 # The absolute path for the directory in the container where the sandbox is mapped to
-export MESOS_SLAVE_DOCKER_SANDBOX_DIRECTORY="<%= p('mesos.slave.docker.sandbox_directory') %>"
+export MESOS_AGENT_DOCKER_SANDBOX_DIRECTORY="<%= p('mesos.agent.docker.sandbox_directory') %>"
 
 # The time as a duration for docker to wait after stopping an instance before it kills that instance
-export MESOS_SLAVE_DOCKER_STOP_TIMEOUT="<%= p('mesos.slave.docker.stop_timeout') %>"
+export MESOS_AGENT_DOCKER_STOP_TIMEOUT="<%= p('mesos.agent.docker.stop_timeout') %>"
 
 # Whether to enable disk quota enforcement for containers
-export MESOS_SLAVE_ENFORCE_CONTAINER_DISK_QUOTA="<%= p('mesos.slave.enforce_container_disk_quota') %>"
+export MESOS_AGENT_ENFORCE_CONTAINER_DISK_QUOTA="<%= p('mesos.agent.enforce_container_disk_quota') %>"
 
-# Amount of time to wait for an executor to register with the slave before considering it hung and shutting it down
-export MESOS_SLAVE_EXECUTOR_REGISTRATION_TIMEOUT="<%= p('mesos.slave.executor_registration_timeout') %>"
+# Amount of time to wait for an executor to register with the agent before considering it hung and shutting it down
+export MESOS_AGENT_EXECUTOR_REGISTRATION_TIMEOUT="<%= p('mesos.agent.executor_registration_timeout') %>"
 
 # Amount of time to wait for an executor to shut down
-export MESOS_SLAVE_EXECUTOR_SHUTDOWN_GRACE_PERIOD="<%= p('mesos.slave.executor_shutdown_grace_period') %>"
+export MESOS_AGENT_EXECUTOR_SHUTDOWN_GRACE_PERIOD="<%= p('mesos.agent.executor_shutdown_grace_period') %>"
 
 # Maximum amount of time to wait before cleaning up executor directories
-export MESOS_SLAVE_GC_DELAY="<%= p('mesos.slave.gc_delay') %>"
+export MESOS_AGENT_GC_DELAY="<%= p('mesos.agent.gc_delay') %>"
 
 # Adjust disk headroom used to calculate maximum executor directory age
-export MESOS_SLAVE_GC_DISK_HEADROOM="<%= p('mesos.slave.gc_disk_headroom') %>"
+export MESOS_AGENT_GC_DISK_HEADROOM="<%= p('mesos.agent.gc_disk_headroom') %>"
 
 # Whether to automatically initialize google logging of scheduler and/or executor drivers
-export MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.slave.initialize_driver_logging') %>"
+export MESOS_AGENT_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.agent.initialize_driver_logging') %>"
 
 # Apache Mesos Slave isolation mechanism (process, cgroups)
-export MESOS_SLAVE_ISOLATION="<%= p('mesos.slave.isolation') %>"
+export MESOS_AGENT_ISOLATION="<%= p('mesos.agent.isolation') %>"
 
 # How many seconds to buffer log messages for
-export MESOS_SLAVE_LOGBUFSECS="<%= p('mesos.slave.logbufsecs') %>"
+export MESOS_AGENT_LOGBUFSECS="<%= p('mesos.agent.logbufsecs') %>"
 
 # Log message at or above this level
-export MESOS_SLAVE_LOGLEVEL="<%= p('mesos.slave.loglevel') %>"
+export MESOS_AGENT_LOGLEVEL="<%= p('mesos.agent.loglevel') %>"
 
 # Duration of a perf stat sample
-export MESOS_SLAVE_PERF_DURATION="<%= p('mesos.slave.perf_duration') %>"
+export MESOS_AGENT_PERF_DURATION="<%= p('mesos.agent.perf_duration') %>"
 
 # List of command-separated perf events to sample for each container when using the perf_event isolator
-export MESOS_SLAVE_PERF_EVENTS="<%= p('mesos.slave.perf_events') %>"
+export MESOS_AGENT_PERF_EVENTS="<%= p('mesos.agent.perf_events') %>"
 
 # Interval between the start of perf stat samples
-export MESOS_SLAVE_PERF_INTERVAL="<%= p('mesos.slave.perf_interval') %>"
+export MESOS_AGENT_PERF_INTERVAL="<%= p('mesos.agent.perf_interval') %>"
 
 # Port where Apache Mesos Slave will listen on
-export MESOS_SLAVE_PORT="<%= p('mesos.slave.port') %>"
+export MESOS_AGENT_PORT="<%= p('mesos.agent.port') %>"
 
 # Whether to recover Apache Mesos Slaves status updates and reconnect with old executors (reconnect, cleanup)
-export MESOS_SLAVE_RECOVER="<%= p('mesos.slave.recover') %>"
+export MESOS_AGENT_RECOVER="<%= p('mesos.agent.recover') %>"
 
 # Amount of time alloted for the Apache Mesos Slaves to recover
-export MESOS_SLAVE_RECOVERY_TIMEOUT="<%= p('mesos.slave.recovery_timeout') %>"
+export MESOS_AGENT_RECOVERY_TIMEOUT="<%= p('mesos.agent.recovery_timeout') %>"
 
 # Registration backoff factor
-export MESOS_SLAVE_REGISTRATION_BACKOFF_FACTOR="<%= p('mesos.slave.registration_backoff_factor') %>"
+export MESOS_AGENT_REGISTRATION_BACKOFF_FACTOR="<%= p('mesos.agent.registration_backoff_factor') %>"
 
 # Periodic time interval for monitoring executor resource usage
-export MESOS_SLAVE_RESOURCE_MONITORING_INTERVAL="<%= p('mesos.slave.resource_monitoring_interval') %>"
+export MESOS_AGENT_RESOURCE_MONITORING_INTERVAL="<%= p('mesos.agent.resource_monitoring_interval') %>"
 
-# Total consumable resources per slave, in the form 'name(role):value;name(role):value...'
-export MESOS_SLAVE_RESOURCES="<%= p('mesos.slave.resources') %>"
+# Total consumable resources per agent, in the form 'name(role):value;name(role):value...'
+export MESOS_AGENT_RESOURCES="<%= p('mesos.agent.resources') %>"
 
-# List of comma-separated cgroup subsystems to run the slave binary
-export MESOS_SLAVE_SUBSYSTEMS="<%= p('mesos.slave.subsystems') %>"
+# List of comma-separated cgroup subsystems to run the agent binary
+export MESOS_AGENT_SUBSYSTEMS="<%= p('mesos.agent.subsystems') %>"
 
 # Whether to do Apache Mesos Slaves recovery in strict mode
-export MESOS_SLAVE_STRICT="<%= p('mesos.slave.strict') %>"
+export MESOS_AGENT_STRICT="<%= p('mesos.agent.strict') %>"
 
-# Whether to run tasks as the user who submitted them rather than the user running the slave
-export MESOS_SLAVE_SWITCH_USER="<%= p('mesos.slave.switch_user') %>"
+# Whether to run tasks as the user who submitted them rather than the user running the agent
+export MESOS_AGENT_SWITCH_USER="<%= p('mesos.agent.switch_user') %>"
 
 # SASL plugins
 export SASL_PATH=/var/vcap/packages/sasl/lib/sasl2/

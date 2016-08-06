@@ -1,5 +1,5 @@
-check process mesos-slave
-  with pidfile /var/vcap/sys/run/mesos-slave/mesos-slave.pid
-  start program "/var/vcap/packages/bosh-helpers/monit_debugger mesos_slave_ctl '/var/vcap/jobs/mesos-slave/bin/mesos_slave_ctl start'"
-  stop program "/var/vcap/packages/bosh-helpers/monit_debugger mesos_slave_ctl '/var/vcap/jobs/mesos-slave/bin/mesos_slave_ctl stop'"
+check process mesos-agent
+  with pidfile /var/vcap/sys/run/mesos-agent/mesos-agent.pid
+  start program "/var/vcap/packages/bosh-helpers/monit_debugger mesos_agent_ctl '/var/vcap/jobs/mesos-agent/bin/mesos_agent_ctl start'"
+  stop program "/var/vcap/packages/bosh-helpers/monit_debugger mesos_agent_ctl '/var/vcap/jobs/mesos-agent/bin/mesos_agent_ctl stop'"
   group vcap

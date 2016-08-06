@@ -1,5 +1,5 @@
 ---
-name: mesos-slave
+name: mesos-agent
 
 packages:
   - apr
@@ -17,127 +17,127 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/mesos_slave_ctl.erb: bin/mesos_slave_ctl
+  bin/mesos_agent_ctl.erb: bin/mesos_agent_ctl
   config/credentials.erb: config/credentials
   config/logrotate.conf.erb: config/logrotate.conf
-  config/mesos_slave_logrotate.cron.erb: config/mesos_slave_logrotate.cron
+  config/mesos_agent_logrotate.cron.erb: config/mesos_agent_logrotate.cron
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
 properties:
-  mesos.slave.user:
+  mesos.agent.user:
     description: "User which will own the Apache Mesos Slave services"
     default: "root"
-  mesos.slave.group:
+  mesos.agent.group:
     description: "Group which will own the Apache Mesos Slave services"
     default: "vcap"
-  mesos.slave.attributes:
+  mesos.agent.attributes:
     description: "Attributes of machine"
     default: ""
-  mesos.slave.authenticatee:
+  mesos.agent.authenticatee:
     description: "Authenticatee implementation to use when authenticating against the master"
     default: "crammd5"
-  mesos.slave.cgroups_enable_cfs:
+  mesos.agent.cgroups_enable_cfs:
     description: "Cgroups feature flag to enable hard limits on CPU resources via the CFS bandwidth limiting subfeature"
     default: false
-  mesos.slave.cgroups_hierarchy:
+  mesos.agent.cgroups_hierarchy:
     description: "The path to the cgroups hierarchy root"
     default: "/sys/fs/cgroup"
-  mesos.slave.cgroups_limit_swap:
+  mesos.agent.cgroups_limit_swap:
     description: "Cgroups feature flag to enable memory limits on both memory and swap instead of just memory"
     default: false
-  mesos.slave.cgroups_root:
+  mesos.agent.cgroups_root:
     description: "Name of the root cgroup"
     default: "mesos"
-  mesos.slave.container_disk_watch_interval:
+  mesos.agent.container_disk_watch_interval:
     description: "The interval between disk quota checks for containers"
     default: "15secs"
-  mesos.slave.default_role:
+  mesos.agent.default_role:
     description: "Default role"
     default: "*"
-  mesos.slave.disk_watch_interval:
+  mesos.agent.disk_watch_interval:
     description: "Periodic time interval (e.g., 10secs, 2mins, etc) to check the disk usage"
     default: "1mins"
-  mesos.slave.enforce_container_disk_quota:
+  mesos.agent.enforce_container_disk_quota:
     description: "Whether to enable disk quota enforcement for containers"
     default: false
-  mesos.slave.executor_registration_timeout:
-    description: "Amount of time to wait for an executor to register with the slave before considering it hung and shutting it down"
+  mesos.agent.executor_registration_timeout:
+    description: "Amount of time to wait for an executor to register with the agent before considering it hung and shutting it down"
     default: "5mins"
-  mesos.slave.executor_shutdown_grace_period:
+  mesos.agent.executor_shutdown_grace_period:
     description: "Amount of time to wait for an executor to shut down"
     default: "5secs"
-  mesos.slave.gc_delay:
+  mesos.agent.gc_delay:
     description: "Maximum amount of time to wait before cleaning up executor directories"
     default: "1weeks"
-  mesos.slave.gc_disk_headroom:
+  mesos.agent.gc_disk_headroom:
     description: "Adjust disk headroom used to calculate maximum executor directory age"
     default: "0.1"
-  mesos.slave.initialize_driver_logging:
+  mesos.agent.initialize_driver_logging:
     description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
     default: true
-  mesos.slave.isolation:
+  mesos.agent.isolation:
     description: "Apache Mesos Slave isolation mechanism (process, cgroups)"
     default: "cgroups/cpu,cgroups/mem"
-  mesos.slave.logbufsecs:
+  mesos.agent.logbufsecs:
     description: "How many seconds to buffer log messages for"
     default: 0
-  mesos.slave.loglevel:
+  mesos.agent.loglevel:
     description: "Log message at or above this level; possible values: 'INFO', 'WARNING', 'ERROR';"
     default: "INFO"
-  mesos.slave.perf_duration:
+  mesos.agent.perf_duration:
     description: "Duration of a perf stat sample"
     default: "10secs"
-  mesos.slave.perf_events:
+  mesos.agent.perf_events:
     description: "List of command-separated perf events to sample for each container when using the perf_event isolator"
     default: ""
-  mesos.slave.perf_interval:
+  mesos.agent.perf_interval:
     description: "Interval between the start of perf stat samples"
     default: "1mins"
-  mesos.slave.port:
+  mesos.agent.port:
     description: "Port where Apache Mesos Slave will listen on"
     default: 5051
-  mesos.slave.recover:
+  mesos.agent.recover:
     description: "Whether to recover Apache Mesos Slaves status updates and reconnect with old executors (reconnect, cleanup)"
     default: "reconnect"
-  mesos.slave.recovery_timeout:
+  mesos.agent.recovery_timeout:
     description: "Amount of time alloted for the Apache Mesos Slaves to recover"
     default: "15mins"
-  mesos.slave.registration_backoff_factor:
+  mesos.agent.registration_backoff_factor:
     description: "Registration backoff factor"
     default: "1secs"
-  mesos.slave.resource_monitoring_interval:
+  mesos.agent.resource_monitoring_interval:
     description: "Periodic time interval for monitoring executor resource usage"
     default: "1secs"
-  mesos.slave.resources:
-    description: "Total consumable resources per slave, in the form 'name(role):value;name(role):value...'"
+  mesos.agent.resources:
+    description: "Total consumable resources per agent, in the form 'name(role):value;name(role):value...'"
     default: ""
-  mesos.slave.subsystems:
-    description: "List of comma-separated cgroup subsystems to run the slave binary"
+  mesos.agent.subsystems:
+    description: "List of comma-separated cgroup subsystems to run the agent binary"
     default: "cpu,memory"
-  mesos.slave.strict:
+  mesos.agent.strict:
     description: "Whether to do Apache Mesos Slaves recovery in strict mode"
     default: true
-  mesos.slave.switch_user:
-    description: "Whether to run tasks as the user who submitted them rather than the user running the slave"
+  mesos.agent.switch_user:
+    description: "Whether to run tasks as the user who submitted them rather than the user running the agent"
     default: false
 
-  mesos.slave.logrotate.frequency:
+  mesos.agent.logrotate.frequency:
     description: "Frequency to run logrotate for Mesos Slave log files (crontab five time and date fields)"
     default: "0 * * * *"
-  mesos.slave.logrotate.rotate:
+  mesos.agent.logrotate.rotate:
     description: "Number of times Mesos Slave log files are rotated before being removed"
     default: "7"
-  mesos.slave.logrotate.size:
+  mesos.agent.logrotate.size:
     description: "Size before Mesos Slave log files are rotated"
     default: "10M"
 
-  mesos.slave.docker.remove_delay:
+  mesos.agent.docker.remove_delay:
     description: "The amount of time to wait before removing docker containers"
     default: "6hrs"
-  mesos.slave.docker.sandbox_directory:
+  mesos.agent.docker.sandbox_directory:
     description: "The absolute path for the directory in the container where the sandbox is mapped to"
     default: "/mnt/mesos/sandbox"
-  mesos.slave.docker.stop_timeout:
+  mesos.agent.docker.stop_timeout:
     description: "The time as a duration for docker to wait after stopping an instance before it kills that instance"
     default: "0ns"
 

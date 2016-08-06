@@ -1,10 +1,10 @@
-/var/vcap/sys/log/mesos-slave/*.log {
+/var/vcap/sys/log/mesos-agent/*.log {
   missingok
-  rotate <%= p('mesos.slave.logrotate.rotate') %>
+  rotate <%= p('mesos.agent.logrotate.rotate') %>
   compress
   delaycompress
   notifempty
   copytruncate
-  size <%= p('mesos.slave.logrotate.size') %>
-  su <%= p('mesos.slave.user') %> <%= p('mesos.slave.group') %>
+  size <%= p('mesos.agent.logrotate.size') %>
+  su <%= p('mesos.agent.user') %> <%= p('mesos.agent.group') %>
 }

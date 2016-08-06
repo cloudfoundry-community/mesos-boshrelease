@@ -3,8 +3,8 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 
 # Setup common env vars and folders
-source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'mesos-slave'
-export MESOS_SLAVE_PID_FILE=${MESOS_SLAVE_PID_DIR}/mesos-slave.pid
+source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'mesos-agent'
+export MESOS_AGENT_PID_FILE=${MESOS_AGENT_PID_DIR}/mesos-agent.pid
 
 <%
 def openstruct_to_hash(os)
@@ -32,30 +32,30 @@ fi
 case $1 in
 
   start)
-    pid_guard ${MESOS_SLAVE_PID_FILE} ${JOB_NAME}
-    echo $$ > ${MESOS_SLAVE_PID_FILE}
+    pid_guard ${MESOS_AGENT_PID_FILE} ${JOB_NAME}
+    echo $$ > ${MESOS_AGENT_PID_FILE}
 
     # Increase the default number of open file descriptors
     ulimit -n 8192
 
     # Create Apache Mesos Slave user & group
-    create_group ${MESOS_SLAVE_GROUP}
-    create_user ${MESOS_SLAVE_USER} ${MESOS_SLAVE_GROUP}
+    create_group ${MESOS_AGENT_GROUP}
+    create_user ${MESOS_AGENT_USER} ${MESOS_AGENT_GROUP}
 
     # Enable logrotate crontab
-    (crontab -l | sed /mesos_slave.*logrotate/d; cat ${MESOS_SLAVE_CONF_DIR}/mesos_slave_logrotate.cron) | sed /^$/d | crontab
+    (crontab -l | sed /mesos_agent.*logrotate/d; cat ${MESOS_AGENT_CONF_DIR}/mesos_agent_logrotate.cron) | sed /^$/d | crontab
 
-    # Remove slave info
-    rm -f ${MESOS_SLAVE_TMP_DIR}/meta/slaves/latest
+    # Remove agent info
+    rm -f ${MESOS_AGENT_TMP_DIR}/meta/agents/latest
 
     <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
     # Set proper credentials file permissions
-    chmod 0600 ${MESOS_SLAVE_CONF_DIR}/credentials
-    chown ${MESOS_SLAVE_USER}:${MESOS_SLAVE_GROUP} ${MESOS_SLAVE_CONF_DIR}/credentials
+    chmod 0600 ${MESOS_AGENT_CONF_DIR}/credentials
+    chown ${MESOS_AGENT_USER}:${MESOS_AGENT_GROUP} ${MESOS_AGENT_CONF_DIR}/credentials
     <% end %>
 
     # Calculate consumable resources if not set by user
-    if [[ -z ${MESOS_SLAVE_RESOURCES} ]]; then
+    if [[ -z ${MESOS_AGENT_RESOURCES} ]]; then
         CPUS=`grep processor /proc/cpuinfo | wc -l`
         MEM_KB=`cat /proc/meminfo | grep MemTotal | awk '{print $2}'`
         MEM=$[(MEM_KB - 1024 * 1024) / 1024]
@@ -63,55 +63,55 @@ case $1 in
     fi
 
     # Start Apache Mesos Slave service
-    exec chpst -u ${MESOS_SLAVE_USER}:${MESOS_SLAVE_GROUP} mesos-slave \
-           --attributes="${MESOS_SLAVE_ATTRIBUTES}" \
-           --authenticatee="${MESOS_SLAVE_AUTHENTICATEE}" \
-           --cgroups_enable_cfs="${MESOS_SLAVE_CGROUPS_ENABLE_CFS}" \
-           --cgroups_hierarchy="${MESOS_SLAVE_CGROUPS_HIERARCHY}" \
-           --cgroups_limit_swap="${MESOS_SLAVE_CGROUPS_LIMIT_SWAP}" \
-           --cgroups_root="${MESOS_SLAVE_CGROUPS_ROOT}" \
-           --container_disk_watch_interval="${MESOS_SLAVE_CONTAINER_DISK_WATCH_INTERVAL}" \
-           ${MESOS_SLAVE_CREDENTIALS:-} \
+    exec chpst -u ${MESOS_AGENT_USER}:${MESOS_AGENT_GROUP} mesos-agent \
+           --attributes="${MESOS_AGENT_ATTRIBUTES}" \
+           --authenticatee="${MESOS_AGENT_AUTHENTICATEE}" \
+           --cgroups_enable_cfs="${MESOS_AGENT_CGROUPS_ENABLE_CFS}" \
+           --cgroups_hierarchy="${MESOS_AGENT_CGROUPS_HIERARCHY}" \
+           --cgroups_limit_swap="${MESOS_AGENT_CGROUPS_LIMIT_SWAP}" \
+           --cgroups_root="${MESOS_AGENT_CGROUPS_ROOT}" \
+           --container_disk_watch_interval="${MESOS_AGENT_CONTAINER_DISK_WATCH_INTERVAL}" \
+           ${MESOS_AGENT_CREDENTIALS:-} \
            --containerizers=<%= containerizers %> \
-           --default_role="${MESOS_SLAVE_DEFAULT_ROLE}" \
-           --disk_watch_interval="${MESOS_SLAVE_DISK_WATCH_INTERVAL}" \
+           --default_role="${MESOS_AGENT_DEFAULT_ROLE}" \
+           --disk_watch_interval="${MESOS_AGENT_DISK_WATCH_INTERVAL}" \
            --docker="/var/vcap/packages/docker/bin/docker" \
-           --docker_remove_delay="${MESOS_SLAVE_DOCKER_REMOVE_DELAY}" \
-           --docker_sandbox_directory="${MESOS_SLAVE_DOCKER_SANDBOX_DIRECTORY}" \
-           --docker_stop_timeout="${MESOS_SLAVE_DOCKER_STOP_TIMEOUT}" \
-           --enforce_container_disk_quota="${MESOS_SLAVE_ENFORCE_CONTAINER_DISK_QUOTA}" \
-           --executor_registration_timeout="${MESOS_SLAVE_EXECUTOR_REGISTRATION_TIMEOUT}" \
-           --executor_shutdown_grace_period="${MESOS_SLAVE_EXECUTOR_SHUTDOWN_GRACE_PERIOD}" \
+           --docker_remove_delay="${MESOS_AGENT_DOCKER_REMOVE_DELAY}" \
+           --docker_sandbox_directory="${MESOS_AGENT_DOCKER_SANDBOX_DIRECTORY}" \
+           --docker_stop_timeout="${MESOS_AGENT_DOCKER_STOP_TIMEOUT}" \
+           --enforce_container_disk_quota="${MESOS_AGENT_ENFORCE_CONTAINER_DISK_QUOTA}" \
+           --executor_registration_timeout="${MESOS_AGENT_EXECUTOR_REGISTRATION_TIMEOUT}" \
+           --executor_shutdown_grace_period="${MESOS_AGENT_EXECUTOR_SHUTDOWN_GRACE_PERIOD}" \
            --hostname="${public_ip}" \
-           --frameworks_home="${MESOS_SLAVE_STORE_DIR}" \
-           --gc_delay="${MESOS_SLAVE_GC_DELAY}" \
-           --gc_disk_headroom="${MESOS_SLAVE_GC_DISK_HEADROOM}" \
-           --initialize_driver_logging="${MESOS_SLAVE_INITIALIZE_DRIVER_LOGGING}" \
+           --frameworks_home="${MESOS_AGENT_STORE_DIR}" \
+           --gc_delay="${MESOS_AGENT_GC_DELAY}" \
+           --gc_disk_headroom="${MESOS_AGENT_GC_DISK_HEADROOM}" \
+           --initialize_driver_logging="${MESOS_AGENT_INITIALIZE_DRIVER_LOGGING}" \
            --ip=<%= private_ip %> \
-           --isolation="${MESOS_SLAVE_ISOLATION}" \
-           --log_dir="${MESOS_SLAVE_LOG_DIR}" \
-           --logbufsecs="${MESOS_SLAVE_LOGBUFSECS}" \
-           --logging_level="${MESOS_SLAVE_LOGLEVEL}" \
-           --master=file://${MESOS_SLAVE_CONF_DIR}/zoo_mesos.cfg \
-           --perf_duration="${MESOS_SLAVE_PERF_DURATION}" \
-           --perf_events="${MESOS_SLAVE_PERF_EVENTS}" \
-           --perf_interval="${MESOS_SLAVE_PERF_INTERVAL}" \
-           --port="${MESOS_SLAVE_PORT}" \
-           --recover="${MESOS_SLAVE_RECOVER}" \
-           --recovery_timeout="${MESOS_SLAVE_RECOVERY_TIMEOUT}" \
-           --registration_backoff_factor="${MESOS_SLAVE_REGISTRATION_BACKOFF_FACTOR}" \
-           --resource_monitoring_interval="${MESOS_SLAVE_RESOURCE_MONITORING_INTERVAL}" \
+           --isolation="${MESOS_AGENT_ISOLATION}" \
+           --log_dir="${MESOS_AGENT_LOG_DIR}" \
+           --logbufsecs="${MESOS_AGENT_LOGBUFSECS}" \
+           --logging_level="${MESOS_AGENT_LOGLEVEL}" \
+           --master=file://${MESOS_AGENT_CONF_DIR}/zoo_mesos.cfg \
+           --perf_duration="${MESOS_AGENT_PERF_DURATION}" \
+           --perf_events="${MESOS_AGENT_PERF_EVENTS}" \
+           --perf_interval="${MESOS_AGENT_PERF_INTERVAL}" \
+           --port="${MESOS_AGENT_PORT}" \
+           --recover="${MESOS_AGENT_RECOVER}" \
+           --recovery_timeout="${MESOS_AGENT_RECOVERY_TIMEOUT}" \
+           --registration_backoff_factor="${MESOS_AGENT_REGISTRATION_BACKOFF_FACTOR}" \
+           --resource_monitoring_interval="${MESOS_AGENT_RESOURCE_MONITORING_INTERVAL}" \
            ${RESOURCES} \
-           --strict="${MESOS_SLAVE_STRICT}" \
-           --switch_user="${MESOS_SLAVE_SWITCH_USER}" \
-           --work_dir="${MESOS_SLAVE_TMP_DIR}" \
-           >>${MESOS_SLAVE_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
-           2>>${MESOS_SLAVE_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
+           --strict="${MESOS_AGENT_STRICT}" \
+           --switch_user="${MESOS_AGENT_SWITCH_USER}" \
+           --work_dir="${MESOS_AGENT_TMP_DIR}" \
+           >>${MESOS_AGENT_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
+           2>>${MESOS_AGENT_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
 
   stop)
     # Stop Apache Mesos Slave service
-    kill_and_wait ${MESOS_SLAVE_PID_FILE}
+    kill_and_wait ${MESOS_AGENT_PID_FILE}
     ;;
 
   *)
