@@ -6,26 +6,6 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'mesos-master'
 export MESOS_MASTER_PID_FILE=${MESOS_MASTER_PID_DIR}/mesos-master.pid
 
-<%
-def openstruct_to_hash(os)
-  os.marshal_dump.map do |key, element|
-    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-  end.reduce(&:merge)
-end
-
-networks = openstruct_to_hash(spec.networks)
-default_network = networks.values.find { |net| net.has_key?(:default) }
-private_ip = default_network[:ip]
-
-vip_network = networks.values.find { |net| net[:type] == 'vip' }
-public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
-%>
-
-public_ip=$(public_ip_address)
-if [ -z $public_ip ]; then
-  public_ip=<%= public_ip %>
-fi
-
 case $1 in
 
   start)
@@ -42,6 +22,8 @@ case $1 in
     # Enable logrotate crontab
     (crontab -l | sed /mesos_master.*logrotate/d; cat ${MESOS_MASTER_CONF_DIR}/mesos_master_logrotate.cron) | sed /^$/d | crontab
 
+    mkdir -p ${MESOS_MASTER_WORK_DIR}
+    chown ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} ${MESOS_MASTER_WORK_DIR}
 
     <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
     # Set proper credentials file permissions
@@ -51,34 +33,48 @@ case $1 in
 
     # Start Apache Mesos Master service
     exec chpst -u ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} mesos-master \
+           ${MESOS_MASTER_ADVERTIZE_IP:-} \
+           ${MESOS_MASTER_ADVERTIZE_PORT:-} \
+           --agent_ping_timeout="${MESOS_MASTER_AGENT_PING_TIMEOUT}" \
+           --agent_reregister_timeout="${MESOS_MASTER_AGENT_REREGISTER_TIMEOUT}" \
+           ${MESOS_MASTER_AGENT_REMOVAL_RATE_LIMIT:-} \
            --allocation_interval="${MESOS_MASTER_ALLOCATION_INTERVAL}" \
-           --authenticate="${MESOS_MASTER_AUTHENTICATE_FRAMEWORKS}" \
-           --authenticate_slaves="${MESOS_MASTER_AUTHENTICATE_SLAVES}" \
+           <%=p('mesos.master.authenticate_agents') ? '--authenticate_agents' : '' %> \
+           <%=p('mesos.master.authenticate_frameworks') ? '--authenticate_frameworks' : '' %> \
+           <%=p('mesos.master.authenticate_http_frameworks') ? '--authenticate_http_frameworks' : '' %> \
+           <%=p('mesos.master.authenticate_http_readonly') ? '--authenticate_http_readonly' : '' %> \
+           <%=p('mesos.master.authenticate_http_readwrite') ? '--authenticate_http_readwrite' : '' %> \
            --authenticators="${MESOS_MASTER_AUTHENTICATORS}" \
+           --authorizers="${MESOS_MASTER_AUTHORIZERS}" \
            --cluster="${MESOS_CLUSTER_NAME}" \
            ${MESOS_MASTER_CREDENTIALS:-} \
+           --fair_sharing_excluded_resource_names="${MESOS_MASTER_FAIR_SHARING_EXCLUDED_RESOURCE_NAMES}" \
+           --firewall_rules="${MESOS_MASTER_FIREWALL_RULES}" \
            --framework_sorter="${MESOS_MASTER_FRAMEWORK_SORTER}" \
-           --hostname="${public_ip}" \
+           --hostname=<%= spec.address %> \
+           --http_authenticators="${MESOS_MASTER_HTTP_AUTHENTICATORS}" \
+           --http_framework_authenticators="${MESOS_MASTER_HTTP_FRAMEWORK_AUTHENTICATORS}" \
            --initialize_driver_logging="${MESOS_MASTER_INITIALIZE_DRIVER_LOGGING}" \
-           --ip=<%= private_ip %> \
+           --ip=<%= spec.address %> \
            --log_auto_initialize="${MESOS_MASTER_LOG_AUTO_INITIALIZE}" \
            --log_dir="${MESOS_MASTER_LOG_DIR}" \
            --logbufsecs="${MESOS_MASTER_LOGBUFSECS}" \
            --logging_level="${MESOS_MASTER_LOGLEVEL}" \
+           --max_agent_ping_timeouts="${MESOS_MASTER_MAX_AGENT_PING_TIMEOUTS}" \
+           --max_completed_frameworks="${MESOS_MASTER_MAX_COMPLETED_FRAMEWORKS}" \
+           --max_completed_tasks_per_framework="${MESOS_MASTER_MAX_COMPLETED_TASKS_PER_FRAMEWORK}" \
            --offer_timeout="${MESOS_MASTER_OFFER_TIMEOUT}" \
            --port="${MESOS_MASTER_PORT}" \
            --quorum="${MESOS_MASTER_QUORUM}" \
-           --recovery_slave_removal_limit="${MESOS_MASTER_RECOVERY_SLAVE_REMOVAL_LIMIT}" \
+           --recovery_agent_removal_limit="${MESOS_MASTER_RECOVERY_AGENT_REMOVAL_LIMIT}" \
            --registry="${MESOS_MASTER_REGISTRY}" \
            --registry_fetch_timeout="${MESOS_MASTER_REGISTRY_FETCH_TIMEOUT}" \
            --registry_store_timeout="${MESOS_MASTER_REGISTRY_STORE_TIMEOUT}" \
-           --roles="${MESOS_MASTER_ROLES}" \
            --root_submissions="${MESOS_MASTER_ROOT_SUBMISSIONS}" \
-           --slave_reregister_timeout="${MESOS_MASTER_SLAVE_REREGISTER_TIMEOUT}" \
            --user_sorter="${MESOS_MASTER_USER_SORTER}" \
-           --weights="${MESOS_MASTER_WEIGHTS}" \
-           ${MESOS_MASTER_SLAVES_WHITELIST:-} \
-           --work_dir="${MESOS_MASTER_TMP_DIR}" \
+           --webui_dir="${JOB_DIR}/packages/mesos/share/mesos/webui" \
+           ${MESOS_MASTER_AGENTS_WHITELIST:-} \
+           --work_dir="${MESOS_MASTER_WORK_DIR}" \
            --zk=file://${MESOS_MASTER_CONF_DIR}/zoo_mesos.cfg \
            --zk_session_timeout="${MESOS_MASTER_ZK_SESSION_TIMEOUT}" \
            >>${MESOS_MASTER_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \

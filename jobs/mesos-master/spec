@@ -15,7 +15,7 @@ templates:
   config/credentials.erb: config/credentials
   config/logrotate.conf.erb: config/logrotate.conf
   config/mesos_master_logrotate.cron.erb: config/mesos_master_logrotate.cron
-  config/slaves_whitelist.cfg.erb: config/slaves_whitelist.cfg
+  config/agents_whitelist.cfg.erb: config/agents_whitelist.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
 consumes:
@@ -31,24 +31,66 @@ properties:
   mesos.master.group:
     description: "Group which will own the Apache Mesos Master services"
     default: "vcap"
+  mesos.master.advertize_ip:
+    description: "IP address advertized to reach this Mesos master"
+    default: ''
+  mesos.master.advertize_port:
+    description: "Port advertized to reach Mesos master"
+    default: ''
+  mesos.master.agent_ping_timeout:
+    description: "The timeout within which each agent is expected to respond to a ping from the master."
+    default: '15secs'
+  mesos.master.agent_removal_rate_limit:
+    description: "The maximum rate (e.g., `1/10mins`, `2/3hrs`, etc) at which agents will be removed from the master when they fail health checks.  By default, agents will be removed as soon as they fail the health checks. The value is of the form `(Number of agents)/(Duration)`."
+    default: ''
+  mesos.master.agent_reregister_timeout:
+    description: "The timeout within which all agents are expected to re-register when a new master is elected as the leader. Agents that do not re-register within the timeout will be removed from the registry and will be shutdown if they attempt to communicate with master."
+    default: '10mins'
   mesos.master.allocation_interval:
     description: "Amount of time to wait between performing (batch) allocations"
     default: "1secs"
+  mesos.master.allocator:
+    description: "Allocator to use for resource allocation to frameworks."
+    default: "HierarchicalDRF"
+  mesos.master.authenticate_agents:
+    description: "Only authenticated agents are allowed to register?"
+    default: false
   mesos.master.authenticate_frameworks:
     description: "Only authenticated frameworks are allowed to register?"
     default: false
-  mesos.master.authenticate_slaves:
-    description: "Only authenticated slaves are allowed to register?"
+  mesos.master.authenticate_http_frameworks:
+    description: "Only authenticated HTTP frameworks are allowed to register?"
+    default: false
+  mesos.master.authenticate_http_readonly:
+    description: "Only authenticated requests for read-only HTTP endpoints supporting authentication are allowed?"
+    default: false
+  mesos.master.authenticate_http_readwrite:
+    description: "Only authenticated requests for read-write HTTP endpoints supporting authentication are allowed?"
     default: false
   mesos.master.authenticators:
-    description: "Authenticator implementation to use when authenticating frameworks and/or slaves"
+    description: "Authenticator implementation to use when authenticating frameworks and/or agents"
     default: "crammd5"
+  mesos.master.authorizers:
+    description: "Authorizer implementation to use when authorizing actions that require it."
+    default: "local"
   mesos.cluster_name:
     description: "Human readable name for the Apache Mesos cluster"
     default: "Mesos Cluster"
+  mesos.master.fair_sharing_excluded_resource_names:
+    description: "A comma-separated list of the resource names (e.g. 'gpus') that will be excluded from fair sharing constraints."
+    default: ''
+  mesos.master.firewall_rules:
+    description: "JSON-formatted rules used in the endpoints firewall."
+    default: '{}'
   mesos.master.framework_sorter:
     description: "Policy to use for allocating resources between a given user's frameworks"
     default: "drf"
+  mesos.master.http_authenticators:
+    description: "HTTP Authenticator implementation to use when handling requests to authenticated endpoints"
+    default: "basic"
+  mesos.master.http_framework_authenticators:
+    description: "HTTP Authenticator implementation to use when authenticating HTTP frameworks"
+    default: "basic"
   mesos.master.initialize_driver_logging:
     description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
     default: true
@@ -61,16 +103,25 @@ properties:
   mesos.master.loglevel:
     description: "Log message at or above this level; possible values: 'INFO', 'WARNING', 'ERROR';"
     default: "INFO"
+  mesos.master.max_agent_ping_timeouts:
+    description: " The number of times an agent can fail to respond to a ping from the master. Agents that do not respond within `max_agent_ping_timeouts` ping retries will be asked to shutdown."
+    default: 5
+  mesos.master.max_completed_frameworks:
+    description: "Maximum number of completed frameworks to store in memory."
+    default: 50
+  mesos.master.max_completed_tasks_per_framework:
+    description: "Maximum number of completed tasks per framework to store in memory."
+    default: 1000
   mesos.master.offer_timeout:
     description: "Duration of time before an offer is rescinded from a framework"
     default: "5mins"
   mesos.master.port:
     description: "Port where Apache Mesos Master will listen on"
-    default: 80
+    default: 5050
   mesos.master.quorum:
     description: "The size of the quorum of replicas when using 'replicated_log' based registry"
-  mesos.master.recovery_slave_removal_limit:
-    description: "For failovers, limit on the percentage of slaves that can be removed from the registry *and* shutdown after the re-registration timeout elapses"
+  mesos.master.recovery_agent_removal_limit:
+    description: "For failovers, limit on the percentage of agents that can be removed from the registry *and* shutdown after the re-registration timeout elapses"
     default: "100%"
   mesos.master.registry:
     description: "Persistence strategy for the registry"
@@ -81,23 +132,14 @@ properties:
   mesos.master.registry_store_timeout:
     description: "Duration of time to wait in order to store data in the registry"
     default: "5secs"
-  mesos.master.roles:
-    description: "A comma seperated list of the allocation roles that frameworks in this cluster may belong to"
-    default: ""
   mesos.master.root_submissions:
     description: "Can root submit frameworks?"
     default: true
-  mesos.master.slave_reregister_timeout:
-    description: "The timeout within which all slaves are expected to re-register when a new master is elected as the leader"
-    default: "10mins"
   mesos.master.user_sorter:
     description: "Policy to use for allocating resources between users"
     default: "drf"
-  mesos.master.weights:
-    description: "A comma seperated list of role/weight pairs of the form 'role=weight,role=weight'"
-    default: ""
-  mesos.master.slaves_whitelist:
-    description: "List of slaves to advertise offers for"
+  mesos.master.agents_whitelist:
+    description: "List of agents to advertise offers for"
     default: []
   mesos.master.zk_session_timeout:
     description: "ZooKeeper session timeout"

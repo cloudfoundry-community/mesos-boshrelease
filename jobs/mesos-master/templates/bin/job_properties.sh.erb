@@ -16,8 +16,8 @@ export MESOS_MASTER_PID_DIR=${RUN_DIR}
 # Directory to store the Apache Mesos Master data files
 export MESOS_MASTER_STORE_DIR=${STORE_DIR}
 
-# Directory to store the Apache Mesos Master temp files
-export MESOS_MASTER_TMP_DIR=${TMP_DIR}
+# Directory to store the Apache Mesos Master files
+export MESOS_MASTER_WORK_DIR=${STORE_DIR}/master
 
 # User which will own the Apache Mesos Master services
 export MESOS_MASTER_USER="<%= p('mesos.master.user') %>"
@@ -28,17 +28,33 @@ export MESOS_MASTER_GROUP="<%= p('mesos.master.group') %>"
 # Apache Mesos Home directory
 export MESOS_HOME=/var/vcap/packages/mesos
 
+# IP Address advertized to reach this Mesos master
+<% if p('mesos.master.advertize_ip') != '' %>
+export MESOS_MASTER_ADVERTIZE_IP='--advertize_ip=<%=p('mesos.master.advertize_ip')%>'
+<% end %>
+
+<% if p('mesos.master.advertize_port') != '' %>
+export MESOS_MASTER_ADVERTIZE_PORT='--advertize_port=<%=p('mesos.master.advertize_port')%>'
+<% end %>
+
+export MESOS_MASTER_AGENT_PING_TIMEOUT="<%=p('mesos.master.agent_ping_timeout')%>"
+
+<% if p('mesos.master.agent_removal_rate_limit') != '' %>
+export MESOS_MASTER_AGENT_REMOVAL_RATE_LIMIT="--agent_removal_rate_limit=<%=p('mesos.master.agent_removal_rate_limit')%>"
+<% end %>
+
+export MESOS_MASTER_AGENT_REREGISTER_TIMEOUT="<%=p('mesos.master.agent_reregister_timeout')%>"
+
+export MESOS_MASTER_ALLOCATOR="<%=p('mesos.master.allocator')%>"
+
 # Amount of time to wait between performing (batch) allocations
 export MESOS_MASTER_ALLOCATION_INTERVAL="<%= p('mesos.master.allocation_interval') %>"
 
-# Only authenticated frameworks are allowed to register?
-export MESOS_MASTER_AUTHENTICATE_FRAMEWORKS="<%= p('mesos.master.authenticate_frameworks') %>"
-
-# Only authenticated slaves are allowed to register?
-export MESOS_MASTER_AUTHENTICATE_SLAVES="<%= p('mesos.master.authenticate_slaves') %>"
-
-# Authenticator implementation to use when authenticating frameworks and/or slaves
+# Authenticator implementation to use when authenticating frameworks and/or agents
 export MESOS_MASTER_AUTHENTICATORS="<%= p('mesos.master.authenticators') %>"
+
+# Authenticator implementation to use when authenticating frameworks and/or agents
+export MESOS_MASTER_AUTHORIZERS="<%= p('mesos.master.authorizers') %>"
 
 # Human readable name for the Apache Mesos cluster
 export MESOS_CLUSTER_NAME="<%= p('mesos.cluster_name') %>"
@@ -48,8 +64,17 @@ export MESOS_CLUSTER_NAME="<%= p('mesos.cluster_name') %>"
 export MESOS_MASTER_CREDENTIALS="--credentials=file://${MESOS_MASTER_CONF_DIR}/credentials"
 <% end %>
 
+export MESOS_MASTER_FAIR_SHARING_EXCLUDED_RESOURCE_NAMES="<%= p('mesos.master.fair_sharing_excluded_resource_names')%>"
+
+export MESOS_MASTER_FIREWALL_RULES="<%= p('mesos.master.firewall_rules')%>"
+
+
 # Policy to use for allocating resources between a given user's frameworks
 export MESOS_MASTER_FRAMEWORK_SORTER="<%= p('mesos.master.framework_sorter') %>"
+
+export MESOS_MASTER_HTTP_AUTHENTICATORS="<%= p('mesos.master.http_authenticators') %>"
+
+export MESOS_MASTER_HTTP_FRAMEWORK_AUTHENTICATORS="<%= p('mesos.master.http_authenticators') %>"
 
 # Whether to automatically initialize google logging of scheduler and/or executor drivers
 export MESOS_MASTER_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.master.initialize_driver_logging') %>"
@@ -63,6 +88,12 @@ export MESOS_MASTER_LOGBUFSECS="<%= p('mesos.master.logbufsecs') %>"
 # Log message at or above this level
 export MESOS_MASTER_LOGLEVEL="<%= p('mesos.master.loglevel') %>"
 
+export MESOS_MASTER_MAX_AGENT_PING_TIMEOUTS="<%= p('mesos.master.max_agent_ping_timeouts') %>"
+
+export MESOS_MASTER_MAX_COMPLETED_FRAMEWORKS="<%= p('mesos.master.max_completed_frameworks') %>"
+
+export MESOS_MASTER_MAX_COMPLETED_TASKS_PER_FRAMEWORK="<%= p('mesos.master.max_completed_tasks_per_framework') %>"
+
 # Duration of time before an offer is rescinded from a framework
 export MESOS_MASTER_OFFER_TIMEOUT="<%= p('mesos.master.offer_timeout') %>"
 
@@ -72,8 +103,8 @@ export MESOS_MASTER_PORT="<%= p('mesos.master.port') %>"
 # The size of the quorum of replicas when using 'replicated_log' based registry
 export MESOS_MASTER_QUORUM="<%= p('mesos.master.quorum') %>"
 
-# For failovers, limit on the percentage of slaves that can be removed from the registry *and* shutdown after the re-registration timeout elapses
-export MESOS_MASTER_RECOVERY_SLAVE_REMOVAL_LIMIT="<%= p('mesos.master.recovery_slave_removal_limit') %>"
+# For failovers, limit on the percentage of agents that can be removed from the registry *and* shutdown after the re-registration timeout elapses
+export MESOS_MASTER_RECOVERY_AGENT_REMOVAL_LIMIT="<%= p('mesos.master.recovery_agent_removal_limit') %>"
 
 # Persistence strategy for the registry
 export MESOS_MASTER_REGISTRY="<%= p('mesos.master.registry') %>"
@@ -84,24 +115,15 @@ export MESOS_MASTER_REGISTRY_FETCH_TIMEOUT="<%= p('mesos.master.registry_fetch_t
 # Duration of time to wait in order to store data in the registry
 export MESOS_MASTER_REGISTRY_STORE_TIMEOUT="<%= p('mesos.master.registry_store_timeout') %>"
 
-# A comma seperated list of the allocation roles that frameworks in this cluster may belong to
-export MESOS_MASTER_ROLES="<%= p('mesos.master.roles') %>"
-
 # Can root submit frameworks?
 export MESOS_MASTER_ROOT_SUBMISSIONS="<%= p('mesos.master.root_submissions') %>"
-
-# The timeout within which all slaves are expected to re-register when a new master is elected as the leader
-export MESOS_MASTER_SLAVE_REREGISTER_TIMEOUT="<%= p('mesos.master.slave_reregister_timeout') %>"
 
 # Policy to use for allocating resources between users
 export MESOS_MASTER_USER_SORTER="<%= p('mesos.master.user_sorter') %>"
 
-# A comma seperated list of role/weight pairs of the form 'role=weight,role=weight'
-export MESOS_MASTER_WEIGHTS="<%= p('mesos.master.weights') %>"
-
-<% if p('mesos.master.slaves_whitelist', []).any? %>
-# File containing the list of slaves to advertise offers for
-export MESOS_MASTER_SLAVES_WHITELIST="--whitelist=file://${MESOS_MASTER_CONF_DIR}/slaves_whitelist.cfg"
+<% if p('mesos.master.agents_whitelist', []).any? %>
+# File containing the list of agents to advertise offers for
+export MESOS_MASTER_AGENTS_WHITELIST="--whitelist=file://${MESOS_MASTER_CONF_DIR}/agents_whitelist.cfg"
 <% end %>
 
 # ZooKeeper session timeout
