@@ -51,10 +51,6 @@ maven/apache-maven-3.3.3-bin.tar.gz:
   object_id: ec3bab0f-6bd7-494e-8c30-bfcb0b91911d
   sha: c8f257dce3381d9d8c420168a6df0fa25664337c
   size: 8042383
-mesos/mesos-0.22.1.tar.gz:
-  object_id: 14a38062-db66-40a2-93d6-58b4673dbdbd
-  sha: 599c09d83ee69804cd12936c8c3df57f45f30b4d
-  size: 28260536
 nginx/nginx-1.8.0.tar.gz:
   object_id: d14f83bf-5a83-450f-8f62-d64b2ac6b4e3
   sha: 12bad312764feae50246685ab2e74512d1aa9b2f
@@ -115,3 +111,7 @@ maven/apache-maven-3.0.5-bin.tar.gz:
   object_id: f97d9340-91a5-4504-a675-caa44469f2fa
   sha: aecc0d3d67732939c0056d4a0d8510483ee1167e
   size: 5144659
+mesos/mesos-1.0.0.tar.gz:
+  object_id: 57339f7b-e9b6-49f3-ba85-668c0bc6c881
+  sha: 753bc16195e40bf08a741d9ee49a681ab58c3c89
+  size: 41762030

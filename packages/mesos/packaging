@@ -17,6 +17,7 @@ fi
 
 # Java package must be a dependency
 export JAVA_HOME=/var/vcap/packages/java/jdk
+export PATH=${PATH}:${JAVA_HOME}/bin
 
 # Apache Maven package must be a dependency
 export MAVEN_HOME=/var/vcap/packages/maven
@@ -24,11 +25,16 @@ export MAVEN_HOME=/var/vcap/packages/maven
 # Build Apache Mesos package
 echo "Building Apache Mesos ${MESOS_VERSION}..."
 cd ${BOSH_COMPILE_TARGET}/mesos-${MESOS_VERSION}
-./configure --prefix=${BOSH_INSTALL_TARGET} \
+
+mkdir build
+cd build
+
+../configure LD_LIBRARY_PATH=/var/vcap/packages/sasl/lib/  \
+    SASL_PATH=/var/vcap/packages/sasl/lib/sasl2 \
+    --prefix=${BOSH_INSTALL_TARGET} \
     --with-apr=/var/vcap/packages/apr/ \
     --with-sasl=/var/vcap/packages/sasl/ \
     --with-svn=/var/vcap/packages/subversion/ \
-    --with-webui \
     --disable-python
 make -j${CPUS}
 make install

@@ -7,4 +7,4 @@ dependencies:
   - sasl
   - subversion
 files:
-  - mesos/mesos-0.22.1.tar.gz
+  - mesos/mesos-1.0.0.tar.gz
