@@ -111,3 +111,7 @@ zookeeper/zookeeper-3.4.8.tar.gz:
   object_id: ed3bac45-13f6-4253-a57d-0ce6d2c8c7c2
   sha: 51b61611a329294f75aed82f3a4517a4b6ff116f
   size: 22261552
+maven/apache-maven-3.0.5-bin.tar.gz:
+  object_id: f97d9340-91a5-4504-a675-caa44469f2fa
+  sha: aecc0d3d67732939c0056d4a0d8510483ee1167e
+  size: 5144659
