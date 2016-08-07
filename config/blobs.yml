@@ -23,10 +23,6 @@ docker/bridge-utils-1.5.tar.gz:
   object_id: a9a92149-4c9f-4e33-a4e1-24485c34f4f0
   sha: 1f71b6f22f5d2b6d21e146f4ac20820ad42e58ee
   size: 33472
-docker/docker-1.7.1:
-  object_id: 994c3d0c-68c5-409e-9aac-d86082be8009
-  sha: 386f6e91114dc252a13b266fe2ac3a27e83bd0f7
-  size: 16296881
 git/git-2.4.6.tar.gz:
   object_id: 77b59653-ecc4-472e-9722-26f0a88b7a72
   sha: 230cb8b664fe47c838e199663f55dc882a3b9773
@@ -115,3 +111,7 @@ mesos/mesos-1.0.0.tar.gz:
   object_id: 57339f7b-e9b6-49f3-ba85-668c0bc6c881
   sha: 753bc16195e40bf08a741d9ee49a681ab58c3c89
   size: 41762030
+docker/docker-1.11.0.tgz:
+  object_id: 0ec727d1-e31c-4446-83ab-65410a638d94
+  sha: 242b6a3e6def6719f5002a4d3d5b35e587036c4e
+  size: 20520756
