@@ -19,8 +19,6 @@ templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/mesos_agent_ctl.erb: bin/mesos_agent_ctl
   config/credentials.erb: config/credentials
-  config/logrotate.conf.erb: config/logrotate.conf
-  config/mesos_agent_logrotate.cron.erb: config/mesos_agent_logrotate.cron
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
 properties:
@@ -120,16 +118,6 @@ properties:
   mesos.agent.switch_user:
     description: "Whether to run tasks as the user who submitted them rather than the user running the agent"
     default: false
-
-  mesos.agent.logrotate.frequency:
-    description: "Frequency to run logrotate for Mesos Slave log files (crontab five time and date fields)"
-    default: "0 * * * *"
-  mesos.agent.logrotate.rotate:
-    description: "Number of times Mesos Slave log files are rotated before being removed"
-    default: "7"
-  mesos.agent.logrotate.size:
-    description: "Size before Mesos Slave log files are rotated"
-    default: "10M"
 
   mesos.agent.docker.remove_delay:
     description: "The amount of time to wait before removing docker containers"

@@ -42,9 +42,6 @@ case $1 in
     create_group ${MESOS_AGENT_GROUP}
     create_user ${MESOS_AGENT_USER} ${MESOS_AGENT_GROUP}
 
-    # Enable logrotate crontab
-    (crontab -l | sed /mesos_agent.*logrotate/d; cat ${MESOS_AGENT_CONF_DIR}/mesos_agent_logrotate.cron) | sed /^$/d | crontab
-
     # Remove agent info
     rm -f ${MESOS_AGENT_TMP_DIR}/meta/agents/latest
 
