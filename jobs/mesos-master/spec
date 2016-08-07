@@ -23,12 +23,6 @@ consumes:
   - zookeeper.client_port
 
 properties:
-  mesos.master.user:
-    description: "User which will own the Apache Mesos Master services"
-    default: "root"
-  mesos.master.group:
-    description: "Group which will own the Apache Mesos Master services"
-    default: "vcap"
   mesos.master.advertize_ip:
     description: "IP address advertized to reach this Mesos master"
     default: ''

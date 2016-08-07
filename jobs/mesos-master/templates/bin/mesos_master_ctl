@@ -15,19 +15,13 @@ case $1 in
     # Increase the default number of open file descriptors
     ulimit -n 8192
 
-    # Create Apache Mesos Master user & group
-    create_group ${MESOS_MASTER_GROUP}
-    create_user ${MESOS_MASTER_USER} ${MESOS_MASTER_GROUP}
-
     mkdir -p ${MESOS_MASTER_WORK_DIR}
-    chown ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} ${MESOS_MASTER_WORK_DIR}
 
     # Set proper credentials file permissions
     chmod 0600 ${MESOS_MASTER_CONF_DIR}/credentials
-    chown ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} ${MESOS_MASTER_CONF_DIR}/credentials
 
     # Start Apache Mesos Master service
-    exec chpst -u ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} mesos-master \
+    exec mesos-master \
            ${MESOS_MASTER_ADVERTIZE_IP:-} \
            ${MESOS_MASTER_ADVERTIZE_PORT:-} \
            --agent_ping_timeout="${MESOS_MASTER_AGENT_PING_TIMEOUT}" \

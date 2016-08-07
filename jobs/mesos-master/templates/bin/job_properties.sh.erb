@@ -19,12 +19,6 @@ export MESOS_MASTER_STORE_DIR=${STORE_DIR}
 # Directory to store the Apache Mesos Master files
 export MESOS_MASTER_WORK_DIR=${STORE_DIR}/master
 
-# User which will own the Apache Mesos Master services
-export MESOS_MASTER_USER="<%= p('mesos.master.user') %>"
-
-# Group which will own the Apache Mesos Master services
-export MESOS_MASTER_GROUP="<%= p('mesos.master.group') %>"
-
 # Apache Mesos Home directory
 export MESOS_HOME=/var/vcap/packages/mesos
 
