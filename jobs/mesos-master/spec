@@ -13,8 +13,6 @@ templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/mesos_master_ctl: bin/mesos_master_ctl
   config/credentials.erb: config/credentials
-  config/logrotate.conf.erb: config/logrotate.conf
-  config/mesos_master_logrotate.cron.erb: config/mesos_master_logrotate.cron
   config/agents_whitelist.cfg.erb: config/agents_whitelist.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
@@ -144,16 +142,6 @@ properties:
   mesos.master.zk_session_timeout:
     description: "ZooKeeper session timeout"
     default: "10secs"
-
-  mesos.master.logrotate.frequency:
-    description: "Frequency to run logrotate for Mesos Master log files (crontab five time and date fields)"
-    default: "0 * * * *"
-  mesos.master.logrotate.rotate:
-    description: "Number of times Mesos Master log files are rotated before being removed"
-    default: "7"
-  mesos.master.logrotate.size:
-    description: "Size before Mesos Master log files are rotated"
-    default: "10M"
 
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
