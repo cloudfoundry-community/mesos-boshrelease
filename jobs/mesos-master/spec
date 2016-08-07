@@ -11,7 +11,7 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/mesos_master_ctl.erb: bin/mesos_master_ctl
+  bin/mesos_master_ctl: bin/mesos_master_ctl
   config/credentials.erb: config/credentials
   config/logrotate.conf.erb: config/logrotate.conf
   config/mesos_master_logrotate.cron.erb: config/mesos_master_logrotate.cron

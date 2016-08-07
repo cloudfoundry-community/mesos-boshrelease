@@ -25,11 +25,9 @@ case $1 in
     mkdir -p ${MESOS_MASTER_WORK_DIR}
     chown ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} ${MESOS_MASTER_WORK_DIR}
 
-    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
     # Set proper credentials file permissions
     chmod 0600 ${MESOS_MASTER_CONF_DIR}/credentials
     chown ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} ${MESOS_MASTER_CONF_DIR}/credentials
-    <% end %>
 
     # Start Apache Mesos Master service
     exec chpst -u ${MESOS_MASTER_USER}:${MESOS_MASTER_GROUP} mesos-master \
@@ -39,11 +37,11 @@ case $1 in
            --agent_reregister_timeout="${MESOS_MASTER_AGENT_REREGISTER_TIMEOUT}" \
            ${MESOS_MASTER_AGENT_REMOVAL_RATE_LIMIT:-} \
            --allocation_interval="${MESOS_MASTER_ALLOCATION_INTERVAL}" \
-           <%=p('mesos.master.authenticate_agents') ? '--authenticate_agents' : '' %> \
-           <%=p('mesos.master.authenticate_frameworks') ? '--authenticate_frameworks' : '' %> \
-           <%=p('mesos.master.authenticate_http_frameworks') ? '--authenticate_http_frameworks' : '' %> \
-           <%=p('mesos.master.authenticate_http_readonly') ? '--authenticate_http_readonly' : '' %> \
-           <%=p('mesos.master.authenticate_http_readwrite') ? '--authenticate_http_readwrite' : '' %> \
+           ${MESOS_MASTER_AUTHENTICATE_AGENTS:-} \
+           ${MESOS_MASTER_AUTHENTICATE_FRAMEWORKS:-} \
+           ${MESOS_MASTER_AUTHENTICATE_HTTP_FRAMEWORKS:-} \
+           ${MESOS_MASTER_AUTHENTICATE_HTTP_READONLY:-} \
+           ${MESOS_MASTER_AUTHENTICATE_HTTP_READWRITE:-} \
            --authenticators="${MESOS_MASTER_AUTHENTICATORS}" \
            --authorizers="${MESOS_MASTER_AUTHORIZERS}" \
            --cluster="${MESOS_CLUSTER_NAME}" \
@@ -51,11 +49,11 @@ case $1 in
            --fair_sharing_excluded_resource_names="${MESOS_MASTER_FAIR_SHARING_EXCLUDED_RESOURCE_NAMES}" \
            --firewall_rules="${MESOS_MASTER_FIREWALL_RULES}" \
            --framework_sorter="${MESOS_MASTER_FRAMEWORK_SORTER}" \
-           --hostname=<%= spec.address %> \
+           --hostname="${MESOS_MASTER_HOSTNAME}" \
            --http_authenticators="${MESOS_MASTER_HTTP_AUTHENTICATORS}" \
            --http_framework_authenticators="${MESOS_MASTER_HTTP_FRAMEWORK_AUTHENTICATORS}" \
            --initialize_driver_logging="${MESOS_MASTER_INITIALIZE_DRIVER_LOGGING}" \
-           --ip=<%= spec.address %> \
+           --ip="${MESOS_MASTER_IP}" \
            --log_auto_initialize="${MESOS_MASTER_LOG_AUTO_INITIALIZE}" \
            --log_dir="${MESOS_MASTER_LOG_DIR}" \
            --logbufsecs="${MESOS_MASTER_LOGBUFSECS}" \

@@ -49,7 +49,26 @@ export MESOS_MASTER_ALLOCATOR="<%=p('mesos.master.allocator')%>"
 
 # Amount of time to wait between performing (batch) allocations
 export MESOS_MASTER_ALLOCATION_INTERVAL="<%= p('mesos.master.allocation_interval') %>"
+<% if p('mesos.master.authenticate_agents') %>
+export MESOS_MASTER_AUTHENTICATE_AGENTS="--authenticate_agents"
+<% end %>
 
+<% if p('mesos.master.authenticate_frameworks') %>
+export MESOS_MASTER_AUTHENTICATE_FRAMEWORKS="--authenticate_frameworks"
+<% end %>
+
+<% if p('mesos.master.authenticate_http_frameworks') %>
+export MESOS_MASTER_AUTHENTICATE_HTTP_FRAMEWORKS="--authenticate_http_frameworks"
+<% end %>
+
+<% if p('mesos.master.authenticate_http_readonly') %>
+export MESOS_MASTER_AUTHENTICATE_HTTP_READONLY="--authenticate_http_readonly"
+<% end %>
+
+# <% if p('mesos.master.authenticate_http_readwrite') %>
+export MESOS_MASTER_AUTHENTICATE_HTTP_READWRITE="--authenticate_http_readwrite"
+<% end %>
+#
 # Authenticator implementation to use when authenticating frameworks and/or agents
 export MESOS_MASTER_AUTHENTICATORS="<%= p('mesos.master.authenticators') %>"
 
@@ -78,6 +97,10 @@ export MESOS_MASTER_HTTP_FRAMEWORK_AUTHENTICATORS="<%= p('mesos.master.http_auth
 
 # Whether to automatically initialize google logging of scheduler and/or executor drivers
 export MESOS_MASTER_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.master.initialize_driver_logging') %>"
+
+export MESOS_MASTER_HOSTNAME="<%= spec.address %>"
+
+export MESOS_MASTER_IP="<%= spec.address %>"
 
 # Whether to automatically initialize the replicated log used for the registry
 export MESOS_MASTER_LOG_AUTO_INITIALIZE="<%= p('mesos.master.log_auto_initialize') %>"
