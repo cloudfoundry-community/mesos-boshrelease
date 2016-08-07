@@ -5,6 +5,8 @@ director_uuid: 93c01d2d-a2a5-49d8-8d02-389fd223a9cf
 releases:
 - name: mesos
   version: latest
+- name: docker
+  version: latest
 
 stemcells:
 - alias: default
@@ -41,6 +43,16 @@ instance_groups:
         quorum: 2
         authenticate_agents: true
         authenticate_frameworks: true
+- name: mesos-agent
+  azs: [z1, z2, z3]
+  instances: 3
+  jobs:
+  - name: docker
+    release: docker
+  stemcell: default
+  vm_type: medium
+  networks:
+  - name: private
 
 # properties:
 
