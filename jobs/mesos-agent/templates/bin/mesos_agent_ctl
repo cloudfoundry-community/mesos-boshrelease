@@ -6,50 +6,26 @@ set -e # exit immediately if a simple command exits with a non-zero status
 source /var/vcap/packages/bosh-helpers/ctl_setup.sh 'mesos-agent'
 export MESOS_AGENT_PID_FILE=${MESOS_AGENT_PID_DIR}/mesos-agent.pid
 
-<%
-def openstruct_to_hash(os)
-  os.marshal_dump.map do |key, element|
-    element.is_a?(OpenStruct) ? { key => openstruct_to_hash(element) } : { key => element }
-  end.reduce(&:merge)
-end
-
-networks = openstruct_to_hash(spec.networks)
-default_network = networks.values.find { |net| net.has_key?(:default) }
-private_ip = default_network[:ip]
-
-vip_network = networks.values.find { |net| net[:type] == 'vip' }
-public_ip = vip_network.nil? ? private_ip : vip_network[:ip]
-
-docker_template = spec.job.templates.select { |template| template.name == 'docker' }
-containerizers = docker_template.any? ? "docker,mesos" : "mesos"
-%>
-
-public_ip=$(public_ip_address)
-if [ -z $public_ip ]; then
-  public_ip=<%= public_ip %>
-fi
-
 case $1 in
 
   start)
     pid_guard ${MESOS_AGENT_PID_FILE} ${JOB_NAME}
     echo $$ > ${MESOS_AGENT_PID_FILE}
 
-    # Increase the default number of open file descriptors
-    ulimit -n 8192
-
-    # Create Apache Mesos Slave user & group
-    create_group ${MESOS_AGENT_GROUP}
-    create_user ${MESOS_AGENT_USER} ${MESOS_AGENT_GROUP}
+    export MESOS_AGENT_CONTAINERIZERS="mesos"
+    if which docker >/dev/null; then
+      export MESOS_AGENT_CONTAINERIZERS="docker,${MESOS_AGENT_CONTAINERIZERS}"
+      export MESOS_AGENT_ISOLATION="docker/runtime,${MESOS_AGENT_ISOLATION}"
+    fi
 
     # Remove agent info
     rm -f ${MESOS_AGENT_TMP_DIR}/meta/agents/latest
 
-    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+    mkdir -p ${MESOS_AGENT_WORK_DIR}
+
     # Set proper credentials file permissions
     chmod 0600 ${MESOS_AGENT_CONF_DIR}/credentials
-    chown ${MESOS_AGENT_USER}:${MESOS_AGENT_GROUP} ${MESOS_AGENT_CONF_DIR}/credentials
-    <% end %>
+    chmod 0600 ${MESOS_AGENT_CONF_DIR}/http_credentials
 
     # Calculate consumable resources if not set by user
     if [[ -z ${MESOS_AGENT_RESOURCES} ]]; then
@@ -60,36 +36,62 @@ case $1 in
     fi
 
     # Start Apache Mesos Slave service
-    exec chpst -u ${MESOS_AGENT_USER}:${MESOS_AGENT_GROUP} mesos-agent \
+    exec mesos-agent \
+           ${MESOS_AGENT_ADVERTIZE_IP:-} \
+           ${MESOS_AGENT_ADVERTIZE_PORT:-} \
+           --agent_subsystems="${MESOS_AGENT_SUBSYSTEMS}" \
+           --appc_simple_discovery_uri_prefix="${MESOS_AGENT_APPC_SIMPLE_DISCOVERY_URI_PREFIX}" \
+           --appc_store_dir="${MESOS_AGENT_APPC_STORE_DIR}" \
            --attributes="${MESOS_AGENT_ATTRIBUTES}" \
+           ${MESOS_AGENT_AUTHENTICATE_HTTP_READONLY:-} \
+           ${MESOS_AGENT_AUTHENTICATE_HTTP_READWRITE:-} \
            --authenticatee="${MESOS_AGENT_AUTHENTICATEE}" \
+           --authentication_backoff_factor="${MESOS_AGENT_AUTHENTICATION_BACKOFF_FACTOR}" \
+           --cgroups_cpu_enable_pids_and_tids_count="${MESOS_AGENT_CGROUPS_CPU_ENABLE_PIDS_AND_TIDS_COUNT}" \
            --cgroups_enable_cfs="${MESOS_AGENT_CGROUPS_ENABLE_CFS}" \
            --cgroups_hierarchy="${MESOS_AGENT_CGROUPS_HIERARCHY}" \
            --cgroups_limit_swap="${MESOS_AGENT_CGROUPS_LIMIT_SWAP}" \
+           ${MESOS_AGENT_CGROUPS_NET_CLS_PRIMARY_HANDLE:-} \
+           ${MESOS_AGENT_CGROUPS_NET_CLS_SECONDARY_HANDLES:-} \
            --cgroups_root="${MESOS_AGENT_CGROUPS_ROOT}" \
            --container_disk_watch_interval="${MESOS_AGENT_CONTAINER_DISK_WATCH_INTERVAL}" \
+           --containerizers="${MESOS_AGENT_CONTAINERIZERS}" \
            ${MESOS_AGENT_CREDENTIALS:-} \
-           --containerizers=<%= containerizers %> \
+           ${MESOS_AGENT_DEFAULT_CONTAINER_IMAGE:-} \
+           ${MESOS_AGENT_DEFAULT_CONTAINER_INFO:-} \
            --default_role="${MESOS_AGENT_DEFAULT_ROLE}" \
            --disk_watch_interval="${MESOS_AGENT_DISK_WATCH_INTERVAL}" \
            --docker="/var/vcap/packages/docker/bin/docker" \
+           --docker_kill_orphans="${MESOS_AGENT_DOCKER_KILL_ORPHANS}" \
+           ${MESOS_AGENT_DOCKER_MESOS_IMAGE:-} \
+           --docker_registry="${MESOS_AGENT_DOCKER_REGISTRY}" \
+           --docker_socket="/var/vcap/sys/run/docker/docker.sock" \
            --docker_remove_delay="${MESOS_AGENT_DOCKER_REMOVE_DELAY}" \
-           --docker_sandbox_directory="${MESOS_AGENT_DOCKER_SANDBOX_DIRECTORY}" \
-           --docker_stop_timeout="${MESOS_AGENT_DOCKER_STOP_TIMEOUT}" \
+           --docker_store_dir="${MESOS_AGENT_DOCKER_STORE_DIR}" \
+           --docker_volume_checkpoint_dir="/var/vcap/sys/run/mesos/isolators/docker/volume" \
            --enforce_container_disk_quota="${MESOS_AGENT_ENFORCE_CONTAINER_DISK_QUOTA}" \
+           --executor_environment_variables="${MESOS_AGENT_EXECUTOR_ENVIRONMENT_VARIABLES}" \
            --executor_registration_timeout="${MESOS_AGENT_EXECUTOR_REGISTRATION_TIMEOUT}" \
            --executor_shutdown_grace_period="${MESOS_AGENT_EXECUTOR_SHUTDOWN_GRACE_PERIOD}" \
-           --hostname="${public_ip}" \
-           --frameworks_home="${MESOS_AGENT_STORE_DIR}" \
+           --fetcher_cache_dir="${MESOS_AGENT_FETCHER_CACHE_DIR}" \
+           --fetcher_cache_size="${MESOS_AGENT_FETCHER_CACHE_SIZE}" \
+           --firewall_rules="${MESOS_AGENT_FIREWALL_RULES}" \
+           --frameworks_home="${MESOS_AGENT_FRAMEWORKS_HOME}" \
            --gc_delay="${MESOS_AGENT_GC_DELAY}" \
            --gc_disk_headroom="${MESOS_AGENT_GC_DISK_HEADROOM}" \
+           --hadoop_home="${MESOS_AGENT_HADOOP_HOME}" \
+           --hostname="${MESOS_AGENT_HOSTNAME}" \
+           ${MESOS_AGENT_HTTP_CREDENTIALS:-} \
+           --image_providers="${MESOS_AGENT_IMAGE_PROVIDERS}" \
+           --image_provisioner_backend="${MESOS_AGENT_IMAGE_PROVISIONER_BACKEND}" \
            --initialize_driver_logging="${MESOS_AGENT_INITIALIZE_DRIVER_LOGGING}" \
-           --ip=<%= private_ip %> \
+           --ip="${MESOS_AGENT_IP}" \
            --isolation="${MESOS_AGENT_ISOLATION}" \
            --log_dir="${MESOS_AGENT_LOG_DIR}" \
            --logbufsecs="${MESOS_AGENT_LOGBUFSECS}" \
            --logging_level="${MESOS_AGENT_LOGLEVEL}" \
            --master=file://${MESOS_AGENT_CONF_DIR}/zoo_mesos.cfg \
+           --oversubscribed_resources_interval="${MESOS_AGENT_OVERSUBSCRIBED_RESOURCES_INTERVAL}" \
            --perf_duration="${MESOS_AGENT_PERF_DURATION}" \
            --perf_events="${MESOS_AGENT_PERF_EVENTS}" \
            --perf_interval="${MESOS_AGENT_PERF_INTERVAL}" \
@@ -97,17 +99,17 @@ case $1 in
            --recover="${MESOS_AGENT_RECOVER}" \
            --recovery_timeout="${MESOS_AGENT_RECOVERY_TIMEOUT}" \
            --registration_backoff_factor="${MESOS_AGENT_REGISTRATION_BACKOFF_FACTOR}" \
-           --resource_monitoring_interval="${MESOS_AGENT_RESOURCE_MONITORING_INTERVAL}" \
            ${RESOURCES} \
+           --sandbox_directory="${MESOS_AGENT_SANDBOX_DIRECTORY}" \
            --strict="${MESOS_AGENT_STRICT}" \
            --switch_user="${MESOS_AGENT_SWITCH_USER}" \
-           --work_dir="${MESOS_AGENT_TMP_DIR}" \
+           --work_dir="${MESOS_AGENT_WORK_DIR}" \
            >>${MESOS_AGENT_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
            2>>${MESOS_AGENT_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
     ;;
 
   stop)
-    # Stop Apache Mesos Slave service
+    # Stop Apache Mesos Agent service
     kill_and_wait ${MESOS_AGENT_PID_FILE}
     ;;
 

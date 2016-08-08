@@ -17,23 +17,48 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/mesos_agent_ctl.erb: bin/mesos_agent_ctl
+  bin/mesos_agent_ctl: bin/mesos_agent_ctl
   config/credentials.erb: config/credentials
+  config/http_credentials.erb: config/http_credentials
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
+consumes:
+- name: zookeeper
+  type: zookeeper
+  properties:
+  - zookeeper.client_port
+
 properties:
-  mesos.agent.user:
-    description: "User which will own the Apache Mesos Slave services"
-    default: "root"
-  mesos.agent.group:
-    description: "Group which will own the Apache Mesos Slave services"
-    default: "vcap"
+  mesos.agent.advertize_ip:
+    description: "IP address advertized to reach this Mesos agent"
+    default: ''
+  mesos.agent.advertize_port:
+    description: "Port advertized to reach Mesos agent"
+    default: ''
+  mesos.agent.subsystems:
+    description: "List of comma-separated cgroup subsystems to run the agent binary"
+    default: ""
+  mesos.agent.appc_simple_discovery_uri_prefix:
+    description: "URI prefix to be used for simple discovery of appc images"
+    default: "http://"
   mesos.agent.attributes:
     description: "Attributes of machine"
     default: ""
+  mesos.agent.authenticate_http_readonly:
+    description: "Only authenticated requests for read-only HTTP endpoints supporting authentication are allowed?"
+    default: false
+  mesos.agent.authenticate_http_readwrite:
+    description: "Only authenticated requests for read-write HTTP endpoints supporting authentication are allowed?"
+    default: false
   mesos.agent.authenticatee:
     description: "Authenticatee implementation to use when authenticating against the master"
     default: "crammd5"
+  mesos.agent.authentication_backoff_factor:
+    description: "Backoff factor when reauthenticating with master "
+    default: "1secs"
+  mesos.agent.cgroups_cpu_enable_pids_and_tids_count:
+    description: " Cgroups feature flag to enable counting of processes and threads inside a container."
+    default: false
   mesos.agent.cgroups_enable_cfs:
     description: "Cgroups feature flag to enable hard limits on CPU resources via the CFS bandwidth limiting subfeature"
     default: false
@@ -43,33 +68,80 @@ properties:
   mesos.agent.cgroups_limit_swap:
     description: "Cgroups feature flag to enable memory limits on both memory and swap instead of just memory"
     default: false
+  mesos.agent.cgroups_net_cls_primary_handle:
+    description: " A non-zero, 16-bit handle of the form `0xAAAA`. This will be used as the primary handle for the net_cls cgroup."
+  mesos.agent.cgroups_net_cls_secondary_handles:
+    description: " A range of the form 0xAAAA,0xBBBB, specifying the valid secondary handles that can be used with the primary handle."
   mesos.agent.cgroups_root:
     description: "Name of the root cgroup"
     default: "mesos"
   mesos.agent.container_disk_watch_interval:
     description: "The interval between disk quota checks for containers"
     default: "15secs"
+  mesos.agent.default_container_image:
+    description: "The default container image to use if not specified by a task, when using external containerizer."
+  mesos.agent.default_container_info:
+    description: "JSON-formatted ContainerInfo that will be included into any ExecutorInfo that does not specify a ContainerInfo."
   mesos.agent.default_role:
     description: "Default role"
     default: "*"
   mesos.agent.disk_watch_interval:
     description: "Periodic time interval (e.g., 10secs, 2mins, etc) to check the disk usage"
     default: "1mins"
+  mesos.agent.docker.kill_orphans:
+    description: "Enable docker containerizer to kill orphaned containers."
+    default: "true"
+  mesos.agent.docker.mesos_image:
+    description: "The Docker image used to launch this Mesos agent instance."
+  mesos.agent.docker.registry:
+    description: "The default url for pulling Docker images."
+    default: "https://registry-1.docker.io"
+  mesos.agent.docker.remove_delay:
+    description: "The amount of time to wait before removing docker containers"
+    default: "6hrs"
   mesos.agent.enforce_container_disk_quota:
     description: "Whether to enable disk quota enforcement for containers"
     default: false
+  mesos.agent.executor_environment_variables:
+    description: "JSON object representing the environment variables that should be passed to the executor, and thus subsequently task(s)."
+    default: "{}"
   mesos.agent.executor_registration_timeout:
     description: "Amount of time to wait for an executor to register with the agent before considering it hung and shutting it down"
     default: "5mins"
   mesos.agent.executor_shutdown_grace_period:
     description: "Amount of time to wait for an executor to shut down"
     default: "5secs"
+  mesos.agent.fetcher_cache_dir:
+    description: "Parent directory for fetcher cache directories (one subdirectory per agent)."
+    default: "/tmp/mesos/fetch"
+  mesos.agent.fetcher_cache_size:
+    description: "Size of the fetcher cache in Bytes."
+    default: "2GB"
+  mesos.agent.firewall_rules:
+    description: "The value could be a JSON-formatted string of rules."
+    default: "{}"
+  mesos.agent.frameworks_home:
+    description: "Directory path prepended to relative executor URIs."
+    default: ""
   mesos.agent.gc_delay:
     description: "Maximum amount of time to wait before cleaning up executor directories"
     default: "1weeks"
   mesos.agent.gc_disk_headroom:
     description: "Adjust disk headroom used to calculate maximum executor directory age"
     default: "0.1"
+  mesos.agent.hadoop_home:
+    description: "Path to find Hadoop installed (for fetching framework executors from HDFS)"
+    default: ""
+  mesos.agent.http_principal:
+    description: "Principal for accessing gent"
+  mesos.agent.http_secret:
+    description: "Secret for accessing gent"
+  mesos.agent.image_providers:
+    description: "Comma-separated list of supported image providers"
+    default: "DOCKER"
+  mesos.agent.image_provisioner_backend:
+    description: " Strategy for provisioning container rootfs from images."
+    default: "aufs"
   mesos.agent.initialize_driver_logging:
     description: "Whether to automatically initialize google logging of scheduler and/or executor drivers"
     default: true
@@ -82,6 +154,9 @@ properties:
   mesos.agent.loglevel:
     description: "Log message at or above this level; possible values: 'INFO', 'WARNING', 'ERROR';"
     default: "INFO"
+  mesos.agent.oversubscribed_resources_interval:
+    description: "The agent periodically updates the master with the current estimation about the total amount of oversubscribed resources that are allocated and available."
+    default: "15secs"
   mesos.agent.perf_duration:
     description: "Duration of a perf stat sample"
     default: "10secs"
@@ -103,15 +178,12 @@ properties:
   mesos.agent.registration_backoff_factor:
     description: "Registration backoff factor"
     default: "1secs"
-  mesos.agent.resource_monitoring_interval:
-    description: "Periodic time interval for monitoring executor resource usage"
-    default: "1secs"
   mesos.agent.resources:
     description: "Total consumable resources per agent, in the form 'name(role):value;name(role):value...'"
     default: ""
-  mesos.agent.subsystems:
-    description: "List of comma-separated cgroup subsystems to run the agent binary"
-    default: "cpu,memory"
+  mesos.agent.sandbox_directory:
+    description: "The absolute path for the directory in the container where the sandbox is mapped to."
+    default: "/mnt/mesos/sandbox"
   mesos.agent.strict:
     description: "Whether to do Apache Mesos Slaves recovery in strict mode"
     default: true
@@ -119,26 +191,10 @@ properties:
     description: "Whether to run tasks as the user who submitted them rather than the user running the agent"
     default: false
 
-  mesos.agent.docker.remove_delay:
-    description: "The amount of time to wait before removing docker containers"
-    default: "6hrs"
-  mesos.agent.docker.sandbox_directory:
-    description: "The absolute path for the directory in the container where the sandbox is mapped to"
-    default: "/mnt/mesos/sandbox"
-  mesos.agent.docker.stop_timeout:
-    description: "The time as a duration for docker to wait after stopping an instance before it kills that instance"
-    default: "0ns"
-
   mesos.zk_state:
     description: "Path in ZooKeeper for storing Apache Mesos state"
     default: "mesos"
-  zookeeper.servers:
-    description: "List of all Apache Zookeeper server host IP/hostnames"
-  zookeeper.client_port:
-    description: "Port at which the clients will connect to Apache Zookeeper"
-    default: 2181
-
   mesos.principal:
-    description: "Mesos principal"
+    description: "Mesos master principal"
   mesos.secret:
-    description: "Mesos secret"
+    description: "Mesos master secret"

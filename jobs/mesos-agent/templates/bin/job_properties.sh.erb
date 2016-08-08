@@ -15,24 +15,44 @@ export MESOS_AGENT_PID_DIR=${RUN_DIR}
 
 # Directory to store the Apache Mesos Slave data files
 export MESOS_AGENT_STORE_DIR=${STORE_DIR}
-
-# Directory to store the Apache Mesos Slave temp files
-export MESOS_AGENT_TMP_DIR=${TMP_DIR}
-
-# User which will own the Apache Mesos Slave services
-export MESOS_AGENT_USER="<%= p('mesos.agent.user') %>"
-
-# Group which will own the Apache Mesos Slave services
-export MESOS_AGENT_GROUP="<%= p('mesos.agent.group') %>"
+export MESOS_AGENT_DOCKER_STORE_DIR="${STORE_DIR}/docker"
+export MESOS_AGENT_APPC_STORE_DIR="${STORE_DIR}/appc"
+export MESOS_AGENT_WORK_DIR="${STORE_DIR}/agent"
 
 # Apache Mesos Home directory
 export MESOS_HOME=/var/vcap/packages/mesos
 
+# IP Address advertized to reach this Mesos agent
+<% if p('mesos.agent.advertize_ip') != '' %>
+export MESOS_AGENT_ADVERTIZE_IP='--advertize_ip=<%=p('mesos.agent.advertize_ip')%>'
+<% end %>
+
+<% if p('mesos.agent.advertize_port') != '' %>
+export MESOS_AGENT_ADVERTIZE_PORT='--advertize_port=<%=p('mesos.agent.advertize_port')%>'
+<% end %>
+
+# List of comma-separated cgroup subsystems to run the agent binary
+export MESOS_AGENT_SUBSYSTEMS="<%= p('mesos.agent.subsystems') %>"
+
+export MESOS_AGENT_APPC_SIMPLE_DISCOVERY_URI_PREFIX="<%= p('mesos.agent.appc_simple_discovery_uri_prefix') %>"
+
 # Attributes of machine
 export MESOS_AGENT_ATTRIBUTES="<%= p('mesos.agent.attributes') %>"
 
+<% if p('mesos.agent.authenticate_http_readonly') %>
+export MESOS_AGENT_AUTHENTICATE_HTTP_READONLY="--authenticate_http_readonly"
+<% end %>
+
+<% if p('mesos.agent.authenticate_http_readwrite') %>
+export MESOS_AGENT_AUTHENTICATE_HTTP_READWRITE="--authenticate_http_readwrite"
+<% end %>
+
 # Authenticatee implementation to use when authenticating against the master
 export MESOS_AGENT_AUTHENTICATEE="<%= p('mesos.agent.authenticatee') %>"
+
+export MESOS_AGENT_AUTHENTICATION_BACKOFF_FACTOR="<%= p('mesos.agent.authentication_backoff_factor') %>"
+
+export MESOS_AGENT_CGROUPS_CPU_ENABLE_PIDS_AND_TIDS_COUNT="<%= p('mesos.agent.cgroups_cpu_enable_pids_and_tids_count') %>"
 
 # Cgroups feature flag to enable hard limits on CPU resources via the CFS bandwidth limiting subfeature
 export MESOS_AGENT_CGROUPS_ENABLE_CFS="<%= p('mesos.agent.cgroups_enable_cfs') %>"
@@ -43,6 +63,14 @@ export MESOS_AGENT_CGROUPS_HIERARCHY="<%= p('mesos.agent.cgroups_hierarchy') %>"
 # Cgroups feature flag to enable memory limits on both memory and swap instead of just memory
 export MESOS_AGENT_CGROUPS_LIMIT_SWAP="<%= p('mesos.agent.cgroups_limit_swap') %>"
 
+<% if_p('mesos.agent.cgroups_net_cls_primary_handle') do |handle| %>
+export MESOS_AGENT_CGROUPS_NET_CLS_PRIMARY_HANDLE="--cgroups_net_cls_primary_handle=<%= handle %>"
+<% end %>
+
+<% if_p('mesos.agent.cgroups_net_cls_secondary_handles') do |handles| %>
+export MESOS_AGENT_CGROUPS_NET_CLS_SECONDARY_HANDLES="--cgroups_net_cls_secondary_handles=<%= handles %>"
+<% end %>
+
 # Name of the root cgroup
 export MESOS_AGENT_CGROUPS_ROOT="<%= p('mesos.agent.cgroups_root') %>"
 
@@ -50,8 +78,17 @@ export MESOS_AGENT_CGROUPS_ROOT="<%= p('mesos.agent.cgroups_root') %>"
 export MESOS_AGENT_CONTAINER_DISK_WATCH_INTERVAL="<%= p('mesos.agent.container_disk_watch_interval') %>"
 
 <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
+
 # File containing the list of credentials
 export MESOS_AGENT_CREDENTIALS="--credential=file://${MESOS_AGENT_CONF_DIR}/credentials"
+<% end %>
+
+<% if_p('mesos.agent.default_container_image') do |default_container_image| %>
+export MESOS_AGENT_DEFAULT_CONTAINER_IMAGE="--default_container_image=<%= default_container_image %>"
+<% end %>
+
+<% if_p('mesos.agent.default_container_info') do |default_container_info| %>
+export MESOS_AGENT_DEFAULT_CONTAINER_INFO="--default_container_info=<%= default_container_info %>"
 <% end %>
 
 # Default role
@@ -60,17 +97,20 @@ export MESOS_AGENT_DEFAULT_ROLE="<%= p('mesos.agent.default_role') %>"
 # Periodic time interval (e.g., 10secs, 2mins, etc) to check the disk usage
 export MESOS_AGENT_DISK_WATCH_INTERVAL="<%= p('mesos.agent.disk_watch_interval') %>"
 
+export MESOS_AGENT_DOCKER_KILL_ORPHANS="<%= p('mesos.agent.docker.kill_orphans') %>"
+
+<% if_p('mesos.agent.docker.mesos_image')  do |docker_mesos_image|  %>
+  export MESOS_AGENT_DOCKER_MESOS_IMAGE="--docker_mesos_image=<%= docker_mesos_image %>"
+<% end %>
+export MESOS_AGENT_DOCKER_REGISTRY="<%= p('mesos.agent.docker.registry') %>"
+
 # The amount of time to wait before removing docker containers
 export MESOS_AGENT_DOCKER_REMOVE_DELAY="<%= p('mesos.agent.docker.remove_delay') %>"
 
-# The absolute path for the directory in the container where the sandbox is mapped to
-export MESOS_AGENT_DOCKER_SANDBOX_DIRECTORY="<%= p('mesos.agent.docker.sandbox_directory') %>"
-
-# The time as a duration for docker to wait after stopping an instance before it kills that instance
-export MESOS_AGENT_DOCKER_STOP_TIMEOUT="<%= p('mesos.agent.docker.stop_timeout') %>"
-
 # Whether to enable disk quota enforcement for containers
 export MESOS_AGENT_ENFORCE_CONTAINER_DISK_QUOTA="<%= p('mesos.agent.enforce_container_disk_quota') %>"
+
+export MESOS_AGENT_EXECUTOR_ENVIRONMENT_VARIABLES="<%= p('mesos.agent.executor_environment_variables') %>"
 
 # Amount of time to wait for an executor to register with the agent before considering it hung and shutting it down
 export MESOS_AGENT_EXECUTOR_REGISTRATION_TIMEOUT="<%= p('mesos.agent.executor_registration_timeout') %>"
@@ -78,14 +118,36 @@ export MESOS_AGENT_EXECUTOR_REGISTRATION_TIMEOUT="<%= p('mesos.agent.executor_re
 # Amount of time to wait for an executor to shut down
 export MESOS_AGENT_EXECUTOR_SHUTDOWN_GRACE_PERIOD="<%= p('mesos.agent.executor_shutdown_grace_period') %>"
 
+export MESOS_AGENT_FETCHER_CACHE_DIR="<%= p('mesos.agent.fetcher_cache_dir') %>"
+
+export MESOS_AGENT_FETCHER_CACHE_SIZE="<%= p('mesos.agent.fetcher_cache_size') %>"
+
+export MESOS_AGENT_FIREWALL_RULES="<%= p('mesos.agent.firewall_rules') %>"
+
+export MESOS_AGENT_FRAMEWORKS_HOME="<%= p('mesos.agent.frameworks_home') %>"
+
 # Maximum amount of time to wait before cleaning up executor directories
 export MESOS_AGENT_GC_DELAY="<%= p('mesos.agent.gc_delay') %>"
 
 # Adjust disk headroom used to calculate maximum executor directory age
 export MESOS_AGENT_GC_DISK_HEADROOM="<%= p('mesos.agent.gc_disk_headroom') %>"
 
+export MESOS_AGENT_HADOOP_HOME="<%= p('mesos.agent.hadoop_home') %>"
+
+export MESOS_AGENT_HOSTNAME="<%= spec.address %>"
+
+<% if_p('mesos.http_principal', 'mesos.http_secret') do |principal, secret| %>
+export MESOS_AGENT_HTTP_CREDENTIALS="--http_credentials=file://${MESOS_AGENT_CONF_DIR}/http_credentials"
+<% end %>
+
+export MESOS_AGENT_IMAGE_PROVIDERS="<%= p('mesos.agent.image_providers') %>"
+
+export MESOS_AGENT_IMAGE_PROVISIONER_BACKEND="<%= p('mesos.agent.image_provisioner_backend') %>"
+
 # Whether to automatically initialize google logging of scheduler and/or executor drivers
 export MESOS_AGENT_INITIALIZE_DRIVER_LOGGING="<%= p('mesos.agent.initialize_driver_logging') %>"
+
+export MESOS_AGENT_IP="<%= spec.address %>"
 
 # Apache Mesos Slave isolation mechanism (process, cgroups)
 export MESOS_AGENT_ISOLATION="<%= p('mesos.agent.isolation') %>"
@@ -95,6 +157,8 @@ export MESOS_AGENT_LOGBUFSECS="<%= p('mesos.agent.logbufsecs') %>"
 
 # Log message at or above this level
 export MESOS_AGENT_LOGLEVEL="<%= p('mesos.agent.loglevel') %>"
+
+export MESOS_AGENT_OVERSUBSCRIBED_RESOURCES_INTERVAL="<%= p('mesos.agent.oversubscribed_resources_interval') %>"
 
 # Duration of a perf stat sample
 export MESOS_AGENT_PERF_DURATION="<%= p('mesos.agent.perf_duration') %>"
@@ -117,14 +181,10 @@ export MESOS_AGENT_RECOVERY_TIMEOUT="<%= p('mesos.agent.recovery_timeout') %>"
 # Registration backoff factor
 export MESOS_AGENT_REGISTRATION_BACKOFF_FACTOR="<%= p('mesos.agent.registration_backoff_factor') %>"
 
-# Periodic time interval for monitoring executor resource usage
-export MESOS_AGENT_RESOURCE_MONITORING_INTERVAL="<%= p('mesos.agent.resource_monitoring_interval') %>"
-
 # Total consumable resources per agent, in the form 'name(role):value;name(role):value...'
 export MESOS_AGENT_RESOURCES="<%= p('mesos.agent.resources') %>"
 
-# List of comma-separated cgroup subsystems to run the agent binary
-export MESOS_AGENT_SUBSYSTEMS="<%= p('mesos.agent.subsystems') %>"
+export MESOS_AGENT_SANDBOX_DIRECTORY="<%= p('mesos.agent.sandbox_directory') %>"
 
 # Whether to do Apache Mesos Slaves recovery in strict mode
 export MESOS_AGENT_STRICT="<%= p('mesos.agent.strict') %>"
