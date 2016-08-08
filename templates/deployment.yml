@@ -48,11 +48,17 @@ instance_groups:
   instances: 3
   jobs:
   - name: docker
-    release: docker
+    release: mesos
+  - name: mesos-agent
+    release: mesos
   stemcell: default
   vm_type: medium
   networks:
   - name: private
+  properties:
+    mesos:
+      principal: "principal"
+      secret: "secret"
 
 # properties:
 
