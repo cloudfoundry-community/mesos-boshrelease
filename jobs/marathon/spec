@@ -13,18 +13,10 @@ packages:
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/marathon_ctl.erb: bin/marathon_ctl
-  config/logrotate.conf.erb: config/logrotate.conf
-  config/marathon_logrotate.cron.erb: config/marathon_logrotate.cron
   config/zoo_hosts.cfg.erb: config/zoo_hosts.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
 properties:
-  marathon.user:
-    description: "User which will own the Marathon services"
-    default: "root"
-  marathon.group:
-    description: "Group which will own the Marathon services"
-    default: "vcap"
   marathon.java_heap_size:
     description: "Java Heap Size for Marathon"
     default: "512m"

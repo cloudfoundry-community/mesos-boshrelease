@@ -35,18 +35,10 @@ case $1 in
     # Increase the default number of open file descriptors
     ulimit -n 8192
 
-    # Create Marathon user & group
-    create_group ${MARATHON_GROUP}
-    create_user ${MARATHON_USER} ${MARATHON_GROUP}
-
-    # Enable logrotate crontab
-    (crontab -l | sed /marathon.*logrotate/d; cat ${MARATHON_CONF_DIR}/marathon_logrotate.cron) | sed /^$/d | crontab
-
     <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
     # Set framework secrets file
     echo -n '<%= secret %>' > ${MARATHON_CONF_DIR}/authentication_secret_file
     chmod 0600 ${MARATHON_CONF_DIR}/authentication_secret_file
-    chown ${MARATHON_USER}:${MARATHON_GROUP} ${MARATHON_CONF_DIR}/authentication_secret_file
     <% end %>
 
     # Read ZooKeeper Hosts
