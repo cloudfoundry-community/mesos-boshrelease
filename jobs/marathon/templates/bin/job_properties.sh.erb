@@ -19,12 +19,6 @@ export MARATHON_STORE_DIR=${STORE_DIR}
 # Directory to store the Marathon temp files
 export MARATHON_TMP_DIR=${TMP_DIR}
 
-# User which will own the Marathon services
-export MARATHON_USER="<%= p('marathon.user') %>"
-
-# Group which will own the Marathon services
-export MARATHON_GROUP="<%= p('marathon.group') %>"
-
 # Java Heap Size for Marathon
 export MARATHON_JAVA_HEAP_SIZE="<%= p('marathon.java_heap_size') %>"
 

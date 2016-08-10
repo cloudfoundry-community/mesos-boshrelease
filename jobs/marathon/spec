@@ -12,9 +12,15 @@ packages:
 
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
-  bin/marathon_ctl.erb: bin/marathon_ctl
+  bin/marathon_ctl: bin/marathon_ctl
   config/zoo_hosts.cfg.erb: config/zoo_hosts.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
+
+consumes:
+- name: zookeeper
+  type: zookeeper
+  properties:
+  - zookeeper.client_port
 
 properties:
   marathon.java_heap_size:
