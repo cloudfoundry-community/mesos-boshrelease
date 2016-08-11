@@ -37,12 +37,10 @@ instance_groups:
   - name: private
   properties:
     mesos:
-      principal: "principal"
-      secret: "secret"
       master:
         quorum: 2
-        # authenticate_agents: true
-        # authenticate_frameworks: true
+        authenticate_agents: true
+        authenticate_frameworks: true
 - name: mesos-agent
   azs: [z1, z2, z3]
   instances: 3
@@ -55,13 +53,9 @@ instance_groups:
   vm_type: medium
   networks:
   - name: private
-  properties:
-    mesos:
-      principal: "principal"
-      secret: "secret"
 - name: marathon
   azs: [z1, z2, z3]
-  instances: 1
+  instances: 3
   jobs:
   - name: marathon
     release: mesos
@@ -70,7 +64,10 @@ instance_groups:
   networks:
   - name: private
 
-# properties:
+properties:
+  mesos:
+    principal: "principal"
+    secret: "secret"
 
 update:
   canaries: 1

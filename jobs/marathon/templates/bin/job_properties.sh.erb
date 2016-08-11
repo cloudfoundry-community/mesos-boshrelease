@@ -27,14 +27,14 @@ export MARATHON_JAVA_HEAP_SIZE="<%= p('marathon.java_heap_size') %>"
 export MARATHON_CHECKPOINT="--checkpoint"
 <% end %>
 
-<% if_p('marathon.enable_metrics') do |enable_metrics| %>
-# Enable metric measurement of service method calls
-export MARATHON_ENABLE_METRICS="--enable_metrics"
+<% if_p('marathon.default_accepted_resource_roles') do |default_accepted_resource_roles| %>
+export MARATHON_DEFAULT_ACCEPTED_RESOURCE_ROLES="--default_accepted_resource_roles=<%= default_accepted_resource_roles %>"
 <% end %>
 
-<% if_p('marathon.enable_tracing') do |enable_tracing| %>
-# Enable trace logging ofservice method calls
-export MARATHON_ENABLE_TRACING="--enable_tracing"
+export MARATHON_DECLINE_OFFER_DURATION=<%= p('marathon.decline_offer_duration') %>
+
+<% if_p('marathon.disable_http') do |disable_http| %>
+export MARATHON_DISABLE_HTTP="--disable_http"
 <% end %>
 
 # The event stream buffers events that are not already consumed by clients
@@ -51,8 +51,18 @@ export MARATHON_FRAMEWORK_NAME="<%= p('marathon.framework_name') %>"
 export MARATHON_HA="--ha"
 <% end %>
 
+export MARATHON_HOSTNAME="<%= spec.address %>"
+
+export MARATHON_HTTP_ADDRESS="<%= spec.address %>"
+
 # Credentials for accessing the Marathon http service
 export MARATHON_HTTP_CREDENTIALS="<%= p('marathon.http_credentials') %>"
+
+export MARATHON_HTTP_EVENT_CALLBACK_SLOW_CONSUMER_TIMEOUT=<%= p('marathon.http_event_callback_slow_consumer_timeout') %>
+
+<% if_p('marathon.http_max_concurrent_requests') do |http_max_concurrent_requests| %>
+export MARATHON_HTTP_MAX_CONCURRENT_REQUESTS="--http_max_concurrent_requests <%= http_max_concurrent_requests %>"
+<% end %>
 
 # The port Marathon will listen on for HTTP requests
 export MARATHON_HTTP_PORT="<%= p('marathon.http_port') %>"
@@ -60,8 +70,14 @@ export MARATHON_HTTP_PORT="<%= p('marathon.http_port') %>"
 # The security realm associated with the credentials
 export MARATHON_HTTP_REALM="<%= p('marathon.http_realm') %>"
 
+export MARATHON_HTTPS_ADDRESS="<%= spec.address %>"
+
 # The port Marathon will listen on for HTTPS requests
 export MARATHON_HTTPS_PORT="<%= p('marathon.https_port') %>"
+
+export MARATHON_LAUNCH_TOKEN_REFRESH_INTERVAL=<%= p('marathon.launch_token_refresh_interval') %>
+
+export MARATHON_LAUNCH_TOKENS=<%= p('marathon.launch_tokens') %>
 
 # Maximum time, in milliseconds, to wait for connecting to the current Marathon leader from another Marathon instance
 export MARATHON_LEADER_PROXY_CONNECTION_TIMEOUT="<%= p('marathon.leader_proxy_connection_timeout') %>"
@@ -69,17 +85,18 @@ export MARATHON_LEADER_PROXY_CONNECTION_TIMEOUT="<%= p('marathon.leader_proxy_co
 # Maximum time, in milliseconds, for reading from the current Marathon leader
 export MARATHON_LEADER_PROXY_READ_TIMEOUT="<%= p('marathon.leader_proxy_read_timeout') %>"
 
-# Min port number to use when Marathon assigns ports to apps
-export MARATHON_LOCAL_PORT_MIN="<%= p('marathon.local_port_min') %>"
-
 # Max port number to use when Marathon assigns ports to apps
 export MARATHON_LOCAL_PORT_MAX="<%= p('marathon.local_port_max') %>"
+
+# Min port number to use when Marathon assigns ports to apps
+export MARATHON_LOCAL_PORT_MIN="<%= p('marathon.local_port_min') %>"
 
 # Set logging level
 export MARATHON_LOGGING_LEVEL="<%= p('marathon.logging_level') %>"
 
-# Maximum time, in milliseconds, to wait for persistent storage operations to complete
-export MARATHON_STORE_TIMEOUT="<%= p('marathon.store_timeout') %>"
+<% if_p('marathon.max_apps') do |max_apps| %>
+export MARATHON_MAX_APPS="--max_apps <%= max_apps %>"
+<% end %>
 
 <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
 # Mesos principal and secret
@@ -90,20 +107,57 @@ export MARATHON_AUTHENTICATION_SECRET="--mesos_authentication_secret_file ${MARA
 # Maximally launch this number of tasks per offer
 export MARATHON_MAX_TASKS_PER_OFFER="<%= p('marathon.max_tasks_per_offer') %>"
 
-# Maximally launch this number of tasks per offer cycle
-export MARATHON_MAX_TASKS_PER_OFFER_CYCLE="<%= p('marathon.max_tasks_per_offer_cycle') %>"
-
 # Mesos role for this framework
 export MARATHON_MESOS_ROLE="<%= p('marathon.mesos_role') %>"
 
 # Mesos user for this framework
 export MARATHON_MESOS_USER="<%= p('marathon.mesos_user') %>"
 
+<% if_p('marathon.disable_metrics') do |disable_metrics| %>
+export MARATHON_DISABLE_METRICS="--disable_metrics"
+<% end %>
+
+export MARATHON_MIN_REVIVE_OFFERS_INTERVAL=<%= p('marathon.min_revive_offers_interval') %>
+
+export MARATHON_OFFER_MATCHING_TIMEOUT=<%= p('marathon.offer_matching_timeout') %>
+
+export MARATHON_ON_ELECTED_PREPARE_TIMEOUT=<%= p('marathon.on_elected_prepare_timeout') %>
+
 # This is the length of time, in milliseconds, before Marathon begins to periodically perform task reconciliation operations
 export MARATHON_RECONCILIATION_INITIAL_DELAY="<%= p('marathon.reconciliation_initial_delay') %>"
 
 # This is the length of time, in milliseconds, between task reconciliation operations
 export MARATHON_RECONCILIATION_INTERVAL="<%= p('marathon.reconciliation_interval') %>"
+
+<% if_p('marathon.reporter_datadog') do |reporter_datadog| %>
+export MARATHON_REPORTER_DATADOG="--reporter_datadog <%= reporter_datadog %>"
+<% end %>
+
+<% if_p('marathon.reporter_graphite') do |reporter_graphite| %>
+export MARATHON_REPORTER_GRAPHITE="--reporter_graphite <%= reporter_graphite %>"
+<% end %>
+
+export MARATHON_REVIVE_OFFERS_REPETITIONS=<%= p('marathon.revive_offers_repetitions') %>
+
+export MARATHON_SAVE_TASKS_TO_LAUNCH_TIMEOUT=<%= p('marathon.save_tasks_to_launch_timeout') %>
+
+<% if_p('marathon.ssl_keystore_password') do |ssl_keystore_password| %>
+export MARATHON_SSL_KEYSTORE_PASSWORD="--ssl_keystore_password <%= ssl_keystore_password %>"
+<% end %>
+
+<% if_p('marathon.ssl_keystore_path') do |ssl_keystore_path| %>
+export MARATHON_SSL_KEYSTORE_PATH="--ssl_keystore_path <%= ssl_keystore_path %>"
+<% end %>
+
+export MARATHON_TASK_LAUNCH_CONFIRM_TIMEOUT=<%= p('marathon.task_launch_confirm_timeout') %>
+
+<% if_p('marathon.tracing') do |tracing| %>
+export MARATHON_TRACING="--tracing"
+<% end %>
+
+<% if_p('marathon.webui_url') do |webui_url| %>
+export MARATHON_WEBUI_URL="--webui_url"
+<% end %>
 
 # This is the length of time, in milliseconds, before Marathon begins to periodically attempt to scale apps
 export MARATHON_SCALE_APPS_INITIAL_DELAY="<%= p('marathon.scale_apps_initial_delay') %>"

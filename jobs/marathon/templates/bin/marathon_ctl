@@ -15,11 +15,10 @@ case $1 in
     # Increase the default number of open file descriptors
     ulimit -n 8192
 
-    <% if_p('mesos.principal', 'mesos.secret') do |principal, secret| %>
-    # Set framework secrets file
-    echo -n '<%= secret %>' > ${MARATHON_CONF_DIR}/authentication_secret_file
+    # Secrets file must not contain newline char
+    cat ${MARATHON_CONF_DIR}/authentication_secret_file | tr -d '\n' > secret_without_newline
+    mv secret_without_newline ${MARATHON_CONF_DIR}/authentication_secret_file
     chmod 0600 ${MARATHON_CONF_DIR}/authentication_secret_file
-    <% end %>
 
     # Read ZooKeeper Hosts
     ZK_MESOS=`cat ${MARATHON_CONF_DIR}/zoo_mesos.cfg`
@@ -28,54 +27,74 @@ case $1 in
     ZK_HOSTS=`cat ${MARATHON_CONF_DIR}/zoo_hosts.cfg`
 
     # Process IP
-    # export LIBPROCESS_IP=<%# = private_ip %>
+    export LIBPROCESS_IP="${MARATHON_HTTP_ADDRESS}"
 
     marathon_jar=$(find /var/vcap/packages/marathon/target -name 'marathon-assembly-*.jar' | sort | tail -1)
+
     # Start Marathon service
-    exec java -jar "$marathon_jar" \
-           --master ${ZK_MESOS} \
-           --zk ${ZK_HOSTS} \
-           >>${MARATHON_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
-           2>>${MARATHON_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
-           <%# -Xmx"${MARATHON_JAVA_HEAP_SIZE}" \ %>
-           <%# -Xms"${MARATHON_JAVA_HEAP_SIZE}" \ %>
-           <%# -Dfile.encoding=UTF-8 \ %>
-           <%# -Djava.io.tmpdir=${MARATHON_TMP_DIR} \ %>
-           <%# -cp /var/vcap/packages/marathon/marathon.jar mesosphere.marathon.Main \ %>
-           <%# --artifact_store "file://${MARATHON_STORE_DIR}" \ %>
-           <%# ${MARATHON_CHECKPOINT:-} \ %>
-           <%# ${MARATHON_ENABLE_METRICS:-} \ %>
-           <%# ${MARATHON_ENABLE_TRACING:-} \ %>
-           <%# --event_stream_max_outstanding_messages "${MARATHON_EVENT_STREAM_MAX_OUTSTANDING_MESSAGES}" \ %>
-           <%# --failover_timeout "${MARATHON_FAILOVER_TIMEOUT}" \ %>
-           <%# --framework_name "${MARATHON_FRAMEWORK_NAME}" \ %>
-           <%# ${MARATHON_HA:-} \ %>
-           <%# --http_credentials "${MARATHON_HTTP_CREDENTIALS}" \ %>
-           <%# --http_port "${MARATHON_HTTP_PORT}" \ %>
-           <%# --http_realm "${MARATHON_HTTP_REALM}" \ %>
-           <%# --https_port "${MARATHON_HTTPS_PORT}" \ %>
-           <%# --hostname "${public_ip}" \ %>
-           <%# --leader_proxy_connection_timeout "${MARATHON_LEADER_PROXY_CONNECTION_TIMEOUT}" \ %>
-           <%# --leader_proxy_read_timeout "${MARATHON_LEADER_PROXY_READ_TIMEOUT}" \ %>
-           <%# --local_port_min "${MARATHON_LOCAL_PORT_MIN}" \ %>
-           <%# --local_port_max "${MARATHON_LOCAL_PORT_MAX}" \ %>
-           <%# --logging_level "${MARATHON_LOGGING_LEVEL}" \ %>
-           <%# --marathon_store_timeout "${MARATHON_STORE_TIMEOUT}" \ %>
-           <%# ${MARATHON_AUTHENTICATION_PRINCIPAL:-} \ %>
-           <%# ${MARATHON_AUTHENTICATION_SECRET:-} \ %>
-           <%# --max_tasks_per_offer "${MARATHON_MAX_TASKS_PER_OFFER}" \ %>
-           <%# --max_tasks_per_offer_cycle "${MARATHON_MAX_TASKS_PER_OFFER_CYCLE}" \ %>
-           <%# --mesos_role "${MARATHON_MESOS_ROLE}" \ %>
-           <%# --mesos_user "${MARATHON_MESOS_USER}" \ %>
-           <%# --reconciliation_initial_delay "${MARATHON_RECONCILIATION_INITIAL_DELAY}" \ %>
-           <%# --reconciliation_interval "${MARATHON_RECONCILIATION_INTERVAL}" \ %>
-           <%# --scale_apps_initial_delay "${MARATHON_SCALE_APPS_INITIAL_DELAY}" \ %>
-           <%# --scale_apps_interval "${MARATHON_SCALE_APPS_INTERVAL}" \ %>
-           <%# --task_launch_timeout "${MARATHON_TASK_LAUNCH_TIMEOUT}" \ %>
-           <%# --zk_max_versions "${MARATHON_ZK_MAX_VERSIONS}" \ %>
-           <%# --zk_timeout "${MARATHON_ZK_TIMEOUT}" \ %>
-           <%# --zk_session_timeout "${MARATHON_ZK_SESSION_TIMEOUT}" \ %>
-    ;;
+    exec java \
+      -Xmx"${MARATHON_JAVA_HEAP_SIZE}" \
+      -Xms"${MARATHON_JAVA_HEAP_SIZE}" \
+      -Dfile.encoding=UTF-8 \
+      -Djava.io.tmpdir=${MARATHON_TMP_DIR} \
+      -jar "${marathon_jar}" \
+      --artifact_store "file://${MARATHON_STORE_DIR}" \
+      ${MARATHON_CHECKPOINT:-} \
+      ${MARATHON_DEFAULT_ACCEPTED_RESOURCE_ROLES:-} \
+      --decline_offer_duration "${MARATHON_DECLINE_OFFER_DURATION}" \
+      ${MARATHON_DISABLE_HTTP:-} \
+      --event_stream_max_outstanding_messages "${MARATHON_EVENT_STREAM_MAX_OUTSTANDING_MESSAGES}" \
+      --failover_timeout "${MARATHON_FAILOVER_TIMEOUT}" \
+      --framework_name "${MARATHON_FRAMEWORK_NAME}" \
+      ${MARATHON_HA:-} \
+      --hostname "${MARATHON_HOSTNAME}" \
+      --http_address "${MARATHON_HTTP_ADDRESS}" \
+      --http_credentials "${MARATHON_HTTP_CREDENTIALS}" \
+      --http_event_callback_slow_consumer_timeout "${MARATHON_HTTP_EVENT_CALLBACK_SLOW_CONSUMER_TIMEOUT}" \
+      ${MARATHON_HTTP_MAX_CONCURRENT_REQUESTS:-} \
+      --http_port "${MARATHON_HTTP_PORT}" \
+      --http_realm "${MARATHON_HTTP_REALM}" \
+      --https_address "${MARATHON_HTTPS_ADDRESS}" \
+      --https_port "${MARATHON_HTTPS_PORT}" \
+      --launch_token_refresh_interval "${MARATHON_LAUNCH_TOKEN_REFRESH_INTERVAL}" \
+      --launch_tokens "${MARATHON_LAUNCH_TOKENS}" \
+      --leader_proxy_connection_timeout "${MARATHON_LEADER_PROXY_CONNECTION_TIMEOUT}" \
+      --leader_proxy_read_timeout "${MARATHON_LEADER_PROXY_READ_TIMEOUT}" \
+      --local_port_max "${MARATHON_LOCAL_PORT_MAX}" \
+      --local_port_min "${MARATHON_LOCAL_PORT_MIN}" \
+      --logging_level "${MARATHON_LOGGING_LEVEL}" \
+      --master ${ZK_MESOS} \
+      ${MARATHON_MAX_APPS:-} \
+      ${MARATHON_AUTHENTICATION_PRINCIPAL:-} \
+      ${MARATHON_AUTHENTICATION_SECRET:-} \
+      --max_tasks_per_offer "${MARATHON_MAX_TASKS_PER_OFFER}" \
+      --mesos_role "${MARATHON_MESOS_ROLE}" \
+      --mesos_user "${MARATHON_MESOS_USER}" \
+      ${MARATHON_DISABLE_METRICS:-} \
+      --min_revive_offers_interval "${MARATHON_MIN_REVIVE_OFFERS_INTERVAL}" \
+      --offer_matching_timeout "${MARATHON_OFFER_MATCHING_TIMEOUT}" \
+      --on_elected_prepare_timeout "${MARATHON_ON_ELECTED_PREPARE_TIMEOUT}" \
+      --reconciliation_initial_delay "${MARATHON_RECONCILIATION_INITIAL_DELAY}" \
+      --reconciliation_interval "${MARATHON_RECONCILIATION_INTERVAL}" \
+      ${MARATHON_REPORTER_DATADOG:-} \
+      ${MARATHON_REPORTER_GRAPHITE:-} \
+      --revive_offers_repetitions "${MARATHON_REVIVE_OFFERS_REPETITIONS}" \
+      --save_tasks_to_launch_timeout "${MARATHON_SAVE_TASKS_TO_LAUNCH_TIMEOUT}" \
+      --scale_apps_initial_delay "${MARATHON_SCALE_APPS_INITIAL_DELAY}" \
+      --scale_apps_interval "${MARATHON_SCALE_APPS_INTERVAL}" \
+      ${MARATHON_SSL_KEYSTORE_PASSWORD:-} \
+      ${MARATHON_SSL_KEYSTORE_PATH:-} \
+      --task_launch_confirm_timeout "${MARATHON_TASK_LAUNCH_CONFIRM_TIMEOUT}" \
+      --task_launch_timeout "${MARATHON_TASK_LAUNCH_TIMEOUT}" \
+      ${MARATHON_TRACING:-} \
+      ${MARATHON_WEBUI_URL:-} \
+      --zk ${ZK_HOSTS} \
+      --zk_max_versions "${MARATHON_ZK_MAX_VERSIONS}" \
+      --zk_timeout "${MARATHON_ZK_TIMEOUT}" \
+      --zk_session_timeout "${MARATHON_ZK_SESSION_TIMEOUT}" \
+      >>${MARATHON_LOG_DIR}/${OUTPUT_LABEL}.stdout.log \
+      2>>${MARATHON_LOG_DIR}/${OUTPUT_LABEL}.stderr.log
+      ;;
 
   stop)
     # Stop Marathon service

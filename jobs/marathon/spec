@@ -13,6 +13,7 @@ packages:
 templates:
   bin/job_properties.sh.erb: bin/job_properties.sh
   bin/marathon_ctl: bin/marathon_ctl
+  config/authentication_secret_file.erb: config/authentication_secret_file
   config/zoo_hosts.cfg.erb: config/zoo_hosts.cfg
   config/zoo_mesos.cfg.erb: config/zoo_mesos.cfg
 
@@ -29,12 +30,13 @@ properties:
   marathon.enable_checkpoint:
     description: "Enable checkpointing of tasks"
     default: true
-  marathon.enable_metrics:
-    description: "Enable metric measurement of service method calls"
-    default: true
-  marathon.enable_tracing:
-    description: "Enable trace logging ofservice method calls"
-    default: false
+  marathon.default_accepted_resource_roles:
+    description: " Default for the defaultAcceptedResourceRoles attribute of all app definitions as a comma-separated list of strings. This defaults to all roles for which this Marathon instance is configured to receive offers."
+  marathon.decline_offer_duration:
+    description: "The duration (milliseconds) for which to decline offers by default"
+    default: "120000"
+  marathon.disable_http:
+    description: "Disable listening for HTTP requests completely."
   marathon.event_stream_max_outstanding_messages:
     description: "The event stream buffers events that are not already consumed by clients"
     default: 50
@@ -50,60 +52,99 @@ properties:
   marathon.http_credentials:
     description: "Credentials for accessing the Marathon http service (username:password format)"
     default: "marathon:marathon"
+  marathon.http_event_callback_slow_consumer_timeout:
+    description: "A http event callback consumer is considered slow, if the delivery takes longer than this timeout (ms)"
+    default: "10000"
+  marathon.http_max_concurrent_requests:
+    description: "The number of concurrent HTTP requests that are allowed before rejecting."
   marathon.http_port:
     description: "The port Marathon will listen on for HTTP requests"
-    default: 80
+    default: 8080
   marathon.http_realm:
     description: "The security realm associated with the credentials"
     default: "mesos"
   marathon.https_port:
     description: "The port Marathon will listen on for HTTPS requests"
     default: 443
+  marathon.launch_token_refresh_interval:
+    description: "The interval (ms) in which to refresh the launch tokens to --launch_token_count"
+    default: "30000"
+  marathon.launch_tokens:
+    description: "Launch tokens per interval"
+    default: "100"
   marathon.leader_proxy_connection_timeout:
     description: "Maximum time, in milliseconds, to wait for connecting to the current Marathon leader from another Marathon instance"
     default: 5000
   marathon.leader_proxy_read_timeout:
     description: "Maximum time, in milliseconds, for reading from the current Marathon leader"
     default: 10000
-  marathon.local_port_min:
-    description: "Min port number to use when Marathon assigns ports to apps"
-    default: 10000
   marathon.local_port_max:
     description: "Max port number to use when Marathon assigns ports to apps"
     default: 20000
+  marathon.local_port_min:
+    description: "Min port number to use when Marathon assigns ports to apps"
+    default: 10000
   marathon.logging_level:
     description: "Set logging level to one of: off, fatal, error, warn, info, debug, trace, all"
     default: "info"
-  marathon.store_timeout:
-    description: "Maximum time, in milliseconds, to wait for persistent storage operations to complete"
-    default: 2000
+  marathon.max_apps:
+    description: "The maximum number of applications that may be created."
   marathon.max_tasks_per_offer:
     description: "Maximally launch this number of tasks per offer"
-    default: 1
-  marathon.max_tasks_per_offer_cycle:
-    description: "Maximally launch this number of tasks per offer cycle"
-    default: 1000
+    default: 5
   marathon.mesos_role:
     description: "Mesos role for this framework"
     default: "*"
   marathon.mesos_user:
     description: "Mesos user for this framework"
     default: "vcap"
+  marathon.disable_metrics:
+    description: "Disable exposing execution time of service method calls using code instrumentation via the metrics endpoing"
+  marathon.min_revive_offers_interval:
+    description: "Do not ask for all offers (also already seen ones) more often than this interval"
+    default: 5000
+  marathon.offer_matching_timeout:
+    description: "Offer matching timeout (ms). Stop trying to match additional tasks for this offer after this time."
+    default: 1000
+  marathon.on_elected_prepare_timeout:
+    description: "The timeout for preparing the Marathon instance when elected as leader."
+    default: 180000
   marathon.reconciliation_initial_delay:
     description: "This is the length of time, in milliseconds, before Marathon begins to periodically perform task reconciliation operations"
     default: 15000
   marathon.reconciliation_interval:
     description: "This is the length of time, in milliseconds, between task reconciliation operations"
-    default: 300000
+    default: 600000
+  marathon.reporter_datadog:
+    description: "URL to dogstatsd agent."
+  marathon.reporter_graphite:
+    description: "URL to graphite agent."
+  marathon.revive_offers_repetitions:
+    description: "Repeat every reviveOffer request this many times, delayed by the --min_revive_offers_interval."
+    default: 3
+  marathon.save_tasks_to_launch_timeout:
+    description: "Timeout (ms) after matching an offer for saving all matched tasks that we are about to launch."
+    default: 3000
   marathon.scale_apps_initial_delay:
     description: "This is the length of time, in milliseconds, before Marathon begins to periodically attempt to scale apps"
     default: 15000
   marathon.scale_apps_interval:
     description: "This is the length of time, in milliseconds, between task scale apps"
     default: 300000
+  marathon.ssl_keystore_password:
+    description: "Password for the keystore supplied with the `ssl_keystore_path` option."
+  marathon.ssl_keystore_path:
+    description: "Path to the SSL keystore."
+  marathon.task_launch_confirm_timeout:
+    description: "Time, in milliseconds, to wait for a task to enter the TASK_STAGING state before killing it."
+    default: 300000
   marathon.task_launch_timeout:
     description: "Time, in milliseconds, to wait for a task to enter the TASK_RUNNING state before killing it"
     default: 300000
+  marathon.tracing:
+    description: "Enable trace logging of service method calls."
+  marathon.webui_url:
+    description: "The HTTP(S) url of the web ui, defaulting to the advertised hostname."
   marathon.zk_state:
     description: "Path in ZooKeeper for storing Marathon state"
     default: "marathon"
