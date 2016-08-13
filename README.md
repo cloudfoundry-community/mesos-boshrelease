@@ -23,14 +23,14 @@ To use this BOSH release, first upload it to your BOSH:
 
 ```
 bosh target BOSH_HOST
-git clone https://github.com/cf-platform-eng/mesos-boshrelease.git
+git clone https://github.com/cloudfoundry-community/mesos-boshrelease.git
 cd mesos-boshrelease
-bosh upload release releases/mesos/mesos-4.yml
+bosh upload release releases/mesos/mesos-6.yml
 ```
 
 ### Create a BOSH deployment manifest
 
-Now create a deployment file (using the files at the [examples](https://github.com/cf-platform-eng/mesos-boshrelease/tree/master/examples) directory as a starting point).
+Now create a deployment file (using the files at the [templates](https://github.com/cloudfoundry-community/mesos-boshrelease/tree/master/templates) directory as a starting point).
 
 ### Deploy using the BOSH deployment manifest
 
