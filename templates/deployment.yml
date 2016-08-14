@@ -1,6 +1,6 @@
 ---
 name: mesos-deployment
-director_uuid: 93c01d2d-a2a5-49d8-8d02-389fd223a9cf
+director_uuid: <%= '<director-uuid>' %>
 
 releases:
 - name: mesos
